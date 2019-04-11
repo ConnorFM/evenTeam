@@ -1,0 +1,50 @@
+<form method="post">
+
+	<!-- Medium input for Event Name -->
+  <div class="md-form">
+	  <input type="text" id="inputMDEx" class="form-control">
+	  <label for="inputMDEx">Event Name</label>
+	</div>
+
+	<!-- Event Description-->
+	<div class="md-form">
+	  <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3"></textarea>
+	  <label for="textarea-char-counter">Type your event description</label>
+	</div>
+
+	<!-- Room select -->
+	<label>Choose a Room</label>
+	<select class="mdb-select md-form colorful-select down-warning">
+	  <option value="1">Option 1</option>
+	  <option value="2">Option 2</option>
+	  <option value="3">Option 3</option>
+	  <option value="4">Option 4</option>
+	  <option value="5">Option 5</option>
+	</select>
+	
+	<!-- Start Date input -->
+	<div class="md-form input-group">
+	  <div class="input-group-prepend">
+	    <span class="input-group-text md-addon">Begin date</span>
+	  </div>
+	  <input type="text" id="inputLGEx" aria-label="Year" class="form-control" placeholder="Year" value="2019">
+	  <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="Month">
+	  <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="Day">
+	  <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour">
+	</div>
+
+	<!-- End Date input -->
+	<div class="md-form input-group">
+	  <div class="input-group-prepend">
+	    <span class="input-group-text md-addon">End date</span>
+	  </div>
+	  <input type="text" aria-label="Year" class="form-control" placeholder="Year">
+	  <input type="text" aria-label="Month" class="form-control" placeholder="Month">
+	  <input type="text" aria-label="Day" class="form-control" placeholder="Day">
+	  <input type="text" aria-label="Hour" class="form-control" placeholder="Hour">
+	</div>
+
+		<!-- Add New Event button -->
+  <button type="submit" class="btn btn-deep-orange">Create New Event</button>
+</form>
+
