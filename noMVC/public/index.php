@@ -12,10 +12,7 @@
     <title>evenTeam</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary mb-3">
-    <a href="/index.php" class="navbar-brand">evenTeam</a>
 
-</nav>
 
 <?php
 require '../src/Calendar/Month.php';
@@ -32,11 +29,11 @@ try{
 $start = $month->getStartingDay();
 $start = $start->format('N') === '1' ? $start :$month->getStartingDay()->modify('last monday');
 $weeks = $month->getWeeks();
-$end = (clone $start)->modify('+' .(6 + 7 * $weeks -1) . ' days');
-$events = $events->getEventsBetween($start, $end);
+$end = (clone $start)->modify('+' .(6 + 7 * ($weeks -1)) . ' days');
+$events = $events->getEventsBetweenByDay($start, $end);
 
 
-?>
+use App\Calendar\Month; ?>
 <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
     <h1><?= $month->toString(); ?></h1>
     <div>
@@ -53,13 +50,19 @@ $events = $events->getEventsBetween($start, $end);
     <tr>
 
         <?php foreach ($month->days as $k => $day):
-            $date =(clone $start)->modify("+" . ($k +$i * 7 ) . "days")
+            $date =(clone $start)->modify("+" . ($k +$i * 7 ) . "days");
+            $eventsForDay = $events[$date->format('Y-m-d')] ?? [];
             ?>
             <td class="<?= $month->withinMonth($date) ? '' :'calendar__othermonth'; ?>">
                 <?php if ($i ===0): ?>
                     <div class="calendar__weekday"><?= $day; ?></div>
                 <?php endif; ?>
                 <div class="calendar__day"><?= $date->format('d'); ?></div>
+                <?php foreach ($eventsForDay as $event): ?>
+                <div class="calendar__event">
+                    <?= (new DateTime($event['start']))->format('H:i') ?> - <a href="/event.php?id=<?= $event['id']; ?>"> <?= $event['name']; ?></a>
+                </div>
+            <?php endforeach; ?>
             </td>
         <?php endforeach; ?>
         <?php endfor; ?>
