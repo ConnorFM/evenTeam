@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,63 +10,70 @@
     <link rel="stylesheet" type="text/css" href="/css/calendar.css">
 
     <title>evenTeam</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-dark bg-primary mb-3">
-      <a href="/index.php" class="navbar-brand">evenTeam</a>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-primary mb-3">
+    <a href="/index.php" class="navbar-brand">evenTeam</a>
 
-    </nav>
+</nav>
 
-    <?php
-    require '../src/Date/Month.php';
+<?php
+require '../src/Calendar/Month.php';
+require '../src/Calendar/Events.php';
 
-    try{
+$events = new \App\Calendar\Events();
 
-    $month = new App\Date\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
-    } catch (\Exception $e){
-      $month = new App\Date\Month();
-    }
+try{
 
-    $start = $month->getStartingDay()->modify('last monday');
+    $month = new App\Calendar\Month($_GET['month'] ?? null, $_GET['year'] ?? null);
+} catch (\Exception $e){
+    $month = new App\Calendar\Month();
+}
+$start = $month->getStartingDay();
+$start = $start->format('N') === '1' ? $start :$month->getStartingDay()->modify('last monday');
+$weeks = $month->getWeeks();
+$end = (clone $start)->modify('+' .(6 + 7 * $weeks -1) . ' days');
+$events = $events->getEventsBetween($start, $end);
 
-    ?>
-    <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
-      <h1><?= $month->toString(); ?></h1>
-      <div>
+
+?>
+<div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+    <h1><?= $month->toString(); ?></h1>
+    <div>
         <a href="/index.php?month=<?= $month->previousMonth()->month; ?>&year=<?= $month->previousMonth()->year; ?>" class="btn btn-primary">&lt;</a>
         <a href="/index.php?month=<?= $month->nextMonth()->month; ?>&year=<?= $month->nextMonth()->year; ?>" class="btn btn-primary">&gt;</a>
-      </div>
     </div>
+</div>
 
 
 
 
-    <table class="calendar__table calendar__table--<?= $month->getWeeks(); ?>weeks">
-      <?php for ($i=0; $i < $month->getWeeks(); $i++): ?>
-      <tr>
+<table class="calendar__table calendar__table--<?= $weeks; ?>weeks">
+    <?php for ($i=0; $i < $weeks; $i++): ?>
+    <tr>
 
         <?php foreach ($month->days as $k => $day):
-          $date =(clone $start)->modify("+" . ($k +$i * 7 ) . "days")
-          ?>
-        <td class="<?= $month->withinMonth($date) ? '' :'calendar__othermonth'; ?>">
-          <?php if ($i ===0): ?>
-          <div class="calendar__weekday"><?= $day; ?></div>
-          <?php endif; ?>
-          <div class="calendar__day"><?= $date->format('d'); ?></div>
-          </td>
+            $date =(clone $start)->modify("+" . ($k +$i * 7 ) . "days")
+            ?>
+            <td class="<?= $month->withinMonth($date) ? '' :'calendar__othermonth'; ?>">
+                <?php if ($i ===0): ?>
+                    <div class="calendar__weekday"><?= $day; ?></div>
+                <?php endif; ?>
+                <div class="calendar__day"><?= $date->format('d'); ?></div>
+            </td>
         <?php endforeach; ?>
-      <?php endfor; ?>
+        <?php endfor; ?>
 
-    </table>
-
-
+</table>
 
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
 </html>
