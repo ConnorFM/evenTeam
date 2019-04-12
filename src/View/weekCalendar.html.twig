@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    My Calendar
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+            <div>
+                <a href="/MonthCalendar/show" class="btn btn-primary">Month</a>
+                <a href="/WeekCalendar/show" class="btn btn-primary">Week</a>
+            </div>
+
+            <h1>{{ fullDate }}</h1>
+            <div>
+                <a href="/WeekCalendar/show/{{ previous }}" class="btn btn-primary">&lt;</a>
+                <a href="/WeekCalendar/show/{{ next }}" class="btn btn-primary">&gt;</a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">#</th>
+            {% for day in daysOfWeek %}
+                <th scope="col">{{ day }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for hour in 6..20 %}
+                <tr>
+                    <!-- A VOIR SI OFFSET 2 POSSIBLE SUR L'ITERATION-->
+                    <th scope="row">{{  hour ~ ":00" }}</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
