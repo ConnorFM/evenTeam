@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    My Calendar
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+            <div>
+                <a href="/MonthCalendar/show" class="btn btn-primary">Month</a>
+                <a href="/WeekCalendar/show" class="btn btn-primary">Week</a>
+            </div>
+
+            <h1>{{ fullDate }}</h1>
+            <div>
+                <a href="/MonthCalendar/show/{{ previous }}" class="btn btn-primary">&lt;</a>
+                <a href="/MonthCalendar/show/{{ next }}" class="btn btn-primary">&gt;</a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks">
+        <thead>
+        <tr class="text-center">
+            {% for day in days %}
+                <th scope="col">{{ day }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% set i = 0 %}
+            {% for i in i..nbWeeks %}
+                <tr>
+                    {% for day in days %}
+                        {% if firstMonthDayType == '1' %}
+                            {% set date = firstMonthDay | date_modify("+" ~ ((i * 7) + loop.index-1) ~ "days") | date ('Y-m-d') %}
+                        {% else %}
+                            {% set date = firstMonday | date_modify("+" ~ ((i * 7) + loop.index-1) ~ "days") | date ('Y-m-d') %}
+                        {% endif %}
+                        <td>
+                            <div class="text-center">
+                                {{ date | date('d') }}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
