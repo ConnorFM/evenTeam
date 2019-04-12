@@ -1,14 +1,18 @@
 		
 		<h1> Add a New Event</h1>
+    <p> ajouter les required</p>
+
+
 
       <form method="post">
         <div class="row">
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
             <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg">
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName">
               <label for="inputLGEx">Event Name</label>
             </div>
+            {{ errors.eventNameErr }}
           </div>
         </div>
 
@@ -16,9 +20,10 @@
           <div class="col-sm-8">
             <!-- Event Description-->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3"></textarea>
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription"></textarea>
               <label for="textarea-char-counter">Type your event description</label>
             </div>
+            {{ errors.eventDescriptionErr }}
           </div>
 
           <div class="col-sm-4">
@@ -43,10 +48,14 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">Begin date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019">
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03">
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23">
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 12:00">
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear">
+              {{ errors.eventBeginYearErr }}
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventBeginMonth">
+              {{ errors.eventBeginMonthErr }}
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventBeginDay">
+              {{ errors.eventBeginDayErr }}
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00" name="eventBeginHour">
+              {{ errors.eventBeginHourErr }}
             </div>
           </div>
         </div>
@@ -58,13 +67,17 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">End date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019">
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03">
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23">
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 12:00">
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear">
+              {{ errors.eventBeginYearErr }}
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventEndMonth">
+              {{ errors.eventBeginMonthErr }}
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventEndDay">
+              {{ errors.eventBeginDayErr }}
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 14:30" name="eventEndHour">
+              {{ errors.eventBeginHourErr }}
             </div>
           </div>
         </div>
         <!-- Add New Event button -->
-        <button type="submit" class="btn btn-deep-orange">Create New Event</button>
+        <button type="submit" class="btn btn-deep-orange">Create Event</button>
       </form>
