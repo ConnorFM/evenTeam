@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    My Weekly Calendar
+{% endblock %}
+
+{% block content %}
+    {% include '_modalEvent.html.twig' %}
+    {% include '_addEventButton.html.twig' %}
+    <div class="container">
+        <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+            <div>
+                <a href="/MonthCalendar/show" class="btn btn-warning">Month</a>
+                <a href="/WeekCalendar/show" class="btn btn-warning">Week</a>
+            </div>
+
+            <h2 class="week-title">{{ fullDate }}</h2>
+            <h2 class="week-title-mobile">{{ mobileDate }}</h2>
+            <div>
+                <a href="/WeekCalendar/show/{{ previous }}" class="btn btn-warning">&lt;</a>
+                <a href="/WeekCalendar/show/{{ next }}" class="btn btn-warning">&gt;</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+    <table class="table table-bordered">
+        <thead class="screenDesktop">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            {% for day in daysOfWeek %}
+                <th scope="col">{{ day }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <thead class="screenMobile">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            {% for daym in daysOfWeekMobile %}
+                <th scope="col">{{ daym }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for hour in range(0, 24, 2) %}
+                <tr>
+                    <th scope="row">{{  hour ~ ":00" }}</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
