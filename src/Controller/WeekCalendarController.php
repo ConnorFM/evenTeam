@@ -57,7 +57,7 @@ class WeekCalendarController extends AbstractController
     {
         $date = new DateTime();
         $date ->setISOdate($this->calendar->year, $this->calendar->week);
-        return $date ->format('d m') ." to " .$date->modify('+6 day')->format('d m y');
+        return $date ->format('d.m') ." to " .$date->modify('+6 day')->format('d.m.y');
     }
 
     /** créer un table comportant l'ensemble des jours
