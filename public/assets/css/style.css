@@ -1,0 +1,100 @@
+/* CALENDAR */
+
+.calendar__table{
+    width:100%;
+    height:calc(100vh - 200px);
+}
+
+.calendar__table td{
+    padding: 10px;
+    border: 1px solid #CCC;
+    vertical-align: top;
+    width: 14.20%;
+    height: 20%;
+}
+
+.calendar__table--6weeks td{
+    height: 16.66%;
+}
+
+.calendar__weekday{
+    font-weight: bold;
+    color: black;
+    font-size: 1.2em;
+}
+
+.calendar__day{
+    font-size: 1.3em;
+}
+
+.calendar__othermonth td{
+    opacity: 0.4;
+}
+
+/* ADD BUTTON */
+
+.addEventButt {
+    position: fixed;
+    /* Fixed/sticky position */
+    bottom: 50px;
+    /* Place the button at the bottom of the page */
+    right: 50px;
+    /* Place the button 30px from the right */
+    z-index: 99;
+    /* Make sure it does not overlap */
+    border: none;
+    /* Remove borders */
+    outline: none;
+    /* Remove outline */
+    cursor: pointer;
+    /* Add a mouse pointer on hover */
+    padding: 20px;
+    /* Some padding */
+    border-radius: 10px;
+    /* Rounded corners */
+}
+.addEventButt:hover {
+    background-color: #555;
+    /* Add a dark-grey background on hover */
+    transition-duration: 0.5s;
+}
+
+
+
+/* Change title considering screen size */
+
+@media screen and (max-width: 1200px){
+    .week-title{
+        display: none;
+    }
+}
+
+
+.week-title-mobile{
+    display: none;
+}
+
+@media screen and (min-width:768px) and (max-width: 1200px){
+    .week-title-mobile{
+        display: initial;
+        font-size: 2vw;
+    }
+}
+
+/* Change day names considering screen size */
+
+@media screen and (max-width: 991px) {
+    .screenDesktop{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 992px){
+    .screenMobile{
+        display: none;
+        font-size: 1em;
+    }
+}
+
+
