@@ -56,9 +56,9 @@ class WeekCalendarController extends AbstractController
     {
         $date = new DateTime();
         $date ->setISOdate($this->calendar->year, $this->calendar->week);
-        $days = [];
-        for ($i = 0; $i < 7; $i++) {
-            $days[] = $date->modify('+'.$i.' days')->format('l d F Y' );
+        $days = [$date->format('l d F Y')];
+        for ($i = 0; $i < 6; $i++) {
+            $days[] = $date->modify('+1 days')->format('l d F Y');
         }
         return $days;
     }

@@ -27,7 +27,7 @@
     font-size: 1.3em;
 }
 
-.calendar__othermonth .calendar__day{
+.calendar__othermonth td{
     opacity: 0.4;
 }
 
@@ -36,9 +36,9 @@
 .addEventButt {
     position: fixed;
     /* Fixed/sticky position */
-    bottom: 20px;
+    bottom: 50px;
     /* Place the button at the bottom of the page */
-    right: 30px;
+    right: 50px;
     /* Place the button 30px from the right */
     z-index: 99;
     /* Make sure it does not overlap */
@@ -48,7 +48,7 @@
     /* Remove outline */
     cursor: pointer;
     /* Add a mouse pointer on hover */
-    padding: 15px;
+    padding: 20px;
     /* Some padding */
     border-radius: 10px;
     /* Rounded corners */
