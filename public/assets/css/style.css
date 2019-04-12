@@ -58,3 +58,43 @@
     /* Add a dark-grey background on hover */
     transition-duration: 0.5s;
 }
+
+
+
+/* Change title considering screen size */
+
+@media screen and (max-width: 1200px){
+    .week-title{
+        display: none;
+    }
+}
+
+
+.week-title-mobile{
+    display: none;
+}
+
+@media screen and (min-width:768px) and (max-width: 1200px){
+    .week-title-mobile{
+        display: initial;
+        font-size: 2vw;
+    }
+}
+
+/* Change day names considering screen size */
+
+@media screen and (max-width: 991px) {
+    .screenDesktop{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 992px){
+    .screenMobile{
+        display: none;
+        font-size: 1em;
+    }
+}
+
+

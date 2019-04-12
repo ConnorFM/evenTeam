@@ -48,8 +48,20 @@ class WeekCalendarController extends AbstractController
         return $date ->format('d F Y') ." to " .$date->modify('+6 day')->format('d F Y');
     }
 
+    /**
+     * donne le titre principal de la page en concatenant le jour du début et de la fin de semaine
+     * @return string
+     * @throws Exception
+     */
+    public function getMobileTittle()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->calendar->year, $this->calendar->week);
+        return $date ->format('d m') ." to " .$date->modify('+6 day')->format('d m y');
+    }
+
     /** créer un table comportant l'ensemble des jours
-     * @return array de l'ensemblle des jour au format jour 00 mois 0000
+     * @return array de l'ensemble des jour au format jour 00 mois 0000
      * @throws Exception
      */
     public function daysOfWeek()
@@ -59,6 +71,21 @@ class WeekCalendarController extends AbstractController
         $days = [$date->format('l d F Y')];
         for ($i = 0; $i < 6; $i++) {
             $days[] = $date->modify('+1 days')->format('l d F Y');
+        }
+        return $days;
+    }
+
+    /** créer un table comportant l'ensemble des jours pour vue moins de 991px
+     * @return array de l'ensemble des jour au format jour 00 mois 0000
+     * @throws Exception
+     */
+    public function daysOfWeekMobile()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->calendar->year, $this->calendar->week);
+        $days = [$date->format('D d')];
+        for ($i = 0; $i < 6; $i++) {
+            $days[] = $date->modify('+1 days')->format('D d');
         }
         return $days;
     }
@@ -104,7 +131,9 @@ class WeekCalendarController extends AbstractController
         return $this->twig->render('weekCalendar.html.twig', [
                                                                     'fullDate' => $this->getTittle(),
                                                                     'daysOfWeek' => $this->daysOfWeek(),
+                                                                    'daysOfWeekMobile' => $this->daysOfWeekMobile(),
                                                                     'next' => $this->nextWeek(),
-                                                                    'previous' => $this->previousWeek()]);
+                                                                    'previous' => $this->previousWeek(),
+                                                                    'mobileDate' => $this->getMobileTittle()]);
     }
 }

@@ -14,16 +14,17 @@
                 <a href="/WeekCalendar/show" class="btn btn-warning">Week</a>
             </div>
 
-            <h1>{{ fullDate }}</h1>
+            <h2 class="week-title">{{ fullDate }}</h2>
+            <h2 class="week-title-mobile">{{ mobileDate }}</h2>
             <div>
                 <a href="/WeekCalendar/show/{{ previous }}" class="btn btn-warning">&lt;</a>
                 <a href="/WeekCalendar/show/{{ next }}" class="btn btn-warning">&gt;</a>
             </div>
         </div>
     </div>
-
+    <div class="container">
     <table class="table table-bordered">
-        <thead>
+        <thead class="screenDesktop">
         <tr class="text-center">
             <th scope="col">#</th>
             {% for day in daysOfWeek %}
@@ -31,10 +32,17 @@
             {% endfor %}
         </tr>
         </thead>
+        <thead class="screenMobile">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            {% for daym in daysOfWeekMobile %}
+                <th scope="col">{{ daym }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
         <tbody>
             {% for hour in range(0, 24, 2) %}
                 <tr>
-                    <!-- A VOIR SI OFFSET 2 POSSIBLE SUR L'ITERATION-->
                     <th scope="row">{{  hour ~ ":00" }}</th>
                     <td></td>
                     <td></td>
@@ -47,5 +55,6 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 
 {% endblock %}
