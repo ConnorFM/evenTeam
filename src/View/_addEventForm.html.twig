@@ -1,15 +1,15 @@
 		
 		<h1> Add a New Event</h1>
-    <p> ajouter les required</p>
+    {{ success }}
 
 
-
-      <form method="post">
+      <!-- Waiting for the good name of controller add the action="" of the method="post" -->
+      <form method="post" action="">
         <div class="row">
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
             <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName">
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" required>
               <label for="inputLGEx">Event Name</label>
             </div>
             {{ errors.eventNameErr }}
@@ -20,7 +20,7 @@
           <div class="col-sm-8">
             <!-- Event Description-->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription"></textarea>
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required></textarea>
               <label for="textarea-char-counter">Type your event description</label>
             </div>
             {{ errors.eventDescriptionErr }}
@@ -48,13 +48,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">Begin date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear">
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
               {{ errors.eventBeginYearErr }}
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventBeginMonth">
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventBeginMonth" required>
               {{ errors.eventBeginMonthErr }}
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventBeginDay">
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventBeginDay" required>
               {{ errors.eventBeginDayErr }}
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00" name="eventBeginHour">
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00" name="eventBeginHour" required>
               {{ errors.eventBeginHourErr }}
             </div>
           </div>
@@ -67,13 +67,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">End date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear">
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
               {{ errors.eventBeginYearErr }}
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventEndMonth">
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03" name="eventEndMonth" required>
               {{ errors.eventBeginMonthErr }}
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventEndDay">
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 23" name="eventEndDay" required>
               {{ errors.eventBeginDayErr }}
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 14:30" name="eventEndHour">
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 14:30" name="eventEndHour" required>
               {{ errors.eventBeginHourErr }}
             </div>
           </div>

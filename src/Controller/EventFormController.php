@@ -107,15 +107,14 @@ class EventFormController extends AbstractController
 
             // When evey inputs are correct, click on submit button redirect to calendar.html.twig
             if (empty($error)) {
-                // appel à la requête préparée "public function insert(array $item): int" de ItemManager.php
-            
+                // appel à la requête préparée "public function insert(array $item): int" de EventManager.php
+                $messages = "Well done";
 
                 // Redirection to calendar.html.twig
-                header("location: /calendar.html.twig");
-                exit;
+                return $this->twig->render('calendar.html.twig', ['success' => $messages]);
             } else {
                 // Return view of the Form with error messages
-                return $this->twig->render('_addEventForm.html.twig', ['errors' => $error]);
+                return $this->twig->render('calendar.html.twig', ['errors' => $error]);
             }
         }
     }
