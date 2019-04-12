@@ -102,3 +102,16 @@
     width: 125px;
 }
 
+@media screen and (max-width: 440px){
+    table th.firstCol{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .calMobile{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
+
