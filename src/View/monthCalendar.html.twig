@@ -8,23 +8,25 @@
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
     <div class="container">
+        <div class="row"><h2 class="month-title-mobile">{{ fullDate }}</h2></div>
+
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
-            <div>
-                <a href="/MonthCalendar/show" class="btn btn-warning">Month</a>
-                <a href="/WeekCalendar/show" class="btn btn-warning">Week</a>
+            <div class="row no-gutters">
+                <a href="/MonthCalendar/show" class="btn btn-warning weekToMonth">Month</a>
+                <a href="/WeekCalendar/show" class="btn btn-warning weekToMonth">Week</a>
             </div>
 
-            <h1>{{ fullDate }}</h1>
+            <h2 class="month-title">{{ fullDate }}</h2>
             <div>
                 <a href="/MonthCalendar/show/{{ previous }}" class="btn btn-warning"><i class="fas fa-chevron-left"></i></a>
                 <a href="/MonthCalendar/show/{{ next }}" class="btn btn-warning"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
     </div>
-
-    <div class="table-responsive">
-        <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks">
-            <thead>
+    <div class="container calMobile2">
+    <div class="table-striped table-responsive-xl">
+        <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
+            <thead class="screenDesktopMonth">
             <tr class="text-center">
                 {% for day in days %}
                     <th scope="col">{{ day }}</th>
@@ -52,5 +54,6 @@
             </tbody>
         </table>
     </div>
+</div>
 
 {% endblock %}

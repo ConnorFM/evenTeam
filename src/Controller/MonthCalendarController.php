@@ -39,7 +39,6 @@ class MonthCalendarController extends AbstractController
 
 
 
-
     public function show($month = null, $year = null, $week = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
