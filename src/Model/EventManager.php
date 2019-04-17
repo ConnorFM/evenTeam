@@ -1,11 +1,14 @@
 <?php
-
-
 namespace App\Model;
 
+/**
+* Manage interaction with user table in the database
+*/
 class EventManager extends AbstractManager
 {
-
+    /**
+     *  Initializes this constant.
+     */
     const TABLE = 'events';
 
     /**
@@ -17,22 +20,19 @@ class EventManager extends AbstractManager
     }
 
     /**
-     * @param array $event from the create event form
-     * @return int
+     * Insert into the 'event' Table all the input values.
+     *
+     * This method will execute the SQL request which will insert inputs into database via PDO.
+     *
+     * @param array $event Representation of the Object 'event' as an array can be manipulated.
      */
-    public function insert(array $event): int
+    public function insert(array $event)
     {
-
-        /* A IMPLEMENTER DANS LE CONTROLLER DU ADD FORM ET ADAPTER DANS CE MANAGER
-         $date = DateTime::createFromFormat('d/m/Y', $_POST['date']);
-         $query = $db->prepare('INSERT INTO table(date) VALUES(:date)'); // $db étant une instance de PDO
-         $query->bindValue(':date', $date->format('Y-m-d'), PDO::PARAM_STR);
-         $query->execute();
-        */
-
         // prepared request
-        $statement = $this->pdo->prepare("INSERT INTO $this->table (name, date_start, date_end, room_id, description ) 
-                                                    VALUES (:title, :date_start, :date_end, :room_id, :description)");
+        $statement = $this->pdo->prepare("
+            INSERT INTO $this->table (name, date_start, date_end, room_id, description) 
+            VALUES (:name, :date_start, :date_end, :room_id, :description)
+            ");
         $statement->bindValue('name', $event['name'], \PDO::PARAM_STR);
         $statement->bindValue('date_start', $event['date_start'], \PDO::PARAM_STR);
         $statement->bindValue('date_end', $event['date_end'], \PDO::PARAM_STR);
@@ -42,8 +42,11 @@ class EventManager extends AbstractManager
         $statement->execute();
     }
 
-
     /**
+     * Delete an 'event' object from the 'event' Table by his id.
+     *
+     * This method will execute the SQL request which will delete an 'event' object from database via PDO.
+     *
      * @param int $id
      */
     public function delete(int $id): void
@@ -51,21 +54,23 @@ class EventManager extends AbstractManager
         // prepared request
         $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
+        
         $statement->execute();
     }
 
-
     /**
-     * @param array $item
-     * @return bool
+     * Delete an 'event' object from the 'event' Table by his id.
+     *
+     * This method will execute the SQL request which will delete an 'event' object from database via PDO.
+     *
+     * @param array $event Representation of the Object 'event' as an array can be manipulated.
      */
-    public function update(array $item):bool
+    public function update(array $event):bool
     {
-
         // prepared request
         $statement = $this->pdo->prepare("UPDATE $this->table SET `title` = :title WHERE id=:id");
-        $statement->bindValue('id', $item['id'], \PDO::PARAM_INT);
-        $statement->bindValue('title', $item['title'], \PDO::PARAM_STR);
+        $statement->bindValue('id', $event['id'], \PDO::PARAM_INT);
+        $statement->bindValue('title', $event['title'], \PDO::PARAM_STR);
 
         return $statement->execute();
     }

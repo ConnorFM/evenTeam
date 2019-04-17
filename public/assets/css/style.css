@@ -27,7 +27,7 @@
     font-size: 1.3em;
 }
 
-.calendar__othermonth .calendar__day{
+.calendar__othermonth td{
     opacity: 0.4;
 }
 
@@ -36,9 +36,9 @@
 .addEventButt {
     position: fixed;
     /* Fixed/sticky position */
-    bottom: 20px;
+    bottom: 50px;
     /* Place the button at the bottom of the page */
-    right: 30px;
+    right: 50px;
     /* Place the button 30px from the right */
     z-index: 99;
     /* Make sure it does not overlap */
@@ -48,7 +48,7 @@
     /* Remove outline */
     cursor: pointer;
     /* Add a mouse pointer on hover */
-    padding: 15px;
+    padding: 20px;
     /* Some padding */
     border-radius: 10px;
     /* Rounded corners */
@@ -58,3 +58,47 @@
     /* Add a dark-grey background on hover */
     transition-duration: 0.5s;
 }
+
+
+
+/* Change title considering screen size */
+
+@media screen and (max-width: 1200px){
+    .week-title{
+        display: none;
+    }
+}
+
+
+.week-title-mobile{
+    display: none;
+}
+
+@media screen and (min-width:768px) and (max-width: 1200px){
+    .week-title-mobile{
+        display: initial;
+        font-size: 2vw;
+    }
+}
+
+/* Change day names considering screen size */
+
+@media screen and (max-width: 991px) {
+    .screenDesktop{
+        display: none;
+    }
+}
+
+
+@media screen and (min-width: 992px){
+    .screenMobile{
+        display: none;
+        font-size: 1em;
+    }
+}
+
+
+.weekToMonth{
+    width: 125px;
+}
+
