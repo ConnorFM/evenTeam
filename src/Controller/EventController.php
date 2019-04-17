@@ -17,7 +17,7 @@ use App\Model\EventManager;
 class EventController extends AbstractController
 {
     /**
-     * Display the created event on the 'weekCalendar.html.twig' page with a success message.
+     * Display the created event on the 'weekCalendar.html.twig' page with a success message, or display the same form with errors messages.
      *
      * This method will insert into 'events' table the form inputs from '_addEventForm.html.twig'.
      *
@@ -40,11 +40,9 @@ class EventController extends AbstractController
                 'eventEndHour'      => $_POST['eventEndHour'],
                 'eventRoom'         => $_POST['eventRoom']
             ];
-
-            // Errors array initialized at empty
+            // take this $errors and test him in 'verifEvent' method
             $errors = $this->verifEvent($event);
-
-            // Condition which verify the errors array as empty
+            // Condition verify the errors array is empty
             if (empty($errors)) {
                 $validEvent = [
                     "name"          => $event['eventName'],
@@ -55,20 +53,20 @@ class EventController extends AbstractController
                 ];
 
                 $eventManager = new EventManager();
-                $eventManager -> insert($validEvent);
+                $eventManager->insert($validEvent);
                 $messages = "Well done";
 
-                // Display the 'weekCalendar.html.twig' page with a success message
-                return $this->twig->render('weekCalendar.html.twig', ['success' => $messages]);
+                // Display the 'monthCalendar.html.twig' page with a success message
+                return $this->twig->render('monthCalendar.html.twig', ['success' => $messages]);
             } else {
-                // Display the 'weekCalendar.html.twig' page with errors messages on each mistake
-                return $this->twig->render('weekCalendar.html.twig', ['errors' => $errors]);
+                // Display the 'monthCalendar.html.twig' page with errors messages on each mistake
+                return $this->twig->render('monthCalendar.html.twig', ['errors' => $errors]);
             }
         }
     }
 
     /**
-     * Display the 'weekCalendar.html.twig' page with errors messages.
+     * Stock the errors array in memory.
      *
      * This method will verify if the inputs from '_addEventForm.html.twig' match with the conditions.
      *
@@ -77,6 +75,7 @@ class EventController extends AbstractController
      */
     private function verifEvent(array $event)
     {
+        // Empty errors array initialization
         $errors = [];
 
         // Testing EVENT NAME input
@@ -112,7 +111,7 @@ class EventController extends AbstractController
         if (empty($event['eventBeginHour'])) {
             $errors['eventBeginHour'] = "An hour is required";
         } elseif (filter_var($event['eventBeginHour'], FILTER_VALIDATE_INT) == false &&
-                  preg_match("#[0-9]{2}#", $event['eventBeginHour'])) {
+                  preg_match("#[0-9]{2}+0-9]{2}:#", $event['eventBeginHour'])) {
             $errors['eventBeginHour'] = "Enter a valid hour please ex: 05:30 or 16:45";
         }
         // Testing EVENT END YEAR input
@@ -140,7 +139,7 @@ class EventController extends AbstractController
         if (empty($event['eventEndHour'])) {
             $errors['eventEndHour'] = "An hour is required";
         } elseif (filter_var($event['eventEndHour'], FILTER_VALIDATE_INT) == false &&
-                  preg_match("#[0-9]{2}#", $event['eventEndHour'])) {
+                  preg_match("#[0-9]{2}+[0-9]{2}#", $event['eventEndHour'])) {
             $errors['eventEndHour'] = "Enter a valid hour please ex: 05:30 or 16:45";
         }
 
