@@ -42,7 +42,7 @@ class EventController extends AbstractController
             ];
             // take this $errors and test him in 'verifEvent' method
             $errors = $this->verifEvent($event);
-            print_r($errors);
+            
             // Condition verify the errors array is empty
             if (empty($errors)) {
                 $validEvent = [
