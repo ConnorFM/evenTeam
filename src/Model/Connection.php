@@ -8,7 +8,6 @@
  *
  * @link   http://fr3.php.net/manual/fr/book.pdo.php classe PDO
  */
-
 namespace App\Model;
 
 use \PDO;
@@ -30,7 +29,6 @@ class Connection
      * @access private
      */
     private $pdoConnection;
-
     /**
      * Initialize connection
      *
@@ -44,9 +42,7 @@ class Connection
                 APP_DB_USER,
                 APP_DB_PWD
             );
-
             $this->pdoConnection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
             // show errors in DEV environment
             if (APP_DEV) {
                 $this->pdoConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -55,8 +51,6 @@ class Connection
             die('<div class="error">Error !: ' . $e->getMessage() . '</div>');
         }
     }
-
-
     /**
      * @return PDO $pdo
      */
