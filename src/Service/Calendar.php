@@ -22,14 +22,14 @@ class Calendar
         'Febuary',
         'Mars',
         'April',
-        'Mai',
+        'May',
         'June',
-        'Juillet',
-        'Août',
-        'Septembre',
-        'Octobre',
-        'Novembre',
-        'Décembre'
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
     ];
     public $weeks = [0,1,2,3,4,5,6];
     public $month;

@@ -81,6 +81,29 @@
     }
 }
 
+
+/* Change title considering screen size */
+
+@media screen and (max-width: 768px){
+    .month-title{
+        display: none;
+    }
+}
+
+
+.month-title-mobile{
+    display: none;
+}
+
+@media screen and (max-width: 768px){
+    .month-title-mobile{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+}
+
 /* Change day names considering screen size */
 
 @media screen and (max-width: 991px) {
@@ -102,3 +125,28 @@
     width: 125px;
 }
 
+@media screen and (max-width: 440px){
+    table th.firstCol{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .calMobile{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
+
+@media screen and (max-width: 514px) {
+    .screenDesktopMonth{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .calMobile2{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
