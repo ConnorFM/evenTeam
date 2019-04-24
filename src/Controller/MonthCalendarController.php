@@ -14,16 +14,16 @@ class MonthCalendarController extends AbstractController
     private $calendar;
 
 
-    public function __construct($month = null, $year = null)
+    public function __construct($month = null, $year = null, $week = null)
     {
         parent::__construct();
-        $this->setCalendar(new Calendar($month, $year));
+        $this->setCalendar(new Calendar($month = null, $year, $week));
     }
 
     /**
      * @return mixed
      */
-    private function getCalendar()
+    public function getCalendar()
     {
         return $this->calendar;
     }
@@ -31,7 +31,7 @@ class MonthCalendarController extends AbstractController
     /**
      * @param mixed $calendar
      */
-    private function setCalendar($calendar): void
+    public function setCalendar($calendar): void
     {
         $this->calendar = $calendar;
     }

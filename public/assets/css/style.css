@@ -24,11 +24,11 @@
 }
 
 .calendar__day{
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
-.calendar__othermonth td{
-    opacity: 0.4;
+.calendar__othermonth{
+    opacity: 0.3;
 }
 
 /* ADD BUTTON */

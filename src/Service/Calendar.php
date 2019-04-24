@@ -5,17 +5,20 @@ namespace App\Service;
 
 use DateTime;
 use Exception;
+use Symfony\Component\DependencyInjection\Tests\Compiler\D;
+use Twig\Environment;
+
 
 class Calendar
 {
     public $days = [
-        0 => 'Lundi',
-        1 => 'Mardi',
-        2 => 'Mercredi',
-        3 => 'Jeudi',
-        4 => 'Vendredi',
-        5 => 'Samedi',
-        6 => 'Dimanche'
+        0 => 'Monday',
+        1 => 'Tuesday',
+        2 => 'Wednesday',
+        3 => 'Thursday',
+        4 => 'Friday',
+        5 => 'Saturday',
+        6 => 'Sunday'
     ];
     public $months = [
         'January',
@@ -57,7 +60,7 @@ class Calendar
 
 
     /**
-     * définit par quel jour commence le mois
+     * Définit par quel jour commence le mois.
      * @return DateTime
      * @throws Exception
      */
@@ -67,7 +70,7 @@ class Calendar
     }
 
     /**
-     * Donne le nombre de semaine a afficher
+     * Donne le nombre de semaine a afficher.
      * @return int nombre semaines dans le mois mois
      * @throws Exception
      */
@@ -83,7 +86,7 @@ class Calendar
     }
 
     /**
-     * retourne mois a afficher en toutes lettres
+     * Retourne mois a afficher en toutes lettres
      * @return string
      */
     public function fullDate(): string
@@ -91,25 +94,28 @@ class Calendar
         return $this->months[$this->month -1] . ' ' . $this->year;
     }
 
+    /**
+     * Retourne le jour de la semaine de début de mois
+     * @return [type] [description]
+     */
     public function getStartingDayType()
     {
         return $this->getStartingDay()->format('N');
     }
 
     /**
-     * donne le numéro de jour du dernier lundi du mois précédent
+     * Donne le numéro de jour du dernier lundi du mois précédent
      * @return string
      * @throws Exception
      */
-
     public function getFirstMonday()
     {
-        return $this->getStartingDay()->modify('last monday')->format('Y-m-d');
+        return $this->getStartingDay()->modify('last monday');
     }
 
 
     /**
-     * renvoie au mois suivant
+     * Renvoie au mois suivant
      * @return string next month well formated
      * @throws Exception
      */
@@ -121,7 +127,7 @@ class Calendar
     }
 
     /**
-     * renvoie au mois précédent
+     * Renvoie au mois précédent
      * @return string previous mounth well formated
      * @throws Exception
      */
@@ -131,4 +137,149 @@ class Calendar
         $date ->setISOdate($this->year, $this->week);
         return $date->modify('-1 month')->format('m/Y/W');
     }
+
+
+    /**
+     * Permet d'acceder a la semaine suivante
+     * @return string
+     * @throws Exception
+     */
+    public function nextWeek()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week);
+        return $date->modify('+1 week')->format('m/Y/W');
+    }
+
+    /**
+     * Permet d'acceder à la semaine précédente
+     * @return string
+     * @throws Exception
+     */
+    public function previousWeek()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week);
+        return $date->modify('-1 week')->format('m/Y/W');
+    }
+
+
+    /**
+     * Donne le titre principal de la page en concatenant le jour du début et de la fin de semaine
+     * @return string
+     * @throws Exception
+     */
+    public function getTitle()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week);
+        return $date ->format('d F Y') ." to " .$date->modify('+6 day')->format('d F Y');
+    }
+
+    /**
+     * Donne le titre principal de la page en concatenant le jour du début et de la fin de semaine
+     * @return string
+     * @throws Exception
+     */
+    public function getMobileTitle()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week);
+        return $date ->format('d.m') ." to " .$date->modify('+6 day')->format('d.m.y');
+    }
+
+    /** Créer un table comportant l'ensemble des jours
+     * @return array de l'ensemble des jour au format jour 00 mois 0000
+     * @throws Exception
+     */
+    public function daysOfWeek()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week);
+        //$days = [$date];
+        for ($i = 0; $i <= 6; $i++) {
+            $days[] = (clone $date)->modify('+' . $i .' days')->format('l d F Y H:i');
+        }
+        return $days;
+    }
+
+    /** Créer un table comportant l'ensemble des jours pour vue moins de 991px
+     * @return array de l'ensemble des jour au format jour 00 mois 0000
+     * @throws Exception
+     */
+    public function daysOfWeekMobile()
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week)->setTime(00,00);
+        $days = [$date->format('D d')];
+        for ($i = 0; $i < 6; $i++) {
+            $days[] = $date->modify('+1 days')->format('D d');
+        }
+        return $days;
+    }
+
+
+    /**
+   * Jour dans le mois en cours?
+   * @param  \DateTime $date [description]
+   * @return [type]          [description]
+   */
+    public function withinMonth (\DateTime $date): bool{
+        return $this->getStartingDay()->format('Y-m') === $date->format('Y-m');
+    }
+
+    /**
+     * Crée un tableau associatif par mois qui définit le nombre de jours à afficher et les affiche
+     * [generateMonth description]
+     * @return [type] [description]
+     */
+    public function generateMonth()
+    {
+        $firstDay = '';
+        $nbDays = ($this->getWeeks()+1) * 7;
+        $monthArray=[];
+        $firstDayType = $this->getStartingDayType();
+        if ($firstDayType == 1){
+            $firstDay = $this->getStartingDay();
+        }
+        else{
+            $firstDay = $this->getFirstMonday();
+        }
+
+        for($i = 0; $i < $nbDays; $i++){
+            $monthArray[] = [(clone $firstDay)->modify('+' . $i . 'day'), $this->withinMonth((clone $firstDay)->modify('+' . $i . 'day'))];
+
+        }
+
+        return $monthArray;
+    }
+
+
+
+    public function generateDay($j)
+    {
+        $date = new DateTime();
+        $date ->setISOdate($this->year, $this->week)->setTime($j,00);
+        $hours = [];
+        for ($i = 0; $i <7; $i++){
+            $hours[] = (clone $date)->modify('+' . $i .'day');
+        }
+        return $hours;
+
+    }
+
+    public function generateWeek()
+    {
+        $array=[];
+        for ($i=0; $i<24; $i+=2) {
+            array_push($array, $this->generateDay($i));
+        }
+        return $array;
+    }
+
 }
+
+
+            //$hours[] = (clone $date)->modify('+' . $i .'day');
+
+
