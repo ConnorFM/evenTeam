@@ -72,6 +72,7 @@ class UserController extends AbstractController
         return $this->twig->render('Users/add_user.html.twig');
     }
 
+
     // Connect the user if the password and the email is ok
     public function connection()
     {
@@ -92,6 +93,7 @@ class UserController extends AbstractController
             }
         }
     }
+
     // Disconnect the user and redirect to login page
     public function logOut()
     {
@@ -102,7 +104,10 @@ class UserController extends AbstractController
     // Display the login page
     public function logIn()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!empty($_SESSION)) {
+            header('Location: /calendar/month');
+        }
+        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
@@ -114,7 +119,7 @@ class UserController extends AbstractController
                     $userBdd['lastname'],
                     $userBdd['firstname']
                 );
-                header('Location: /calendar/month');
+                header('Location: /calendar/week');
                 exit();
             } else {
                 $this->twig->addGlobal("errorConnection", true);
