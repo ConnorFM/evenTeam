@@ -82,15 +82,14 @@ class UserController extends AbstractController
                 $session = new Session;
                 $session->createSession($userBdd['ID'], $userBdd['status_ID']);
                 header('Location:/user/index');
-            }
-            else {
+            } else {
                 echo "Mot de passe incorect ou email inexistant";
             }
         }
     }
     // Disconnect the user and redirect to login page
     public function logOut()
-    {   
+    {
         session_destroy();
         header('Location:/user/login');
     }
@@ -100,13 +99,13 @@ class UserController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
-            if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email']) && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
+            if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
+                && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
                 $session->createSession($userBdd['ID'], $userBdd['status_ID']);
-                header('Location:/user/index');
+                header('Location: /calendar/month');
                 exit();
-            }
-            else {
+            } else {
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
