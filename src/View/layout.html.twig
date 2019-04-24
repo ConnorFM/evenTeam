@@ -19,7 +19,9 @@
     </head>
 
     <body>
-
+        {% if connected == true %}
+            <button onclick="window.location.href='logout';" class="btn btn-info btn-block">Log out</button>
+        {% endif %}
         {% block content %}{% endblock %}
 
         <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>

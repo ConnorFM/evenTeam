@@ -39,5 +39,8 @@ abstract class AbstractController
             ]
         );
         $this->twig->addExtension(new DebugExtension());
+        if (!empty($_SESSION)) {
+            $this->twig->addGlobal("connected", true);
+        }
     }
 }

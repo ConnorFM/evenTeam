@@ -1,5 +1,8 @@
-{% for user in users %}
-	<a href="/user/show/{{ user.ID }}">{{ user.ID }}</a> {{ user.firstname }} ton email: {{ user.email }} <br/>
-{% endfor %}
-<a href="/user/add"=>Ajouter</a>
+{% extends 'layout.html.twig' %}
+{% block content %}
+	{% for user in users %}
+		<a href="/user/show/{{ user.ID }}">{{ user.ID }}</a> {{ user.firstname }} ton email: {{ user.email }} <br/>
+	{% endfor %}
+	<a href="/user/add"=>Ajouter</a>
+{% endblock %}
 
