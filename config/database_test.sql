@@ -1,13 +1,13 @@
-DROP DATABASE eventeam
+DROP DATABASE eventeam;
 
 CREATE DATABASE eventeam;
-use eventeam
+use eventeam;
 
 CREATE TABLE room (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(50),
 capacity INT NOT NULL,
-description TEXT NOT NULL
+description TEXT NOT NULL,
 image TEXT NULL
 );
 
@@ -45,12 +45,12 @@ FOREIGN KEY (event_id) REFERENCES events(id)
 );
 
 INSERT INTO room (name, capacity, description, image) VALUES
-("Salle Réunion 1er Etage", 35, "Salle de réunion du premier étage a droite en sortant de l'ascenseur" "http://tinyurl.com/y5p7yjox"),
+("Salle Réunion 1er Etage", 35, "Salle de réunion du premier étage a droite en sortant de l'ascenseur", "http://tinyurl.com/y5p7yjox"),
 ("Salle de Réception RDC", 300, "Salle de Réception pour les cocktail ou les evenement important de l'entreprise", "http://tinyurl.com/y5p7yjox"),
 ("Amphithéatre", 120, "Salle située au dernier étage", "http://tinyurl.com/y5p7yjox"),
-("Salle de Réunion 2ème étage", 25, "Salle de réunion du premier étage a droite en sortant de l'ascenseur", "http://tinyurl.com/y5p7yjox"),
+("Salle de Réunion 2ème étage", 25, "Salle de réunion du premier étage a droite en sortant de l'ascenseur", "http://tinyurl.com/y5p7yjox");
 
-INSERT INTO status (name) VALUES 
+INSERT INTO status (name) VALUES
 ('admin'), ('user');
 
 INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUES
@@ -58,7 +58,7 @@ INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUE
 ("Noel", "AN", "noel@an.fr", 1, "http://tinyurl.com/yxq8jnen", "noelAN"),
 ("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "http://tinyurl.com/yxq8jnen", "foucauldGAUDIN"),
 ("Catherine", "VINCENT", "catherine@vincent.fr", 1, "http://tinyurl.com/yxq8jnen", "catherineVINCENT"),
-("userFirstName", "userName", "user@user.fr", 2, "http://tinyurl.com/yxq8jnen", userUSER),
+("userFirstName", "userName", "user@user.fr", 2, "http://tinyurl.com/yxq8jnen", "userUSER");
 
 INSERT INTO events (name, date_start, date_end, room_id, description) VALUES
 ("réunion d'équipe", "2018-04-20 14:00:00", "2018-04-20 16:00:00", 1, "c'est une description"),
