@@ -262,7 +262,14 @@ class Calendar
         }
         return $array;
     }
+
+    // Display a user fullname
+    public function showFullName()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getFullName($id);
+    }
+
 }
 
 
-            //$hours[] = (clone $date)->modify('+' . $i .'day');

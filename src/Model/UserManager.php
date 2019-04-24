@@ -10,7 +10,7 @@ class UserManager extends AbstractManager
     {
         parent::__construct(self::TABLE);
     }
-    
+
     // Create a user in the Database
     public function insert($user)
     {
@@ -53,7 +53,7 @@ class UserManager extends AbstractManager
     public function getLog($email)
     {
         // prepared request
-        $statement = $this->pdo->prepare("SELECT ID, email, password, status_ID FROM $this->table WHERE email=:email");
+        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
         $statement->execute();
 
@@ -63,7 +63,7 @@ class UserManager extends AbstractManager
     // Return status and ID of the user
     public function getSession($email)
     {
-        $statement = $this->pdo->prepare("SELECT ID, status_ID FROM $this->table WHERE email=:email");
+        $statement = $this->pdo->prepare("SELECT ID, status_ID, lastname FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
         $statement->execute();
 
@@ -74,6 +74,16 @@ class UserManager extends AbstractManager
     public function getEmail($email)
     {
         $statement = $this->pdo->prepare("SELECT email FROM $this->table WHERE email=:email");
+        $statement->bindvalue('email', $email, \PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetch(); //array
+    }
+
+    // Return the user Name
+    public function getFullName($email)
+    {
+        $statement = $this->pdo->prepare("SELECT concat('firstname', ' ', 'lastname') as fullname FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
         $statement->execute();
 

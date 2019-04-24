@@ -70,4 +70,6 @@ class CalendarController extends AbstractController
                                                                     'calendar' => $this->getCalendar()->generateWeek()
                                                                     ]);
     }
+
+
 }

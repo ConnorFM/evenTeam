@@ -80,7 +80,7 @@ class UserController extends AbstractController
             $userBdd = $userManager->getLog($_POST['email']);
             if (($userBdd['email'] == $_POST['email']) && ($userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
-                $session->createSession($userBdd['ID'], $userBdd['status_ID']);
+                $session->createSession($userBdd['ID'], $userBdd['status_ID'], $userBdd['lastname']);
                 header('Location:/user/index');
             } else {
                 echo "Mot de passe incorect ou email inexistant";
@@ -93,6 +93,7 @@ class UserController extends AbstractController
         session_destroy();
         header('Location:/user/login');
     }
+
     // Display the login page
     public function logIn()
     {
@@ -102,7 +103,7 @@ class UserController extends AbstractController
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
                 && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
-                $session->createSession($userBdd['ID'], $userBdd['status_ID']);
+                $session->createSession($userBdd['ID'], $userBdd['status_ID'], $userBdd['lastname'], $userBdd['firstname']);
                 header('Location: /calendar/month');
                 exit();
             } else {
@@ -111,4 +112,8 @@ class UserController extends AbstractController
         }
         return $this->twig->render('Users/login.html.twig');
     }
+
+
+
+
 }
