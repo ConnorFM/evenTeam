@@ -33,6 +33,12 @@
             {% endfor %}
         </tr>
         </thead>
+        <thead class="screenMobile">
+        <tr class="text-center">
+            {% for day in daysOfWeek %}
+                <th scope="col">{{ day | date('D d') }}</th>
+            {% endfor %}
+        </tr>
 
         <tbody>
         {% for hours in calendar %}

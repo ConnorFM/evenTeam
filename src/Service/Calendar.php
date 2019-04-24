@@ -8,7 +8,6 @@ use Exception;
 use Symfony\Component\DependencyInjection\Tests\Compiler\D;
 use Twig\Environment;
 
-
 class Calendar
 {
     public $days = [
@@ -96,7 +95,7 @@ class Calendar
 
     /**
      * Retourne le jour de la semaine de début de mois
-     * @return [type] [description]
+     * @return string
      */
     public function getStartingDayType()
     {
@@ -105,7 +104,7 @@ class Calendar
 
     /**
      * Donne le numéro de jour du dernier lundi du mois précédent
-     * @return string
+     * @return DateTime
      * @throws Exception
      */
     public function getFirstMonday()
@@ -196,42 +195,30 @@ class Calendar
     {
         $date = new DateTime();
         $date ->setISOdate($this->year, $this->week);
-        //$days = [$date];
+        $days = [];
         for ($i = 0; $i <= 6; $i++) {
             $days[] = (clone $date)->modify('+' . $i .' days')->format('l d F Y H:i');
         }
         return $days;
     }
 
-    /** Créer un table comportant l'ensemble des jours pour vue moins de 991px
-     * @return array de l'ensemble des jour au format jour 00 mois 0000
-     * @throws Exception
-     */
-    public function daysOfWeekMobile()
-    {
-        $date = new DateTime();
-        $date ->setISOdate($this->year, $this->week)->setTime(00,00);
-        $days = [$date->format('D d')];
-        for ($i = 0; $i < 6; $i++) {
-            $days[] = $date->modify('+1 days')->format('D d');
-        }
-        return $days;
-    }
+
 
 
     /**
    * Jour dans le mois en cours?
    * @param  \DateTime $date [description]
-   * @return [type]          [description]
+   * @return bool
    */
-    public function withinMonth (\DateTime $date): bool{
+    public function withinMonth(\DateTime $date): bool
+    {
         return $this->getStartingDay()->format('Y-m') === $date->format('Y-m');
     }
 
     /**
      * Crée un tableau associatif par mois qui définit le nombre de jours à afficher et les affiche
      * [generateMonth description]
-     * @return [type] [description]
+     * @return array
      */
     public function generateMonth()
     {
@@ -239,16 +226,16 @@ class Calendar
         $nbDays = ($this->getWeeks()+1) * 7;
         $monthArray=[];
         $firstDayType = $this->getStartingDayType();
-        if ($firstDayType == 1){
+        if ($firstDayType == 1) {
             $firstDay = $this->getStartingDay();
-        }
-        else{
+        } else {
             $firstDay = $this->getFirstMonday();
         }
 
-        for($i = 0; $i < $nbDays; $i++){
-            $monthArray[] = [(clone $firstDay)->modify('+' . $i . 'day'), $this->withinMonth((clone $firstDay)->modify('+' . $i . 'day'))];
-
+        for ($i = 0; $i < $nbDays; $i++) {
+            $monthArray[] = [
+                (clone $firstDay)->modify('+' . $i . 'day'),
+                $this->withinMonth((clone $firstDay)->modify('+' . $i . 'day'))];
         }
 
         return $monthArray;
@@ -259,13 +246,12 @@ class Calendar
     public function generateDay($j)
     {
         $date = new DateTime();
-        $date ->setISOdate($this->year, $this->week)->setTime($j,00);
+        $date ->setISOdate($this->year, $this->week)->setTime($j, 00);
         $hours = [];
-        for ($i = 0; $i <7; $i++){
+        for ($i = 0; $i <7; $i++) {
             $hours[] = (clone $date)->modify('+' . $i .'day');
         }
         return $hours;
-
     }
 
     public function generateWeek()
@@ -276,10 +262,7 @@ class Calendar
         }
         return $array;
     }
-
 }
 
 
             //$hours[] = (clone $date)->modify('+' . $i .'day');
-
-
