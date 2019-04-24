@@ -51,21 +51,23 @@ class CalendarController extends AbstractController
         $this->calendar = $calendar;
     }
 
+    public function events($mode, $id)
+    {
+        if (isset($mode)) {
+            if ($mode === 'room') {
+                return $this->eventManager->getRoomsEvents($id);
+            } elseif ($mode === 'user') {
+                return $this->eventManager->getUserEvents($id);
+            }
+        } else {
+            return $this->eventManager->getUserEvents($_SESSION['user_id']);
+        }
+    }
+
 
     public function month($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
-
-        $events = [];
-        if (isset($mode)) {
-            if ($mode === 'room') {
-                $events = $this->eventManager->getRoomsEvents($id);
-            } elseif ($mode === 'user') {
-                $events = $this->eventManager->getUserEvents($id);
-            }
-        } else {
-            $events = $this->eventManager->getUserEvents($_SESSION['user_id']);
-        }
 
 
         return $this->twig->render('monthCalendar.html.twig', [
@@ -76,7 +78,7 @@ class CalendarController extends AbstractController
                                                                 'days' => $this->getCalendar()->days,
                                                                 'rooms' => $this->roomManager->selectAll(),
                                                                 'users' => $this->userManager->selectAll(),
-                                                                'events' => $events
+                                                                'events' => $this->events($mode, $id)
                                                                 ]);
     }
 
@@ -84,18 +86,6 @@ class CalendarController extends AbstractController
     public function week($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
-
-        $events = [];
-
-        if (isset($mode)) {
-            if ($mode === 'room') {
-                $events = $this->eventManager->getRoomsEvents($id);
-            } elseif ($mode === 'user') {
-                $events = $this->eventManager->getUserEvents($id);
-            }
-        } else {
-            $events = $this->eventManager->getUserEvents((int)$_SESSION['id']);
-        }
 
         return $this->twig->render('weekCalendar.html.twig', [
                                                                     'fullDate' => $this->getCalendar()->getTitle(),
@@ -105,7 +95,7 @@ class CalendarController extends AbstractController
                                                                     'calendar' => $this->getCalendar()->generateWeek(),
                                                                     'rooms' => $this->roomManager->selectAll(),
                                                                     'users' => $this->userManager->selectAll(),
-                                                                    'events' => $events
+                                                                    'events' => $this->events($mode, $id)
                                                                     ]);
     }
 }
