@@ -8,15 +8,15 @@
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
     <div class="container">
-        <label for="room">Select a Room   </label>
-            <select class="mdb-select md-form colorful-select down-warning">
-                <option value="">Please choose a room</option>
-    {% for room in rooms %}
-                <option data-img-src="{{ room.image }}" value="">{{ room.name }}</option>              
-                    
-    {% endfor %}
-            </select>   
-        <div class="row"><h2 class="month-title-mobile">{{ fullDate }}</h2></div>
+        <select class="mdb-select md-form colorful-select down-warning">
+            <option value="">Please choose a room</option>
+            {% for room in rooms %}
+                <option data-img-src="{{ room.image }}" value="">{{ room.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="row">
+            <h2 class="month-title-mobile">{{ fullDate }}</h2>
+        </div>
 
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">
@@ -30,33 +30,31 @@
                 <a href="/Calendar/month/{{ next }}" class="btn btn-warning"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
+        </div>
+        <div class="container calMobile2">
+            <div class="table-striped table-responsive-xl">
+                <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
+                    <thead class="screenDesktopMonth">
+                        <tr class="text-center">
+                        {% for day in days %}
+                            <th scope="col">{{ day }}</th>
+                        {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% for date in calendar %}
+                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">{{date.0.date | date('d')}}</td>
+                                {% if loop.index %7==0 %}
+                                </tr><tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="container calMobile2">
-    <div class="table-striped table-responsive-xl">
-        <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
-            <thead class="screenDesktopMonth">
-            <tr class="text-center">
-
-                {% for day in days %}
-                    <th scope="col">{{ day }}</th>
-                {% endfor %}
-            </tr>
-            </thead>
-            <tbody>
-                <tr >
-
-                    {% for date in calendar %}
-                        <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">{{date.0.date | date('d')}}</td>
-                        {% if loop.index %7==0 %}
-                        </tr><tr>
-                        {% endif %}
-
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
 {% endblock %}
 
