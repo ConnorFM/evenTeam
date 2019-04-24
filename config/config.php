@@ -17,8 +17,4 @@ define('APP_DEV', true);
 define('APP_VIEW_PATH', __DIR__ . '/../src/View/');
 define('APP_CACHE_PATH', __DIR__ . '/../temp/cache/');
 
-if (!empty($_SESSION)) {
-    define('HOME_PAGE', 'user/login');
-} else {
-    define('HOME_PAGE', 'calendar/week');
-}
+define('HOME_PAGE', 'user/login');
