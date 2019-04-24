@@ -14,7 +14,9 @@ class UserManager extends AbstractManager
     // Create a user in the Database
     public function insert($user)
     {
-        $insert = $this->pdo->prepare("INSERT INTO $this->table (`firstname`, `lastname`, `email`, `status_ID`, `image`, `password`) VALUES (:firstname, :lastname, :email, :status_ID, :image, :password)");
+        $insert = $this->pdo->prepare("INSERT INTO $this->table
+                                     (`firstname`, `lastname`, `email`, `status_ID`, `image`, `password`)
+                                     VALUES (:firstname, :lastname, :email, :status_ID, :image, :password)");
         $insert->bindvalue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $insert->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $insert->bindvalue('email', $user['email'], \PDO::PARAM_STR);
@@ -29,7 +31,10 @@ class UserManager extends AbstractManager
     public function delete(int $id): void
     {
         // prepared request
-        $statement = $this->pdo->prepare("DELETE FROM user_event WHERE user_id=:id; DELETE FROM $this->table WHERE id=:id");
+        $statement = $this->pdo->prepare("DELETE FROM user_event
+                                        WHERE user_id=:id;
+                                        DELETE FROM $this->table
+                                        WHERE id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
     }
@@ -37,7 +42,14 @@ class UserManager extends AbstractManager
     // Uptade a user
     public function update($user)
     {
-        $update = $this->pdo->prepare("UPDATE $this->table SET `firstname` = :firstname, `lastname` = :lastname, `email` = :email, `status_ID` = :status_ID, `image` = :image, `password` = :password WHERE ID=:id");
+        $update = $this->pdo->prepare("UPDATE $this->table
+                                        SET `firstname` = :firstname,
+                                            `lastname` = :lastname,
+                                            `email` = :email,
+                                            `status_ID` = :status_ID,
+                                            `image` = :image,
+                                            `password` = :password
+                                        WHERE ID=:id");
         $update->bindvalue('id', $user['ID'], \PDO::PARAM_INT);
         $update->bindvalue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $update->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
@@ -74,16 +86,6 @@ class UserManager extends AbstractManager
     public function getEmail($email)
     {
         $statement = $this->pdo->prepare("SELECT email FROM $this->table WHERE email=:email");
-        $statement->bindvalue('email', $email, \PDO::PARAM_STR);
-        $statement->execute();
-
-        return $statement->fetch(); //array
-    }
-
-    // Return the user Name
-    public function getFullName($email)
-    {
-        $statement = $this->pdo->prepare("SELECT concat('firstname', ' ', 'lastname') as fullname FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
         $statement->execute();
 

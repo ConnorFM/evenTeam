@@ -262,14 +262,4 @@ class Calendar
         }
         return $array;
     }
-
-    // Display a user fullname
-    public function showFullName()
-    {
-        $userManager = new UserManager();
-        $user = $userManager->getFullName($id);
-    }
-
 }
-
-
