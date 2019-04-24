@@ -1,3 +1,5 @@
+DROP DATABASE eventeam
+
 CREATE DATABASE eventeam;
 use eventeam
 
@@ -61,7 +63,7 @@ INSERT INTO status (name) VALUES
 
 
 INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUES 
-("userfirstname1", "userlastname1", "test/@gmail.com", 2, "http://tinyurl.com/yxq8jnen", "password"),
+("Quentin", "BISIAUX", "quentin.bisiaux@gmail.com", 1, "http://tinyurl.com/yxq8jnen", "unmdpauhasard"),
 ("userfirstname2", "userlastname2", "test/@gmail.com", 2, "http://tinyurl.com/yxq8jnen", "password"),
 ("userfirstname3", "userlastname3", "test/@gmail.com", 2, "http://tinyurl.com/yxq8jnen", "password"),
 ("userfirstname4", "userlastname4", "test/@gmail.com", 2, "http://tinyurl.com/yxq8jnen", "password"),

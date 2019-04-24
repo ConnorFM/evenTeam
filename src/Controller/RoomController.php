@@ -19,7 +19,6 @@ class RoomController extends AbstractController
     {
         $roomManager = new RoomManager();
         $room = $roomManager->selectOneById($id);
-
         return $room;
     }
 
