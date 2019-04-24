@@ -13,7 +13,7 @@ use Twig\Environment;
 use App\Service\Calendar;
 use \DateTime;
 use \Exception;
-
+use App\Model\RoomManager;
 /**
  * Class ItemController
  *
@@ -48,12 +48,15 @@ class CalendarController extends AbstractController
     public function month($month = null, $year = null, $week = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
+        $roomManager = new roomManager();
+        $rooms = $roomManager->selectAll();
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
                                                                 'next' => $this->getCalendar()->nextMonth(),
                                                                 'previous' => $this->getCalendar()->previousMonth(),
                                                                 'calendar' => $this->getCalendar()->generateMonth(),
-                                                                'days' => $this->getCalendar()->days
+                                                                'days' => $this->getCalendar()->days,
+                                                                'rooms' => $rooms
                                                                 ]);
     }
 
