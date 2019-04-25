@@ -1,4 +1,4 @@
-DROP DATABASE eventeam;
+DROP DATABASE `eventeam`;
 
 CREATE DATABASE eventeam;
 use eventeam;
@@ -32,7 +32,7 @@ ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(80) NOT NULL,
 date_start DATETIME NOT NULL,
 date_end DATETIME NOT NULL,
-room_id INT NOT NULL,
+room_id INT NULL,
 description text NULL,
 FOREIGN KEY (room_id) REFERENCES room(id)
 );
@@ -61,11 +61,11 @@ INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUE
 ("userFirstName", "userName", "user@user.fr", 2, "http://tinyurl.com/yxq8jnen", "userUSER");
 
 INSERT INTO events (name, date_start, date_end, room_id, description) VALUES
-("réunion d'équipe", "2018-04-20 14:00:00", "2018-04-20 16:00:00", 1, "c'est une description"),
-("cocktail de fin d'année", "2018-04-25 14:00:00", "2018-04-25 16:00:00", 2, "c'est une description"),
-("Annonce résultats Annuel", "2018-04-29 14:00:00", "2018-04-29 16:00:00", 3, "c'est une description"),
-("HACKATON", "2018-04-22 14:00:00", "2018-04-23 14:00:00", 3, "c'est une description"),
-("organisation projet", "2018-04-25 16:00:00", "2018-04-25 18:00:00", 4, "c'est une description");
+("réunion d'équipe", "2019-04-20 14:00:00", "2019-04-20 16:00:00", 1, "c'est une description"),
+("cocktail de fin d'année", "2019-04-25 14:00:00", "2019-04-25 16:00:00", 2, "c'est une description"),
+("Annonce résultats Annuel", "2019-04-29 14:00:00", "2019-04-29 16:00:00", 3, "c'est une description"),
+("HACKATON", "2019-04-22 14:00:00", "2019-04-23 14:00:00", 3, "c'est une description"),
+("organisation projet", "2019-04-25 16:00:00", "2019-04-25 18:00:00", 4, "c'est une description");
 
 
 
