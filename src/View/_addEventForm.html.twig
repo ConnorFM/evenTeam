@@ -1,3 +1,4 @@
+
 <!-- Success message if inputs are valid (will be in another place in fine) -->
 {{ success }}
 <form method="post" action="/event/addEvent">
@@ -17,12 +18,12 @@
       <select class="mdb-select md-form colorful-select down-warning" name="user" required>
         <option value="" disabled selected>Choose a user</option>
 
+
         {% for user in users %}
           <option value="{{ user.ID }}">{{ user.firstname }} {{ user.lastname }}</option>
         {% endfor %}
 
       </select>
-
     </div>
   </div>
 
@@ -36,7 +37,6 @@
       <!-- Error message if 'Event Description' field is empty or not correct -->
       {{ errors.eventDescriptionErr }}
     </div>
-
     <div class="col-sm-4">
       <!-- Room select -->
       <label>Avaliable Rooms</label>
