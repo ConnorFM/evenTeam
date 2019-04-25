@@ -217,7 +217,7 @@
 }
 
 
-.custom-select{
-    top: 5px;
-    width: 350px;
+.newRoom, .dropdown-item{
+    font-weight: bold;
+    font-size: 1.2em;
 }
