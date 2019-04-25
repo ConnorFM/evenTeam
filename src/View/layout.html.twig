@@ -20,10 +20,41 @@
 
     <body>
         {% if connected == true %}
-            <div class="nameDisplay">
-                <a onclick="window.location.href='../user/logout'"><img src="https://cdn3.iconfinder.com/data/icons/ui-essential-elements-dark-buttons/110/Power-512.png" class="logout"></a>
-            <h6>{{ session.firstname ~  " " ~ session.lastname }}</h6>
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark">
+              <a class="navbar-brand" href="#"><img src="/assets/images/logo.png" class="logonav"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle navbar-links" href="#" id="navbarDropdownMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Rooms
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                    {% for room in rooms %}
+                        <a class="dropdown-item" href="#">{{ room.name }}</a>
+                    {% endfor %}
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Users
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for user in users %}
+                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>
+                    {% endfor %}
+                    </div>
+                  </li>
+                </ul>
+
+              </div>
+              <div class="justify-content-between">
+                <span>{{ session.firstname }} {{ session.lastname }}</span>
+                <a class="logonav"><img src="/assets/images/logout-icon.png" class="logonav"></a>
+                </div>
+            </nav>
         {% endif %}
         {% block content %}{% endblock %}
 
