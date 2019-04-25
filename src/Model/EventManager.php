@@ -88,41 +88,44 @@ class EventManager extends AbstractManager
     /**
      * Select every 'event' objects for one room.
      *
-     * This method will execute the SQL request which will
-     * select all events associate with one room from database via PDO.
+     * This method will execute the SQL request which will select
+     * all events associate with one room from database via PDO.
      *
-     * @param $room_id
-     * @return mixed
+     * @param int $room_id
+     * @return array of events of a room
      */
-    public function selectFromRoom(int $room_id):int
+
+    public function getRoomsEvents($room_id)
     {
         // prepared request
         $statement = $this->pdo->prepare("  SELECT * FROM $this->table
                                             WHERE room_id=:room_id
                                             ORDER BY date_start");
-        $statement = bindValue('room_id', $events['room_id'], \PDO::PARAM_INT);
-
-        return $statement->execute();
+        $statement->bindValue('room_id', $room_id, \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
     }
 
     /**
      * Select every 'event' objects for one user.
      *
-     * This method will execute the SQL request which will
-     * select all events associate with one user from database via PDO.
+     *This method will execute the SQL request which will select
+     * all events associate with one user from database via PDO.
      *
-     * @param $room_id
+     * @param int $user_id
+     * @return array of events of a user
      */
-    public function selectFromUser(int $user_id):int
+
+    public function getUserEvents($user_id)
     {
         // prepared request
-        $statement = $this->pdo->prepare("  SELECT * FROM $this->table
-                                            JOIN user_event ON events.id = user_event.event_id
-                                            JOIN users ON user_event.user_id = users.id
-                                            WHERE user_id=:user_id
-                                            ORDER BY date_start");
-        $statement = bindValue('user_id', $users['id'], \PDO::PARAM_INT);
-
-        return $statement->execute();
+        $statement = $this->pdo->prepare("  SELECT ID, name, date_start, date_end, room_id, description  
+                                                      FROM user_event
+                                                      JOIN events ON id = user_event.event_id
+                                                      WHERE user_id= :user_id
+                                                      ORDER BY date_start;");
+        $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }

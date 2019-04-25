@@ -9,10 +9,11 @@
 
 namespace App\Controller;
 
+use App\Model\EventManager;
+use App\Model\UserManager;
 use Twig\Environment;
 use App\Service\Calendar;
-use \DateTime;
-use \Exception;
+use App\Model\RoomManager;
 
 /**
  * Class ItemController
@@ -21,11 +22,17 @@ use \Exception;
 class CalendarController extends AbstractController
 {
     private $calendar;
+    private $roomManager;
+    private $userManager;
+    private $eventManager;
 
     public function __construct($month = null, $year = null)
     {
         parent::__construct();
         $this->setCalendar(new Calendar($month, $year));
+        $this->roomManager = new RoomManager();
+        $this->userManager = new UserManager();
+        $this->eventManager = new EventManager();
     }
 
     /**
@@ -44,21 +51,39 @@ class CalendarController extends AbstractController
         $this->calendar = $calendar;
     }
 
+    public function events($mode, $id)
+    {
+        if (isset($mode)) {
+            if ($mode === 'room') {
+                return $this->eventManager->getRoomsEvents($id);
+            } elseif ($mode === 'user') {
+                return $this->eventManager->getUserEvents($id);
+            }
+        } else {
+            return $this->eventManager->getUserEvents($_SESSION['user_id']);
+        }
+    }
 
-    public function month($month = null, $year = null, $week = null)
+
+    public function month($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
+
+
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
                                                                 'next' => $this->getCalendar()->nextMonth(),
                                                                 'previous' => $this->getCalendar()->previousMonth(),
                                                                 'calendar' => $this->getCalendar()->generateMonth(),
-                                                                'days' => $this->getCalendar()->days
+                                                                'days' => $this->getCalendar()->days,
+                                                                'rooms' => $this->roomManager->selectAll(),
+                                                                'users' => $this->userManager->selectAll(),
+                                                                'events' => $this->events($mode, $id)
                                                                 ]);
     }
 
 
-    public function week($month = null, $year = null, $week = null)
+    public function week($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
 
@@ -67,7 +92,10 @@ class CalendarController extends AbstractController
                                                                     'daysOfWeek' => $this->getCalendar()->daysOfWeek(),
                                                                     'next' => $this->getCalendar()->nextWeek(),
                                                                     'previous' => $this->getCalendar()->previousWeek(),
-                                                                    'calendar' => $this->getCalendar()->generateWeek()
+                                                                    'calendar' => $this->getCalendar()->generateWeek(),
+                                                                    'rooms' => $this->roomManager->selectAll(),
+                                                                    'users' => $this->userManager->selectAll(),
+                                                                    'events' => $this->events($mode, $id)
                                                                     ]);
     }
 }

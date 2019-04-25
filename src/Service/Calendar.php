@@ -222,7 +222,6 @@ class Calendar
      */
     public function generateMonth()
     {
-        $firstDay = '';
         $nbDays = ($this->getWeeks()+1) * 7;
         $monthArray=[];
         $firstDayType = $this->getStartingDayType();
@@ -263,6 +262,3 @@ class Calendar
         return $array;
     }
 }
-
-
-            //$hours[] = (clone $date)->modify('+' . $i .'day');
