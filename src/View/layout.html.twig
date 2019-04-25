@@ -32,8 +32,11 @@
                       Rooms
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                    {% if session.status == 1%}
+                      <a class="dropdown-item" href="/room/add"><span class="newRoom">Add a room</span></a>
+                    {% endif %}
                     {% for room in rooms %}
-                        <a class="dropdown-item" href="#">{{ room.name }}</a>
+                        <a class="dropdown-item" href="#">{{ room.name }}</a>{% if session.status == 1%}<a href="/room/edit/{{ room.ID }}"><i class="fas fa-pen"></i></a><a href="/room/delete/{{ room.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
                     {% endfor %}
                     </div>
                   </li>
@@ -42,8 +45,13 @@
                       Users
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% if session.status == 1%}
+                      <a class="dropdown-item" href="/user/add"><span class="newRoom">Add a user</span></a>
+                    {% endif %}
                     {% for user in users %}
-                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>
+                    {% if session.firstname != user.firstname %}
+                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a href="/user/edit/{{ user.id }}"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.id }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
+                    {% endif %}
                     {% endfor %}
                     </div>
                   </li>
@@ -51,8 +59,8 @@
 
               </div>
               <div class="justify-content-between">
-                <span>{{ session.firstname }} {{ session.lastname }}</span>
-                <a class="logonav" href="../user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
+                <span class="userName">{{ session.firstname }} {{ session.lastname }}</span>
+                <a class="logonav" href="/user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
                 </div>
             </nav>
         {% endif %}

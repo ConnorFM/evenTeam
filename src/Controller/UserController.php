@@ -42,10 +42,10 @@ class UserController extends AbstractController
           return $this->twig->render('Users/user_edit.html.twig', ['user' => $user]);
     }
   // Delete a user with the id
-    public function delete(int $id)
+    public function delete($id)
     {
         $userManager = new userManager();
-        $userManager->delete($id);
+        $userManager->delete((int)$id);
         header('Location:/user/index');
     }
     // Create a user

@@ -8,17 +8,16 @@
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
     <div class="container">
-
         <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
             <div class="row no-gutters">
-                <a href="/Calendar/month" class="btn btn-warning weekToMonth">Month</a>
-                <a href="/Calendar/week" class="btn btn-warning weekToMonth">Week</a>
+                <a href="/Calendar/month" class="btn btn-warning weekToMonthWeek">Month</a>
+                <a href="/Calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
             </div>
             <h2 class="week-title">{{ fullDate }}</h2>
             <h2 class="week-title-mobile">{{ mobileDate }}</h2>
             <div>
-                <a href="/Calendar/week/{{ previous }}" class="btn btn-warning">&lt;</a>
-                <a href="/Calendar/week/{{ next }}" class="btn btn-warning">&gt;</a>
+                <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-left"></i></a>
+                <a href="/Calendar/week/{{ next }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
     </div>
@@ -36,7 +35,7 @@
                 <thead class="screenMobile">
                     <tr class="text-center">
                         {% for day in daysOfWeek %}
-                            <th scope="col">{{ day | date('D d') }}</th>
+                            <th scope="col" class="tableMobile">{{ day | date('D d') }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
@@ -44,7 +43,7 @@
                     {% for hours in calendar %}
                         <tr>
                             {% for hour in hours %}
-                                <td>{{ hour | date('H:i') }}</td>
+                                <td class="tableMobile">{{ hour | date('H:i') }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}

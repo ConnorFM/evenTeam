@@ -62,7 +62,7 @@ class RoomController extends AbstractController
     {
         $roomManager = new RoomManager();
         $roomManager->delete($id);
-        header('Location:/index');
+        header('Location:'.$_SERVER['PHP_SELF']);
     }
 
     private function verifForm($room)

@@ -76,7 +76,7 @@ class EventController extends AbstractController
                 return $calendar->month();
             } else {
                 $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $errors);
-                $calendar->month();
+                return $calendar->month();
             }
         }
     }
@@ -105,56 +105,56 @@ class EventController extends AbstractController
         // Testing EVENT BEGIN YEAR input
         if (empty($events['eventBeginYear'])) {
             $errors['eventBeginYear'] = "A year is required";
-        } elseif (filter_var($events['eventBeginYear'], FILTER_VALIDATE_INT) == false &&
+        } elseif (filter_var($events['eventBeginYear'], FILTER_VALIDATE_INT) == false ||
                   !preg_match("#[0-9]{4}#", $events['eventBeginYear'])) {
             $errors['eventBeginYear'] = "Enter a valid year please ex: 2019";
         }
         // Testing EVENT BEGIN MONTH input
         if (empty($events['eventBeginMonth'])) {
             $errors['eventBeginMonth'] = "A month is required";
-        } elseif (filter_var($events['eventBeginMonth'], FILTER_VALIDATE_INT) == false &&
-                  !preg_match("#[0-9]{2}#", $events['eventBeginMonth'])) {
+        } elseif (filter_var($events['eventBeginMonth'], FILTER_VALIDATE_INT) == false ||
+                  !preg_match("#[0-9]{2}#", $events['eventBeginMonth']) || $events['eventBeginMonth'] > 12) {
             $errors['eventBeginMonth'] = "Enter a valid month please ex: 11 or 07";
         }
         // Testing EVENT BEGIN DAY input
         if (empty($events['eventBeginDay'])) {
             $errors['eventBeginDay'] = "A day is required";
-        } elseif (filter_var($events['eventBeginDay'], FILTER_VALIDATE_INT) == false &&
-                  !preg_match("#[0-9]{2}#", $events['eventBeginDay'])) {
+        } elseif (filter_var($events['eventBeginDay'], FILTER_VALIDATE_INT) == false ||
+                  !preg_match("#[0-9]{2}#", $events['eventBeginDay']) || $events['eventBeginDay'] > 31) {
             $errors['eventBeginDay'] = "Enter a valid day please ex: 31 or 05";
         }
         // Testing EVENT BEGIN HOUR input
         if (empty($events['eventBeginHour'])) {
             $errors['eventBeginHour'] = "An hour is required";
-        } elseif (filter_var($events['eventBeginHour'], FILTER_VALIDATE_INT) == false &&
+        } elseif (filter_var($events['eventBeginHour'], FILTER_VALIDATE_INT) == false ||
                   !preg_match("#[0-9]{2}:[0-9]{2}#", $events['eventBeginHour'])) {
             $errors['eventBeginHour'] = "Enter a valid hour please ex: 05:30 or 16:45";
         }
         // Testing EVENT END YEAR input
         if (empty($events['eventEndYear'])) {
             $errors['eventEndYear'] = "A year is required";
-        } elseif (filter_var($events['eventEndYear'], FILTER_VALIDATE_INT) == false &&
-                !preg_match("#[0-9]{4}#", $events['eventEndYear'])) {
+        } elseif (filter_var($events['eventEndYear'], FILTER_VALIDATE_INT) == false ||
+                  !preg_match("#[0-9]{4}#", $events['eventEndYear'])) {
             $errors['eventEndYear'] = "Enter a valid year please ex: 2019";
         }
         // Testing EVENT END MONTH input
         if (empty($events['eventEndMonth'])) {
             $errors['eventEndMonth'] = "A month is required";
-        } elseif (filter_var($events['eventEndMonth'], FILTER_VALIDATE_INT) == false &&
+        } elseif (filter_var($events['eventEndMonth'], FILTER_VALIDATE_INT) == false ||
                   !preg_match("#[0-9]{2}#", $events['eventEndMonth'])) {
             $errors['eventEndMonth'] = "Enter a valid month please ex: 11 or 07";
         }
         // Testing EVENT END DAY input
         if (empty($events['eventEndDay'])) {
             $errors['eventEndDay'] = "A day is required";
-        } elseif (filter_var($events['eventEndDay'], FILTER_VALIDATE_INT) == false &&
+        } elseif (filter_var($events['eventEndDay'], FILTER_VALIDATE_INT) == false ||
                   !preg_match("#[0-9]{2}#", $events['eventEndDay'])) {
             $errors['eventEndDay'] = "Enter a valid day please ex: 31 or 05";
         }
         // Testing EVENT END HOUR input
         if (empty($events['eventEndHour'])) {
             $errors['eventEndHour'] = "An hour is required";
-        } elseif (filter_var($events['eventEndHour'], FILTER_VALIDATE_INT) == false &&
+        } elseif (filter_var($events['eventEndHour'], FILTER_VALIDATE_INT) == false ||
                   !preg_match("#[0-9]{2}:[0-9]{2}#", $events['eventEndHour'])) {
             $errors['eventEndHour'] = "Enter a valid hour please ex: 05:30 or 16:45";
         }
