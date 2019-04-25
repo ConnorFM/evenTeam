@@ -39,11 +39,12 @@ class EventController extends AbstractController
                 'eventEndMonth'     => $_POST['eventEndMonth'],
                 'eventEndDay'       => $_POST['eventEndDay'],
                 'eventEndHour'      => $_POST['eventEndHour'],
-                'eventRoom'         => $_POST['eventRoom']
+                'eventRoom'         => $_POST['eventRoom'],
+                'userId'            => $_POST['user']
                       ];
             // take this $errors and test it in 'verifEvent' method
             $errors = $this->verifEvent($events);
-            $event=[];
+
             // Condition verify the errors array is empty
             if (empty($errors)) {
                 $validEvent = [
@@ -57,18 +58,19 @@ class EventController extends AbstractController
                                      $events['eventEndDay'] . " " .
                                      $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
-                    "description" => $events['eventDescription']
+                    "description" => $events['eventDescription'],
+                    "user_id"     => $events['userId']
                 ];
 
                 $eventManager = new EventManager();
                 $eventManager->insert($validEvent);
                 $messages = "Well done";
 
-                // Display the 'monthCalendar.html.twig' page with a success message
-                return $this->twig->render('monthCalendar.html.twig', ['success' => $messages]);
+                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $messages);
+                return $calendar->month();
             } else {
-                // Display the 'monthCalendar.html.twig' page with errors messages on each mistake
-                return $this->twig->render('monthCalendar.html.twig', ['errors' => $errors]);
+                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $errors);
+                $calendar->month();
             }
         }
     }
@@ -95,7 +97,7 @@ class EventController extends AbstractController
             $errors['eventDescription'] = "Event description is required";
         }
         // Testing EVENT USER input
-        if (empty($events['user_id'])) {
+        if (empty($events['userId'])) {
             $errors['user_id'] = "Select a user please";
         }
         // Testing EVENT BEGIN YEAR input
