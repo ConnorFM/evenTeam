@@ -50,7 +50,7 @@
                     {% endif %}
                     {% for user in users %}
                     {% if session.firstname != user.firstname %}
-                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a href="/user/edit/{{ user.ID }}"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
+                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditUser"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
                     {% endif %}
                     {% endfor %}
                     </div>
