@@ -8,12 +8,7 @@
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
     <div class="container">
-        <select class="mdb-select md-form colorful-select down-warning">
-            <option value="">Please choose a room</option>
-            {% for room in rooms %}
-                <option data-img-src="{{ room.image }}" value="">{{ room.name }}</option>
-            {% endfor %}
-        </select>
+
         <div class="row">
             <h2 class="month-title-mobile">{{ fullDate }}</h2>
         </div>

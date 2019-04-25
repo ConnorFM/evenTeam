@@ -60,7 +60,7 @@ class CalendarController extends AbstractController
                 return $this->eventManager->getUserEvents($id);
             }
         } else {
-            return $this->eventManager->getUserEvents($_SESSION['user_id']);
+            return $this->eventManager->getUserEvents($_SESSION['id']);
         }
     }
 
