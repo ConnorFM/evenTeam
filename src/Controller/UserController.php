@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Service\Session;
 
+
 class UserController extends AbstractController
 {
   // Display every user
@@ -125,6 +126,7 @@ class UserController extends AbstractController
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
-        return $this->twig->render('Users/login.html.twig');
     }
 }
+
+   
