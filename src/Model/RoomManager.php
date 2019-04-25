@@ -1,22 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sylvain
- * Date: 07/03/18
- * Time: 18:20
- * PHP version 7
- */
+
+
 namespace App\Model;
 
-/**
- *
- */
-class ItemManager extends AbstractManager
+class RoomManager extends AbstractManager
 {
-    /**
-     *
-     */
-    const TABLE = 'item';
+    const TABLE = 'room';
+
     /**
      *  Initializes this class.
      */
@@ -24,19 +14,25 @@ class ItemManager extends AbstractManager
     {
         parent::__construct(self::TABLE);
     }
+
     /**
-     * @param array $item
+     * @param array $room
      * @return int
      */
-    public function insert(array $item): int
+    public function insert(array $room): int
     {
         // prepared request
-        $statement = $this->pdo->prepare("INSERT INTO $this->table (`title`) VALUES (:title)");
-        $statement->bindValue('title', $item['title'], \PDO::PARAM_STR);
+        $statement = $this->pdo->prepare("INSERT INTO $this->table (name, capacity, image) 
+                                                    VALUES (:name, :capacity, :image)");
+        $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
+        $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
+        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
+
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();
         }
     }
+
     /**
      * @param int $id
      */
@@ -47,16 +43,20 @@ class ItemManager extends AbstractManager
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
     }
+
     /**
-     * @param array $item
+     * @param array $room
      * @return bool
      */
-    public function update(array $item):bool
+    public function update(array $room):bool
     {
+
         // prepared request
         $statement = $this->pdo->prepare("UPDATE $this->table SET `title` = :title WHERE id=:id");
-        $statement->bindValue('id', $item['id'], \PDO::PARAM_INT);
-        $statement->bindValue('title', $item['title'], \PDO::PARAM_STR);
+        $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
+        $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
+        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
+
         return $statement->execute();
     }
 }

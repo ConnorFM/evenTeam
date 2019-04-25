@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<form method="POST">
+		<div>
+			<label  for="firstname">Nom</label><br/>
+			<input  type="text"  id="firstname" value="{{ user.firstname }}"  name="firstname">
+		</div>
+		<div>
+			<label  for="Lastname">Prénom</label><br/>
+			<input  type="text"  id="lastname" value="{{ user.lastname }}"  name="lastname">
+		</div>
+		<div>
+			<label  for="email">Email</label><br/>
+			<input  type="email"  id="email" value="{{ user.email }}"  name="email">
+		</div>
+		<div>
+			<label  for="status">user status:</label><br/>
+			<input  type="number"  id="status" value="{{ user.status_ID }}"  name="status">
+		</div>
+		<div>
+			<label  for="image">Lien image</label><br/>
+			<input  type="text"  id="image" value="{{ user.image }}"  name="image">
+		</div>
+		<div>
+			<label  for="password">Mot de passe</label><br/>
+			<input  type="text"  id="password" value="{{ user.password }}"  name="password">
+		</div>
+	</form>
+    <a href="/user/edit/{{ user.ID }}">Edit</a>
+    <a href="/user/delete/{{user.ID}}">Supprimer</a>
+    <a href="/user/index">Back</a>
+{% endblock %}
