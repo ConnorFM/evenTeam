@@ -16,12 +16,13 @@
             <label>Avaliable Users</label>
             <select class="mdb-select md-form colorful-select down-warning" name="user" required>
               <option value="" disabled selected>Choose a user</option>
-              <option value="1">User 1</option>
-              <option value="2">User 2</option>
-              <option value="3">User 3</option>
-              <option value="4">User 4</option>
-              <option value="5">User 5</option>
+
+              {% for user in users %}
+                  <option value="users.status_ID">{{ user.firstname }} {{ user.lastname }}</option>
+              {% endfor %}
+
             </select>
+
           </div>
         </div>
 
@@ -41,11 +42,13 @@
             <label>Avaliable Rooms</label>
             <select class="mdb-select md-form colorful-select down-warning" name="room">
               <option value="" disabled selected>Choose a room</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
+
+              {% for room in rooms %}
+                  <option value="rooms.id">{{ room.name }}</option>
+              {% endfor %}
+
             </select>
+
           </div>
         </div>
 

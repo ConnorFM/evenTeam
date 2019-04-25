@@ -106,8 +106,7 @@ class UserController extends AbstractController
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month');
-        }
-        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
