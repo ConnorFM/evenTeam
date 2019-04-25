@@ -28,7 +28,7 @@ class EventManager extends AbstractManager
      */
     public function insert(array $events)
     {
-        // prepared request
+        // Prepared request
         $statement = $this->pdo->prepare("
             INSERT INTO $this->table (name, date_start, date_end, room_id, description) 
             VALUES (:name, :date_start, :date_end, :room_id, :description)
@@ -39,13 +39,15 @@ class EventManager extends AbstractManager
         $statement->bindValue('room_id', $events['room_id'], \PDO::PARAM_INT);
         $statement->bindValue('description', $events['description'], \PDO::PARAM_STR);
 
+        //
         if ($statement->execute()) {
-            $eventId = $this->pdo->lastInsertId();
+            $event_id = $this->pdo->lastInsertId();
             $statement = $this->pdo->prepare("
             INSERT INTO user_event (event_id, user_id)
-            VALUES (:eventId, :userId)
+            VALUES (:event_id, :userId)
             ");
-            $statement->bindValue('eventId', $eventId, \PDO::PARAM_INT);
+
+            $statement->bindValue('event_id', $event_id, \PDO::PARAM_INT);
             $statement->bindValue('userId', $events['user_id'], \PDO::PARAM_INT);
             $statement->execute();
         }
@@ -96,7 +98,7 @@ class EventManager extends AbstractManager
 
     public function getRoomsEvents($room_id)
     {
-        // prepared request
+        // Prepared request
         $statement = $this->pdo->prepare("  SELECT * FROM $this->table
                                             WHERE room_id=:room_id
                                             ORDER BY date_start");
@@ -117,7 +119,7 @@ class EventManager extends AbstractManager
 
     public function getUserEvents($user_id)
     {
-        // prepared request
+        // Prepared request
         $statement = $this->pdo->prepare("  SELECT ID, name, date_start, date_end, room_id, description  
                                                       FROM user_event
                                                       JOIN events ON id = user_event.event_id

@@ -16,14 +16,14 @@ use App\Model\EventManager;
  */
 class EventController extends AbstractController
 {
-    /**
-     * Display the created event on the 'weekCalendar.html.twig'
-     * page with a success message, or display the same form with errors messages.
-     *
-     * This method will insert into 'events' table the form inputs from '_addEventForm.html.twig'.
-     *
-     * @return mixed
-     */
+  /**
+   * Display the created event on the 'weekCalendar.html.twig'
+   * page with a success message, or display the same form with errors messages.
+   *
+   * This method will insert into 'events' table the form inputs from '_addEventForm.html.twig'.
+   *
+   * @return mixed
+   */
     public function addEvent()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,24 +39,30 @@ class EventController extends AbstractController
                 'eventEndMonth'     => $_POST['eventEndMonth'],
                 'eventEndDay'       => $_POST['eventEndDay'],
                 'eventEndHour'      => $_POST['eventEndHour'],
-                'eventRoom'         => $_POST['eventRoom'],
                 'userId'            => $_POST['user']
-                      ];
-            // take this $errors and test it in 'verifEvent' method
-            $errors = $this->verifEvent($events);
+            ];
 
+            if (empty($_POST['eventRoom'])) {
+                $events['eventRoom'] = null;
+            } else {
+                $events['eventRoom'] = $_POST['eventRoom'];
+            }
+
+            // Testing $errors in 'verifEvent' method
+            $errors = $this->verifEvent($events);
+            print_r($errors);
             // Condition verify the errors array is empty
             if (empty($errors)) {
                 $validEvent = [
                     "name"        => $events['eventName'],
                     "date_start"  => $events['eventBeginYear'] . "-" .
-                                     $events['eventBeginMonth'] . "-" .
-                                     $events['eventBeginDay'] . " " .
-                                     $events['eventBeginHour'] . ":00",
+                                                     $events['eventBeginMonth'] . "-" .
+                                                     $events['eventBeginDay'] . " " .
+                                                     $events['eventBeginHour'] . ":00",
                     "date_end"    => $events['eventEndYear'] . "-" .
-                                     $events['eventEndMonth'] . "-" .
-                                     $events['eventEndDay'] . " " .
-                                     $events['eventEndHour'] . ":00",
+                                                     $events['eventEndMonth'] . "-" .
+                                                     $events['eventEndDay'] . " " .
+                                                     $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
                     "description" => $events['eventDescription'],
                     "user_id"     => $events['userId']
@@ -76,13 +82,13 @@ class EventController extends AbstractController
     }
 
     /**
-     * Fill and stock the errors array.
-     *
-     * This method will verify if the inputs from '_addEventForm.html.twig' match with the conditions.
-     *
-     * @param  array $events
-     * @return array<string, string>
-     */
+    * Fill and stock the errors array.
+    *
+    * This method will verify if the inputs from '_addEventForm.html.twig' match with the conditions.
+    *
+    * @param  array $events
+    * @return array<string, string>
+    */
     private function verifEvent(array $events)
     {
         // Empty errors array initialization
@@ -91,10 +97,6 @@ class EventController extends AbstractController
         // Testing EVENT NAME input
         if (empty($events['eventName'])) {
             $errors['eventName'] = "Event name is required";
-        }
-        // Testing EVENT DESCRIPTION input
-        if (empty($events['eventDescription'])) {
-            $errors['eventDescription'] = "Event description is required";
         }
         // Testing EVENT USER input
         if (empty($events['userId'])) {

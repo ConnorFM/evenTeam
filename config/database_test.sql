@@ -4,7 +4,7 @@ CREATE DATABASE eventeam;
 use eventeam;
 
 CREATE TABLE room (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(50),
 capacity INT NOT NULL,
 description TEXT NOT NULL,
@@ -12,23 +12,23 @@ image TEXT NULL
 );
 
 CREATE TABLE status (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20)
 );
 
 CREATE TABLE users (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 firstname varchar(30) NOT NULL,
 lastname varchar(30) NOT NULL,
 email varchar(50) NOT NULL,
-status_ID INT NOT NULL,
+status_id INT NOT NULL,
 image TEXT NULL,
 password VARCHAR(50),
 FOREIGN KEY (status_id) REFERENCES status(id)
 );
 
 CREATE TABLE events (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(80) NOT NULL,
 date_start DATETIME NOT NULL,
 date_end DATETIME NOT NULL,
@@ -53,7 +53,7 @@ INSERT INTO room (name, capacity, description, image) VALUES
 INSERT INTO status (name) VALUES
 ('admin'), ('user');
 
-INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUES
+INSERT INTO users (firstname, lastname, email, status_id, image, password) VALUES
 ("Quentin", "BISIAUX", "quentin@bisiaux.fr", 1, "http://tinyurl.com/yxq8jnen", "quentinBISIAUX"),
 ("Noel", "AN", "noel@an.fr", 1, "http://tinyurl.com/yxq8jnen", "noelAN"),
 ("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "http://tinyurl.com/yxq8jnen", "foucauldGAUDIN"),
