@@ -7,6 +7,18 @@
 {% block content %}
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
+    {% if message %}
+        <div class="container mt-2">
+            <div class="alert alert-danger">
+                {% for error in message %}
+                    {{ error }} <br/>
+                {% endfor %}
+                <button type="button" class="btn btn-warning addEventButt" data-toggle="modal" data-target="#modalEvent">
+                    see your event
+                </button>
+            </div>
+        </div>
+    {% endif %}
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">
@@ -32,20 +44,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="text-center">
                             {% for date in calendar %}
                                 <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">
                                     {{date.0.date | date('d')}}
-
+                                    <br/>
                                     {% for event in events %}
                                         {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
-                                            <span class="badge badge-pill badge-primary">{{ event.date_start | date('H:i') }} {{ envent.name }}</span> <br/>
+                                            <span id="event{{ event.id }}" class="badge badge-pill badge-primary">{{ event.name }}</span>
+                                            <br/>
                                         {% endif %}
                                     {% endfor %}
                                 </td>
 
                                 {% if loop.index %7==0 %}
-                                </tr><tr>
+                                </tr><tr class="text-center">
                                 {% endif %}
                             {% endfor %}
                         </tr>
