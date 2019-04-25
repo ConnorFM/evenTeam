@@ -43,7 +43,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {% for user in users %}
+                    {% if session.firstname != user.firstname %}
                         <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>
+                    {% endif %}
                     {% endfor %}
                     </div>
                   </li>
