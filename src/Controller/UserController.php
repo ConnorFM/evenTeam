@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use App\Service\Session;
+
 
 class UserController extends AbstractController
 {
@@ -71,22 +73,60 @@ class UserController extends AbstractController
         return $this->twig->render('Users/add_user.html.twig');
     }
 
+
     // Connect the user if the password and the email is ok
     public function connection()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
-            var_dump($userBdd);
             if (($userBdd['email'] == $_POST['email']) && ($userBdd['password'] == $_POST['password'])) {
-                echo "je suis dans le if";
+                $session = new Session;
+                $session->createSession(
+                    $userBdd['ID'],
+                    $userBdd['status_ID'],
+                    $userBdd['lastname'],
+                    $userBdd['firstname']
+                );
+                header('Location:/user/index');
+            } else {
+                echo "Mot de passe incorect ou email inexistant";
             }
         }
     }
+
+    // Disconnect the user and redirect to login page
+    public function logOut()
+    {
+        session_destroy();
+        header('Location:/user/login');
+    }
+
     // Display the login page
     public function logIn()
     {
-        $userManager = new UserManager();
-        return $this->twig->render('Users/login.html.twig');
+        if (!empty($_SESSION)) {
+            header('Location: /calendar/month');
+        }
+        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userManager = new UserManager();
+            $userBdd = $userManager->getLog($_POST['email']);
+            if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
+                && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
+                $session = new Session;
+                $session->createSession(
+                    $userBdd['ID'],
+                    $userBdd['status_ID'],
+                    $userBdd['lastname'],
+                    $userBdd['firstname']
+                );
+                header('Location: /calendar/week');
+                exit();
+            } else {
+                $this->twig->addGlobal("errorConnection", true);
+            }
+        }
     }
 }
+
+   

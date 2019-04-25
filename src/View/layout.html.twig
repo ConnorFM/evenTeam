@@ -19,7 +19,12 @@
     </head>
 
     <body>
-
+        {% if connected == true %}
+            <div class="nameDisplay">
+                <a onclick="window.location.href='../user/logout'"><img src="https://cdn3.iconfinder.com/data/icons/ui-essential-elements-dark-buttons/110/Power-512.png" class="logout"></a>
+            <h6>{{ session.firstname ~  " " ~ session.lastname }}</h6>
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
 
         <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
@@ -29,7 +34,6 @@
         <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="/assets/js/mdb.js"></script>
-
         {% block javascript %}{% endblock %}
 
     </body>
