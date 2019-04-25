@@ -40,25 +40,24 @@ class EventController extends AbstractController
                 'eventEndDay'       => $_POST['eventEndDay'],
                 'eventEndHour'      => $_POST['eventEndHour'],
                 'eventRoom'         => $_POST['eventRoom']
-            ];
-            // take this $errors and test him in 'verifEvent' method
+                      ];
+            // take this $errors and test it in 'verifEvent' method
             $errors = $this->verifEvent($events);
             
             // Condition verify the errors array is empty
             if (empty($errors)) {
                 $validEvent = [
-
-                    "name"          => $event['eventName'],
-                    "date_start"    => $event['eventBeginYear'] . "-" .
-                                       $event['eventBeginMonth'] . "-" .
-                                       $event['eventBeginDay'] . " " .
-                                       $event['eventBeginHour'] . ":00",
-                    "date_end"      => $event['eventEndYear'] . "-" .
-                                       $event['eventEndMonth'] . "-" .
-                                       $event['eventEndDay'] . " " .
-                                       $event['eventEndHour'] . ":00",
-                    "room_id"       => $event['eventRoom'],
-                    "description"   => $event['eventDescription']
+                    "name"        => $events['eventName'],
+                    "date_start"  => $events['eventBeginYear'] . "-" .
+                                     $events['eventBeginMonth'] . "-" .
+                                     $events['eventBeginDay'] . " " .
+                                     $events['eventBeginHour'] . ":00",
+                    "date_end"    => $events['eventEndYear'] . "-" .
+                                     $events['eventEndMonth'] . "-" .
+                                     $events['eventEndDay'] . " " .
+                                     $events['eventEndHour'] . ":00",
+                    "room_id"     => $events['eventRoom'],
+                    "description" => $events['eventDescription']
                 ];
 
                 $eventManager = new EventManager();
@@ -75,7 +74,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * Stock the errors array in memory.
+     * Fill and stock the errors array.
      *
      * This method will verify if the inputs from '_addEventForm.html.twig' match with the conditions.
      *
