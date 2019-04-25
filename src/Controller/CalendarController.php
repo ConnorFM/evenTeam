@@ -25,14 +25,18 @@ class CalendarController extends AbstractController
     private $roomManager;
     private $userManager;
     private $eventManager;
+    private $messages;
 
-    public function __construct($month = null, $year = null)
+    public function __construct($month = null, $year = null, $messages = null)
     {
         parent::__construct();
         $this->setCalendar(new Calendar($month, $year));
         $this->roomManager = new RoomManager();
         $this->userManager = new UserManager();
         $this->eventManager = new EventManager();
+        if (isset($messages)) {
+            $this->messages = $messages;
+        }
     }
 
     /**
@@ -60,7 +64,7 @@ class CalendarController extends AbstractController
                 return $this->eventManager->getUserEvents($id);
             }
         } else {
-            return $this->eventManager->getUserEvents($_SESSION['user_id']);
+            return $this->eventManager->getUserEvents($_SESSION['id']);
         }
     }
 
@@ -78,7 +82,8 @@ class CalendarController extends AbstractController
                                                                 'days' => $this->getCalendar()->days,
                                                                 'rooms' => $this->roomManager->selectAll(),
                                                                 'users' => $this->userManager->selectAll(),
-                                                                'events' => $this->events($mode, $id)
+                                                                'events' => $this->events($mode, $id),
+                                                                'message'   => $this->messages
                                                                 ]);
     }
 

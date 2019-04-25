@@ -38,7 +38,6 @@ class EventManager extends AbstractManager
         $statement->bindValue('date_end', $events['date_end'], \PDO::PARAM_STR);
         $statement->bindValue('room_id', $events['room_id'], \PDO::PARAM_INT);
         $statement->bindValue('description', $events['description'], \PDO::PARAM_STR);
-        $statement->execute();
 
         if ($statement->execute()) {
             $eventId = $this->pdo->lastInsertId();
@@ -46,8 +45,8 @@ class EventManager extends AbstractManager
             INSERT INTO user_event (event_id, user_id)
             VALUES (:eventId, :userId)
             ");
-            $statement->bindValue('userId', $events['user_id'], \PDO::PARAM_INT);
             $statement->bindValue('eventId', $eventId, \PDO::PARAM_INT);
+            $statement->bindValue('userId', $events['user_id'], \PDO::PARAM_INT);
             $statement->execute();
         }
     }

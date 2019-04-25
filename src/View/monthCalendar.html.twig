@@ -11,7 +11,7 @@
         <select class="mdb-select md-form colorful-select down-warning">
             <option value="">Please choose a room</option>
             {% for room in rooms %}
-                <option data-img-src="{{ room.image }}" value="">{{ room.name }}</option>
+                <option value="{{ room.id }}"><a href="room/{{ room.id }}">{{ room.name }}</a></option>
             {% endfor %}
         </select>
         <div class="row">
@@ -44,7 +44,16 @@
                     <tbody>
                         <tr>
                             {% for date in calendar %}
-                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">{{date.0.date | date('d')}}</td>
+                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">
+                                    {{date.0.date | date('d')}}
+
+                                    {% for event in events %}
+                                        {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
+                                            <span class="badge badge-pill badge-primary">{{ event.date_start | date('H:i') }} {{ envent.name }}</span> <br/>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+
                                 {% if loop.index %7==0 %}
                                 </tr><tr>
                                 {% endif %}
