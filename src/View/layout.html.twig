@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}{% endblock %}</title>
-        
+
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
         <!-- Bootstrap core CSS -->
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -52,14 +52,13 @@
               </div>
               <div class="justify-content-between">
                 <span>{{ session.firstname }} {{ session.lastname }}</span>
-                <a class="logonav"><img src="/assets/images/logout-icon.png" class="logonav"></a>
+                <a class="logonav" href="../user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
                 </div>
             </nav>
         {% endif %}
         {% block content %}{% endblock %}
 
 
-    {% block content %}{% endblock %}
 
   <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -70,18 +69,7 @@
   <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
     {% block javascript %}{% endblock %}
 </body>
-=======
-        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="/assets/js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="/assets/js/mdb.js"></script>
-        {% block javascript %}{% endblock %}
 
-    </body>
->>>>>>> project_status
 </html>
 
 
