@@ -126,7 +126,8 @@ class UserController extends AbstractController
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
+        return $this->twig->render('Users/login.html.twig');
     }
 }
 
-   
+
