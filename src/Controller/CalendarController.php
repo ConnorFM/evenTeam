@@ -21,28 +21,26 @@ use App\Model\RoomManager;
  */
 class CalendarController extends AbstractController
 {
-    private $calendar;
-    private $roomManager;
-    private $userManager;
-    private $eventManager;
-    private $messages;
+    protected $calendar;
+    protected $roomManager;
+    protected $userManager;
+    protected $eventManager;
+    protected $messages;
+    protected $postDatas;
 
-    public function __construct($month = null, $year = null, $messages = null)
+    public function __construct($month = null, $year = null)
     {
         parent::__construct();
         $this->setCalendar(new Calendar($month, $year));
         $this->roomManager = new RoomManager();
         $this->userManager = new UserManager();
         $this->eventManager = new EventManager();
-        if (isset($messages)) {
-            $this->messages = $messages;
-        }
     }
 
     /**
      * @return mixed
      */
-    private function getCalendar()
+    protected function getCalendar()
     {
         return $this->calendar;
     }
@@ -50,10 +48,37 @@ class CalendarController extends AbstractController
     /**
      * @param mixed $calendar
      */
-    private function setCalendar($calendar): void
+    protected function setCalendar($calendar): void
     {
         $this->calendar = $calendar;
     }
+
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+    }
+
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostDatas()
+    {
+        return $this->postDatas;
+    }
+
+    /**
+     * @param mixed $postDatas
+     */
+    public function setPostDatas($postDatas): void
+    {
+        $this->postDatas = $postDatas;
+    }
+
 
     public function events($mode, $id)
     {
@@ -87,6 +112,8 @@ class CalendarController extends AbstractController
                                                                 'events' => $this->events($mode, $id),
                                                                 'message'   => $this->messages,
                                                                 'usersjson' => $usersjson
+                                                                'message'   => $this->getMessages(),
+                                                                'postDatas' => $this->getPostDatas()
                                                                 ]);
     }
 
@@ -107,6 +134,8 @@ class CalendarController extends AbstractController
                                                                     'users' => $this->userManager->selectAll(),
                                                                     'events' => $this->events($mode, $id),
                                                                     'usersjson' => $usersjson
+                                                                    'message'   => $this->getMessages(),
+                                                                    'postDatas' => $this->getPostDatas()
                                                                     ]);
     }
 }

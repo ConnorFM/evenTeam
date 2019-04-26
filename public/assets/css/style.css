@@ -222,3 +222,7 @@
 .newRoom, .dropdown-item{
     font-weight: bold;
 }
+
+.noDisplay{
+    display: none;
+}

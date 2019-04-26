@@ -1,7 +1,8 @@
-{{ dump(users) }}
-<form class="border border-light p-5" method="post" action="/user/edit">
 
-    <p class="h4 mb-4 text-center">Edit {{ user.firstname }} {{ user.lastname }}</p>
+
+<form class="border border-light p-5" method="post" action="/user/edit/{{ user.id }}">
+
+    <p class="h4 mb-4 text-center noDisplay modal-title"></p>
 
     <label for="firstname">First Name</label>
     <input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" class="form-control mb-4">
@@ -13,7 +14,7 @@
     <input type="email" id="email" name="email" value="{{ user.email }}" class="form-control mb-4">
 
     <label for="status">User Status</label>
-    <input type="number" id="status" name="status_ID" value="{{ user.status_ID }}" class="form-control mb-4">
+    <input type="number" id="status" name="status_id" value="{{ user.status_id }}" class="form-control mb-4">
 
     <label  for="image">Image Link</label>
     <input  type="text"  id="image" name="image" value="{{ user.image }}" class="form-control mb-4">
@@ -24,4 +25,5 @@
     <button class="btn btn-info my-4 btn-block" type="submit">Add user</button>
 
 </form>
+
 

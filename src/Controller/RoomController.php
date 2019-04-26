@@ -5,10 +5,10 @@ namespace App\Controller;
 
 use App\Model\RoomManager;
 
-class RoomController extends AbstractController
+class RoomController extends CalendarController
 {
-    private $roomManager;
-    private $date;
+    protected $roomManager;
+
 
 
 
@@ -53,16 +53,16 @@ class RoomController extends AbstractController
             if (empty($errors)) {
                 $roomManager = new RoomManager();
                 $roomManager->insert($room);
-                $messages = "Room created";
 
                 $date =  new \DateTime();
 
-                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $messages);
-                return $calendar->month();
+                $messages = "Well done";
+                $this->setMessages($messages);
+                return $this->month($date->modify('m'), $date->modify('Y'));
             } else {
                 $date =  new \DateTime();
-                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $errors);
-                return $calendar->month();
+                $this->setMessages($errors);
+                return $this->month($date->modify('m'), $date->modify('Y'));
             }
         }
     }

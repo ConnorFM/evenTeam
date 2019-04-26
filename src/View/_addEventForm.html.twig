@@ -32,7 +32,7 @@
         <option value="" disabled selected>Choose a user</option>
 
         {% for user in users %}
-          <option value="{{ user.ID }}">{{ user.firstname }} {{ user.lastname }}</option>
+          <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
         {% endfor %}
 
       </select>
@@ -44,7 +44,7 @@
         <option value="" disabled selected>Choose a room</option>
 
         {% for room in rooms %}
-          <option value="{{ room.ID }}">{{ room.name }}</option>
+          <option value="{{ room.id }}">{{ room.name }}</option>
         {% endfor %}
 
       </select>
