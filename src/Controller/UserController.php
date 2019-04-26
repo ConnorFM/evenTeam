@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Service\Session;
 
-class UserController extends AbstractController
+class UserController extends CalendarController
 {
   // Display every user
     public function index()
@@ -35,7 +35,7 @@ class UserController extends AbstractController
               $user['firstname'] = $_POST['firstname'];
               $user['lastname'] = $_POST['lastname'];
               $user['email'] = $_POST['email'];
-              $user['status_ID'] = $_POST['status_ID'];
+              $user['status_id'] = $_POST['status_id'];
               $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
               $userManager->update($user);
@@ -59,7 +59,7 @@ class UserController extends AbstractController
             'firstname' => $_POST['firstname'],
             'lastname' => $_POST['lastname'],
             'email' => $_POST['email'],
-            'status_ID' => $_POST['status_ID'],
+            'status_id' => $_POST['status_id'],
             'image' => $_POST['image'],
             'password' => $_POST['password']
             ];
@@ -84,8 +84,8 @@ class UserController extends AbstractController
             if (($userBdd['email'] == $_POST['email']) && ($userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
                 $session->createSession(
-                    $userBdd['ID'],
-                    $userBdd['status_ID'],
+                    $userBdd['id'],
+                    $userBdd['status_id'],
                     $userBdd['lastname'],
                     $userBdd['firstname']
                 );
@@ -115,8 +115,8 @@ class UserController extends AbstractController
                 && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
                 $session->createSession(
-                    $userBdd['ID'],
-                    $userBdd['status_ID'],
+                    $userBdd['id'],
+                    $userBdd['status_id'],
                     $userBdd['lastname'],
                     $userBdd['firstname']
                 );

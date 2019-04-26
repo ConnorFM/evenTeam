@@ -52,7 +52,7 @@ abstract class AbstractManager
     }
 
     /**
-     * Get one row from database by ID.
+     * Get one row from database by id.
      *
      * @param  int $id
      *

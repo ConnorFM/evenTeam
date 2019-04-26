@@ -36,7 +36,7 @@
                       <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
                     {% endif %}
                     {% for room in rooms %}
-                        <a class="dropdown-item" href="#">{{ room.name }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditRoom"><i class="fas fa-pen"></i></button><a href="/room/delete/{{ room.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
+                        <a class="dropdown-item" href="#">{{ room.name }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditRoom"><i class="fas fa-pen"></i></button><a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
                     {% endfor %}
                     </div>
                   </li>
@@ -50,7 +50,7 @@
                     {% endif %}
                     {% for user in users %}
                     {% if session.firstname != user.firstname %}
-                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a id="user{{ user.ID }}"data-toggle="modal" href="#modalEditUser{{ user.ID }}" data-title="user{{ user.ID }}"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
+                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a id="user{{ user.id }}"data-toggle="modal" href="#modalEditUser{{ user.id }}" data-title="user{{ user.id }}"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.id }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
                     {% endif %}
                     {% endfor %}
                     </div>
