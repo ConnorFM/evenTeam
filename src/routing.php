@@ -14,8 +14,8 @@ $controller = 'App\Controller\\' . ucfirst($routeParts[0] ?? '') . 'Controller';
 $method = $routeParts[1] ?? '';
 $vars = array_slice($routeParts, 2);
 if (($routeParts[1] != 'login') && empty($_SESSION)) {
-	header('Location:/user/login');
-	exit();
+    header('Location:/user/login');
+    exit();
 }
 if (class_exists($controller) && method_exists(new $controller(), $method)) {
     echo call_user_func_array([new $controller(), $method], $vars);
