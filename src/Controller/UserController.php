@@ -13,12 +13,11 @@ class UserController extends AbstractController
         $userManager = new UserManager();
         $users = $userManager->selectFirstname();
         $usersjson = json_encode($users);
-        // echo $usersjson;
-        return $this->twig->render('Users/user.html.twig',  ['users' => $users,
+        return $this->twig->render('Users/user.html.twig', ['users' => $users,
                                                             'usersjson' => $usersjson
                                                             ]);
-    }   
-  // Display a user
+    }
+
     public function show($id)
     {
         $userManager = new UserManager();
@@ -101,8 +100,7 @@ class UserController extends AbstractController
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month');
-        }
-        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
