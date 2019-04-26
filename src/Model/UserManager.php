@@ -25,6 +25,12 @@ class UserManager extends AbstractManager
         $insert->execute();
     }
 
+    public function selectFirstname(): array
+    {
+        return $this->pdo->query('SELECT firstname FROM ' . $this->table)->fetchAll();
+    }
+
+
     // Delete a user in the database
     public function delete(int $id): void
     {

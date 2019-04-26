@@ -11,10 +11,13 @@ class UserController extends AbstractController
     public function index()
     {
         $userManager = new UserManager();
-        $users = $userManager->selectAll();
-
-        return $this->twig->render('Users/user.html.twig', ['users' => $users]);
-    }
+        $users = $userManager->selectFirstname();
+        $usersjson = json_encode($users);
+        // echo $usersjson;
+        return $this->twig->render('Users/user.html.twig',  ['users' => $users,
+                                                            'usersjson' => $usersjson
+                                                            ]);
+    }   
   // Display a user
     public function show($id)
     {
