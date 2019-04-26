@@ -14,7 +14,7 @@ use App\Model\EventManager;
 /**
  * Class EventController
  */
-class EventController extends AbstractController
+class EventController extends CalendarController
 {
   /**
    * Display the created event on the 'weekCalendar.html.twig'
@@ -56,13 +56,13 @@ class EventController extends AbstractController
                 $validEvent = [
                     "name"        => $events['eventName'],
                     "date_start"  => $events['eventBeginYear'] . "-" .
-                                                     $events['eventBeginMonth'] . "-" .
-                                                     $events['eventBeginDay'] . " " .
-                                                     $events['eventBeginHour'] . ":00",
+                                     $events['eventBeginMonth'] . "-" .
+                                     $events['eventBeginDay'] . " " .
+                                     $events['eventBeginHour'] . ":00",
                     "date_end"    => $events['eventEndYear'] . "-" .
-                                                     $events['eventEndMonth'] . "-" .
-                                                     $events['eventEndDay'] . " " .
-                                                     $events['eventEndHour'] . ":00",
+                                     $events['eventEndMonth'] . "-" .
+                                     $events['eventEndDay'] . " " .
+                                     $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
                     "description" => $events['eventDescription'],
                     "user_id"     => $events['userId']
@@ -70,13 +70,14 @@ class EventController extends AbstractController
 
                 $eventManager = new EventManager();
                 $eventManager->insert($validEvent);
-                $messages = "Well done";
 
-                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $messages);
-                return $calendar->month();
+                $messages = "Well done";
+                $this->setMessages($messages);
+                return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
             } else {
-                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $errors);
-                return $calendar->month();
+                $messages = $errors;
+                $this->setMessages($messages);
+                return $this->month();
             }
         }
     }

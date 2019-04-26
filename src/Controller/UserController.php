@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Service\Session;
 
-class UserController extends AbstractController
+class UserController extends CalendarController
 {
   // Display every user
     public function index()

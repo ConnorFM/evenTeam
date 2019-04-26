@@ -10,17 +10,20 @@
     {% include '_modalRoom.html.twig' %}
     {% include '_modalUser.html.twig' %}
     {% include '_modalEditUser.html.twig' %}
-    {% if message %}
+
+    {% if message is iterable %}
+
         <div class="container mt-2">
-            <div class="alert alert-danger">
+            <div class="alert alert-danger text-center">
                 {% for error in message %}
                     {{ error }} <br/>
                 {% endfor %}
-                <button type="button" class="btn btn-warning addEventButt" data-toggle="modal" data-target="#modalEvent">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEvent">
                     see your event
                 </button>
             </div>
         </div>
+
     {% endif %}
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
@@ -54,7 +57,7 @@
                                     <br/>
                                     {% for event in events %}
                                         {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
-                                            <span id="event{{ event.id }}" class="badge badge-pill badge-primary">{{ event.name }}</span>
+                                            <span id="event{{ event.id }}" class="badge badge-pill badge-primary ">{{ event.name }}</span>
                                             <br/>
                                         {% endif %}
                                     {% endfor %}
