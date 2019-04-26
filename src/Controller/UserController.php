@@ -41,7 +41,7 @@ class UserController extends AbstractController
               $userManager->update($user);
         }
 
-          return $this->twig->render('Users/user_edit.html.twig', ['user' => $user]);
+          return $this->twig->render('_editUser.html.twig', ['user' => $user]);
     }
   // Delete a user with the id
     public function delete($id)
