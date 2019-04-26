@@ -1,7 +1,7 @@
 {% for user in users %}
 {% if 'user' ~ user.id is same as(modal-title) %}
 
-<div class="modal fade" id="modalEditUser{{ user.ID }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
