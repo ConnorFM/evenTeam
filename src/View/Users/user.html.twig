@@ -3,14 +3,16 @@
 
 	<script>
 		var tab = JSON.parse({{ usersjson|json_encode|raw }});
+		console.log(tab);
 		function searchUser() {
 			search_div = document.getElementById('search_div');
 			search_div.innerHTML = "";
 			var j = 0;
 			for (var i = 0; i < tab.length; i++) {
-			 	if (j > 15)
+			 	if (j > 9)
 			 		break;
-		 		if (tab[i].firstname.includes(document.getElementById('search').value)) {		 			
+		 		if (tab[i].firstname.includes(document.getElementById('search').value)) {
+		 			console.log(tab[i].firstname); 			
 					myA = document.createElement('a');
 					myA.className = "dropdown-item";
 					myA.textContent = tab[i].firstname;
@@ -21,13 +23,10 @@
 			} 
 		}
 	</script>
-	<div class="row">
-		<div class="col-4">
-			<label for="site-search">Search the site:</label>
+		<div class="col-12">
+			<label for="site-search">Search a user</label>
 			<input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search" type="text" id="search" name="search" aria-label="Search through site content">
-			<div class="dropdown-menu" id="search_div"></div>
-		</div>
-	</div>
+		<div class="dropdown-menu" id="search_div"></div>
 	<br/>	
 	 
 <!-- 	{% for user in users %}

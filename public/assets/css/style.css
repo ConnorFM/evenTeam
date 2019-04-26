@@ -146,7 +146,9 @@
     }
 }
 
-
+.dropdownuser {
+    width : 20rem;
+}
 
 .weekToMonthWeek{
     width: 125px;

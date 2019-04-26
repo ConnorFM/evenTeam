@@ -41,22 +41,74 @@
                     </div>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" onclick="searchUser()"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Users
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu dropdownuser" aria-labelledby="navbarDropdownMenuLink">
                     {% if session.status == 1%}
                       <a class="dropdown-item" data-toggle="modal" href="#modalUser"><span class="newRoom">Add a user</span></a>
+                    <input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search a user" type="text" id="search" name="search" aria-label="Search through site content">
+                    <div class="dropdown-menu" id="search_div"></div>
                     {% endif %}
-                    {% for user in users %}
-                    {% if session.firstname != user.firstname %}
-                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditUser"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.ID }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
-                    {% endif %}
-                    {% endfor %}
-                    </div>
+
+                  <script>
+                    var tab = JSON.parse({{ usersjson|json_encode|raw }}); 
+                      function searchUser() {
+                        search_div = document.getElementById('search_div');
+                        search_div.innerHTML = "";
+                        var j = 0;
+                        for (var i = 0; i < tab.length; i++) {
+                        if (j > 15)
+                        break;
+                        if (tab[i].firstname.includes(document.getElementById('search').value)) {
+                        console.log(tab[i].firstname);
+                        // Création de rowDiv
+                        myrowDiv = document.createElement('div');
+                        myrowDiv.className = "row";
+                        myrowDiv.style.width = "21.68rem";
+                        // Création des colDiv
+                        mycolDivfirst = document.createElement('div');
+                        mycolDivfirst.className = "col-6";
+                        mycolDivsecond = document.createElement('div');
+                        mycolDivsecond.className = "col-2";
+                        mycolDivthird = document.createElement('div');
+                        mycolDivthird.className = "col-2";
+                        // Creation 
+                        // Création d'une balise a qui se nomme myAfirst      
+                        myAfirst = document.createElement('a');
+                        myAfirst.className = "dropdown-item";
+                        myAfirst.textContent = tab[i].firstname;
+                        myAfirst.href = "https://google.fr";
+                        // Création d'une balise a qui se nomme myAsecond
+                        myAsecond = document.createElement('a');
+                        myAsecond.href ="#modalEditUser" + tab[i].ID;
+                        myAsecond.id = tab[i].ID;
+                        myAsecond.setAttribute("date-toggle", "modal");
+                        // Création d'une balise a qui se nomme myAthird
+                        myAthird = document.createElement('a');
+                        myAthird.href = "/user/delete/" + tab[i].ID;
+                        // Création des balises I (font awesome)
+                        myIfirst = document.createElement('i');
+                        myIfirst.className = "fas fa-pen";
+                        myIsecond = document.createElement('i');
+                        myIsecond.className = "fas fa-trash-alt";
+                        // myAsecond est le papa de myIfirst
+                        mycolDivfirst.appendChild(myAfirst);
+                        mycolDivsecond.appendChild(myAsecond);
+                        mycolDivthird.appendChild(myAthird);
+                        myAsecond.appendChild(myIfirst);
+                        myAthird.appendChild(myIsecond);
+                        myrowDiv.appendChild(mycolDivfirst);
+                        myrowDiv.appendChild(mycolDivsecond);
+                        myrowDiv.appendChild(mycolDivthird);
+                        search_div.appendChild(myrowDiv)  
+                        j++;
+                        } 
+                      }  
+                    }
+                  </script>
                   </li>
                 </ul>
-
               </div>
               <div class="justify-content-between">
                 <span class="userName">{{ session.firstname }} {{ session.lastname }}</span>
