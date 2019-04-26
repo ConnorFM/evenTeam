@@ -7,27 +7,32 @@
 {% block content %}
     {% include '_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
-    <div class="container">
-        <select class="mdb-select md-form colorful-select down-warning">
-            <option value="">Please choose a room</option>
-            {% for room in rooms %}
-                <option data-img-src="{{ room.image }}" value="">{{ room.name }}</option>
-            {% endfor %}
-        </select>
-        <div class="row">
-            <h2 class="month-title-mobile">{{ fullDate }}</h2>
+    {% include '_modalRoom.html.twig' %}
+    {% include '_modalUser.html.twig' %}
+    {% include '_modalEditUser.html.twig' %}
+    {% if message %}
+        <div class="container mt-2">
+            <div class="alert alert-danger">
+                {% for error in message %}
+                    {{ error }} <br/>
+                {% endfor %}
+                <button type="button" class="btn btn-warning addEventButt" data-toggle="modal" data-target="#modalEvent">
+                    see your event
+                </button>
+            </div>
         </div>
-
+    {% endif %}
+    <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">
-                <a href="/Calendar/month" class="btn btn-warning weekToMonth">Month</a>
-                <a href="/Calendar/week" class="btn btn-warning weekToMonth">Week</a>
+                <a href="/Calendar/month" class="btn btn-warning weekToMonthMonth">Month</a>
+                <a href="/Calendar/week" class="btn btn-warning weekToMonthMonth">Week</a>
             </div>
-
+            <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2>
             <h2 class="month-title">{{ fullDate }}</h2>
             <div>
-                <a href="/Calendar/month/{{ previous }}" class="btn btn-warning"><i class="fas fa-chevron-left"></i></a>
-                <a href="/Calendar/month/{{ next }}" class="btn btn-warning"><i class="fas fa-chevron-right"></i></a>
+                <a href="/Calendar/month/{{ previous }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-left"></i></a>
+                <a href="/Calendar/month/{{ next }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
         </div>
@@ -42,11 +47,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="text-center">
                             {% for date in calendar %}
-                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">{{date.0.date | date('d')}}</td>
+                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">
+                                    {{date.0.date | date('d')}}
+                                    <br/>
+                                    {% for event in events %}
+                                        {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
+                                            <span id="event{{ event.id }}" class="badge badge-pill badge-primary">{{ event.name }}</span>
+                                            <br/>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+
                                 {% if loop.index %7==0 %}
-                                </tr><tr>
+                                </tr><tr class="text-center">
                                 {% endif %}
                             {% endfor %}
                         </tr>

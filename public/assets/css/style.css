@@ -84,7 +84,7 @@
 
 /* Change title considering screen size */
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 991px){
     .month-title{
         display: none;
     }
@@ -95,12 +95,18 @@
     display: none;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 991px){
     .month-title-mobile{
         display: block;
         margin-left: auto;
         margin-right: auto;
+        font-size: 0.8em;
+    }
+}
 
+@media screen and (max-width: 368px){
+    .month-title-mobile{
+        display: none;
     }
 }
 
@@ -120,10 +126,42 @@
     }
 }
 
+@media screen and (max-width: 451px){
+    .tableMobile{
+        font-size: 0.5em;
+    }
+}
 
-.weekToMonth{
+.weekToMonthMonth{
     width: 125px;
 }
+
+@media screen and (max-width: 768px) {
+    .weekToMonthMonth{
+        width: 60px;
+        padding-right :2px;
+        padding-left: 2px;
+        font-size: 0.5em;
+        max-height: 38.88px;
+    }
+}
+
+
+
+.weekToMonthWeek{
+    width: 125px;
+}
+
+@media screen and (max-width: 768px) {
+    .weekToMonthWeek{
+        width: 60px;
+        padding-right :2px;
+        padding-left: 2px;
+        font-size: 0.5em;
+        max-height: 38.88px;
+    }
+}
+
 
 @media screen and (max-width: 440px){
     table th.firstCol{
@@ -151,30 +189,34 @@
     }
 }
 
-
-
-.nameDisplay {
-    position: fixed;
-    /* Fixed/sticky position */
-    top: 20px;
-    /* Place the button at the bottom of the page */
-    right: 20px;
-    /* Place the button 30px from the right */
-    z-index: 99;
-    /* Make sure it does not overlap */
-    border: none;
-    /* Remove borders */
-    outline: none;
-    /* Remove outline */
-    cursor: pointer;
-    /* Add a mouse pointer on hover */
-    padding: 20px;
-    /* Some padding */
-    border-radius: 10px;
-    /* Rounded corners */
+@media screen and (max-width: 990px){
+    .userName{
+        display: none;
+    }
 }
 
-.logout{
+
+
+
+.logonav{
     max-height: 2vw;
     width: auto;
+}
+
+.navbar{
+    background-color: #fb3;
+}
+
+.navbar-dark{
+    color: white;
+    font-weight: bold;
+}
+
+.nav-item{
+    color: white;
+}
+
+
+.newRoom, .dropdown-item{
+    font-weight: bold;
 }

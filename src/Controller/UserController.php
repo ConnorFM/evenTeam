@@ -5,18 +5,19 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Service\Session;
 
-
 class UserController extends AbstractController
 {
   // Display every user
     public function index()
     {
         $userManager = new UserManager();
-        $users = $userManager->selectAll();
-
-        return $this->twig->render('Users/user.html.twig', ['users' => $users]);
+        $users = $userManager->selectFirstname();
+        $usersjson = json_encode($users);
+        return $this->twig->render('Users/user.html.twig', ['users' => $users,
+                                                            'usersjson' => $usersjson
+                                                            ]);
     }
-  // Display a user
+
     public function show($id)
     {
         $userManager = new UserManager();
@@ -43,10 +44,10 @@ class UserController extends AbstractController
           return $this->twig->render('Users/user_edit.html.twig', ['user' => $user]);
     }
   // Delete a user with the id
-    public function delete(int $id)
+    public function delete($id)
     {
         $userManager = new userManager();
-        $userManager->delete($id);
+        $userManager->delete((int)$id);
         header('Location:/user/index');
     }
     // Create a user
@@ -107,8 +108,7 @@ class UserController extends AbstractController
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month');
-        }
-        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
@@ -126,7 +126,6 @@ class UserController extends AbstractController
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
+        return $this->twig->render('Users/login.html.twig');
     }
 }
-
-   

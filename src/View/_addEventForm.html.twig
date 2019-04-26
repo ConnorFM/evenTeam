@@ -1,100 +1,102 @@
-    <!-- Success message if inputs are valid (will be in another place in fine) -->
-    {{ success }}
-      <form method="post" action="/event/addEvent">
-        <div class="row">
-          <div class="col-sm-8">
-            <!-- Large input for Event Name -->
-            <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" required>
-              <label for="inputLGEx">Event Name</label>
-            </div>
-            <!-- Error message if 'Event Name' field is empty or not correct -->
-            {{ errors.eventNameErr }}
-          </div>
-          <div class="col-sm-4">
-            <!-- User select -->
-            <label>Avaliable Users</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="user" required>
-              <option value="" disabled selected>Choose a user</option>
-              <option value="1">User 1</option>
-              <option value="2">User 2</option>
-              <option value="3">User 3</option>
-              <option value="4">User 4</option>
-              <option value="5">User 5</option>
-            </select>
-          </div>
+
+<!-- Success message if inputs are valid (will be in another place in fine) -->
+{{ success }}
+<form method="post" action="/event/addEvent">
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- Large input for Event Name -->
+      <div class="md-form form-lg">
+        <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" required>
+        <label for="inputLGEx">Event Name</label>
+      </div>
+      <!-- Error message if 'Event Name' field is empty or not correct -->
+      {{ errors.eventNameErr }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <!-- Event Description -->
+      <div class="md-form">
+        <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription"></textarea>
+        <label for="textarea-char-counter">Type your event description</label>
+      </div>
+      <!-- Error message if 'Event Description' field is empty or not correct -->
+      {{ errors.eventDescriptionErr }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <!-- User select -->
+      <label>Avaliable Users</label>
+      <select class="mdb-select md-form colorful-select down-warning" name="user" required>
+        <option value="" disabled selected>Choose a user</option>
+
+        {% for user in users %}
+          <option value="{{ user.ID }}">{{ user.firstname }} {{ user.lastname }}</option>
+        {% endfor %}
+
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <!-- Room select -->
+      <label>Avaliable Rooms</label>
+      <select class="mdb-select md-form colorful-select down-warning" name="eventRoom">
+        <option value="" disabled selected>Choose a room</option>
+
+        {% for room in rooms %}
+          <option value="{{ room.ID }}">{{ room.name }}</option>
+        {% endfor %}
+
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <!-- Start Date input -->
+    <div class="col-sm-12">
+      <div class="md-form input-group form-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text md-addon">Begin date</span>
         </div>
+        <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
+        <!-- Error message if 'Begin Year' field is empty or not correct -->
+        {{ errors.eventBeginYearErr }}
+        <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month : ex. 03" name="eventBeginMonth" required>
+        <!-- Error message if 'Begin Month' field is empty or not correct -->
+        {{ errors.eventBeginMonthErr }}
+        <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day :ex. 05" name="eventBeginDay" required>
+        <!-- Error message if 'Begin Day' field is empty or not correct -->
+        {{ errors.eventBeginDayErr }}
+        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="eventBeginHour" required>
+        <!-- Error message if 'Begin Hour' field is empty or not correct -->
+        {{ errors.eventBeginHourErr }}
+      </div>
+    </div>
+  </div>
 
-        <div class="row">
-          <div class="col-sm-8">
-            <!-- Event Description -->
-            <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required></textarea>
-              <label for="textarea-char-counter">Type your event description</label>
-            </div>
-            <!-- Error message if 'Event Description' field is empty or not correct -->
-            {{ errors.eventDescriptionErr }}
-          </div>
-
-          <div class="col-sm-4">
-            <!-- Room select -->
-            <label>Avaliable Rooms</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="room">
-              <option value="" disabled selected>Choose a room</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-              <option value="4">Option 4</option>
-            </select>
-          </div>
+  <div class="row">
+    <!-- End Date input -->
+    <div class="col-sm-12">
+      <div class="md-form input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text md-addon">End date</span>
         </div>
-
-        <div class="row">
-
-          <!-- Start Date input -->
-          <div class="col-sm-12">
-            <div class="md-form input-group form-sm">
-              <div class="input-group-prepend">
-                <span class="input-group-text md-addon">Begin date</span>
-              </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
-              <!-- Error message if 'Begin Year' field is empty or not correct -->
-              {{ errors.eventBeginYearErr }}
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth" required>
-              <!-- Error message if 'Begin Month' field is empty or not correct -->
-              {{ errors.eventBeginMonthErr }}
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay" required>
-              <!-- Error message if 'Begin Day' field is empty or not correct -->
-              {{ errors.eventBeginDayErr }}
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour" required>
-              <!-- Error message if 'Begin Hour' field is empty or not correct -->
-              {{ errors.eventBeginHourErr }}
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <!-- End Date input -->
-          <div class="col-sm-12">
-            <div class="md-form input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text md-addon">End date</span>
-              </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
-              <!-- Error message if 'End Year' field is empty or not correct -->
-              {{ errors.eventBeginYearErr }}
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth" required>
-              <!-- Error message if 'End Month' field is empty or not correct -->
-              {{ errors.eventBeginMonthErr }}
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay" required>
-              <!-- Error message if 'End Day' field is empty or not correct -->
-              {{ errors.eventBeginDayErr }}
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour" required>
-              <!-- Error message if 'End Hour' field is empty or not correct -->
-              {{ errors.eventBeginHourErr }}
-            </div>
-          </div>
-        </div>
-        <!-- Add 'New Event' button -->
-        <button type="submit" class="btn btn-deep-orange">Create Event</button>
-      </form>
+        <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
+        <!-- Error message if 'End Year' field is empty or not correct -->
+        {{ errors.eventBeginYearErr }}
+        <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month :ex. 03" name="eventEndMonth" required>
+        <!-- Error message if 'End Month' field is empty or not correct -->
+        {{ errors.eventBeginMonthErr }}
+        <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day :ex. 01" name="eventEndDay" required>
+        <!-- Error message if 'End Day' field is empty or not correct -->
+        {{ errors.eventBeginDayErr }}
+        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour : ex. 09:00" name="eventEndHour" required>
+        <!-- Error message if 'End Hour' field is empty or not correct -->
+        {{ errors.eventBeginHourErr }}
+      </div>
+    </div>
+  </div>
+  <!-- Add 'New Event' button -->
+  <button type="submit" class="btn btn-deep-orange">Create Event</button>
+</form>

@@ -1,10 +1,10 @@
-DROP DATABASE eventeam;
+DROP DATABASE `eventeam`;
 
 CREATE DATABASE eventeam;
 use eventeam;
 
 CREATE TABLE room (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(50),
 capacity INT NOT NULL,
 description TEXT NOT NULL,
@@ -12,27 +12,27 @@ image TEXT NULL
 );
 
 CREATE TABLE status (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20)
 );
 
 CREATE TABLE users (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 firstname varchar(30) NOT NULL,
 lastname varchar(30) NOT NULL,
 email varchar(50) NOT NULL,
-status_ID INT NOT NULL,
+status_id INT NOT NULL,
 image TEXT NULL,
 password VARCHAR(50),
 FOREIGN KEY (status_id) REFERENCES status(id)
 );
 
 CREATE TABLE events (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(80) NOT NULL,
 date_start DATETIME NOT NULL,
 date_end DATETIME NOT NULL,
-room_id INT NOT NULL,
+room_id INT NULL,
 description text NULL,
 FOREIGN KEY (room_id) REFERENCES room(id)
 );
@@ -53,7 +53,7 @@ INSERT INTO room (name, capacity, description, image) VALUES
 INSERT INTO status (name) VALUES
 ('admin'), ('user');
 
-INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUES
+INSERT INTO users (firstname, lastname, email, status_id, image, password) VALUES
 ("Quentin", "BISIAUX", "quentin@bisiaux.fr", 1, "http://tinyurl.com/yxq8jnen", "quentinBISIAUX"),
 ("Noel", "AN", "noel@an.fr", 1, "http://tinyurl.com/yxq8jnen", "noelAN"),
 ("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "http://tinyurl.com/yxq8jnen", "foucauldGAUDIN"),
@@ -61,11 +61,11 @@ INSERT INTO users (firstname, lastname, email, status_ID, image, password) VALUE
 ("userFirstName", "userName", "user@user.fr", 2, "http://tinyurl.com/yxq8jnen", "userUSER");
 
 INSERT INTO events (name, date_start, date_end, room_id, description) VALUES
-("réunion d'équipe", "2018-04-20 14:00:00", "2018-04-20 16:00:00", 1, "c'est une description"),
-("cocktail de fin d'année", "2018-04-25 14:00:00", "2018-04-25 16:00:00", 2, "c'est une description"),
-("Annonce résultats Annuel", "2018-04-29 14:00:00", "2018-04-29 16:00:00", 3, "c'est une description"),
-("HACKATON", "2018-04-22 14:00:00", "2018-04-23 14:00:00", 3, "c'est une description"),
-("organisation projet", "2018-04-25 16:00:00", "2018-04-25 18:00:00", 4, "c'est une description");
+("réunion d'équipe", "2019-04-20 14:00:00", "2019-04-20 16:00:00", 1, "c'est une description"),
+("cocktail de fin d'année", "2019-04-25 14:00:00", "2019-04-25 16:00:00", 2, "c'est une description"),
+("Annonce résultats Annuel", "2019-04-29 14:00:00", "2019-04-29 16:00:00", 3, "c'est une description"),
+("HACKATON", "2019-04-22 14:00:00", "2019-04-23 14:00:00", 3, "c'est une description"),
+("organisation projet", "2019-04-25 16:00:00", "2019-04-25 18:00:00", 4, "c'est une description");
 
 
 
