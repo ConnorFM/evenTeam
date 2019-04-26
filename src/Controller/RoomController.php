@@ -7,6 +7,10 @@ use App\Model\RoomManager;
 
 class RoomController extends AbstractController
 {
+    private $roomManager;
+    private $date;
+
+
 
     public function index()
     {
@@ -40,6 +44,7 @@ class RoomController extends AbstractController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $room = ['name' => $_POST['name'],
                     'capacity' => $_POST['capacity'],
+                    'description' => $_POST['description'],
                     'image' => $_POST['image']
             ];
 
@@ -48,14 +53,18 @@ class RoomController extends AbstractController
             if (empty($errors)) {
                 $roomManager = new RoomManager();
                 $roomManager->insert($room);
+                $messages = "Room created";
 
-                return 'success';
+                $date =  new \DateTime();
+
+                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $messages);
+                return $calendar->month();
             } else {
-                return $errors;
+                $date =  new \DateTime();
+                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $errors);
+                return $calendar->month();
             }
         }
-
-        return $this->twig->render('room/add.html.twig');
     }
 
     public function delete(int $id)
@@ -74,6 +83,9 @@ class RoomController extends AbstractController
         }
         if (empty($room['capacity'])) {
             $errors['capacity'] = 'You should enter a room capacity';
+        }
+        if (empty($room['description'])) {
+            $errors['description'] = 'You should add a description';
         }
         if (empty($room['image'])) {
             $errors['image'] = 'You should put an image';
