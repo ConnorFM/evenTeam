@@ -34,7 +34,7 @@ function searchUser() {
 	myAfirst = document.createElement('a');
 	myAfirst.className = "dropdown-item";
 	myAfirst.textContent = tab[i].firstname; 
-	myAfirst.href = "https://google.fr";
+	myAfirst.href = "/calendar/month/05/2019/21/user/" + tab[i].id;
 	// Création d'une balise a qui se nomme myAsecond
 	myAsecond = document.createElement('a');
 	myAsecond.href ="#modalEditUser" + tab[i].id;
