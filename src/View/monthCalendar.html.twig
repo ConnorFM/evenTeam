@@ -11,6 +11,7 @@
     {% include '_modalUser.html.twig' %}
     {% include '_modalEditUser.html.twig' %}
     {% include '_modalEditRoom.html.twig' %}
+    {% include 'Users/_modalEditEvent.html.twig' %}
 
     {% if message is iterable %}
         <div class="container mt-2">
@@ -66,7 +67,7 @@
                                             date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or
                                             date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
                                             date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
-                                            <a style="width: 8rem;" id="event{{ event.id }}" class="badge badge-pill badge-primary" href="#modalEvent{{ event.id }}"><span style="text-overflow: ellipsis;">{{ event.id }}</span></a>
+                                            <a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary" href="#modalEditEvent{{ event.id }}">{{ event.id }}</span></a>
                                             <br/>
                                         {% endif %}
                                     {% endfor %}
