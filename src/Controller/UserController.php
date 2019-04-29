@@ -50,7 +50,7 @@ class UserController extends CalendarController
     {
         $userManager = new userManager();
         $userManager->delete((int)$id);
-        header('Location:/calendar/week');
+        header('Location:/calendar/month');
     }
     // Create a user
     public function add()

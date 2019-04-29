@@ -1,4 +1,4 @@
-<form class="border border-light p-5" method="post" action="/room/add">
+<form class="border border-light p-5" method="post" action="/room/edit/{{ room.id }}">
 
     <label for="name">Name</label>
     <input type="text" id="name" name="name" class="form-control mb-4" value="{{ room.name }}">
