@@ -45,6 +45,7 @@
             </div>
         </div>
         </div>
+        {{ dump (events) }}
         <div class="container calMobile2">
             <div class="table-striped table-responsive-xl">
                 <table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
@@ -63,7 +64,7 @@
                                     <br/>
                                     {% for event in events %}
                                         {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
-                                            <p style="width: 8rem;" id="event{{ event.id }}" class="badge badge-pill badge-primary "><span style="text-overflow: ellipsis;">{{ event.name }}</span></p>
+                                            <a style="width: 8rem;" id="event{{ event.id }}" class="badge badge-pill badge-primary" href="#modalEvent{{ event.ID }}"><span style="text-overflow: ellipsis;">{{ event.ID }}</span></p>
                                             <br/>
                                         {% endif %}
                                     {% endfor %}

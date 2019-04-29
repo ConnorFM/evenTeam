@@ -197,11 +197,15 @@
     }
 }
 
+.userName{
+    padding-right: 5vw;
+}
+
 
 
 
 .logonav{
-    max-height: 2vw;
+    /*max-height: 2vw;*/
     width: auto;
 }
 
@@ -251,7 +255,7 @@
 .month-year {
     font-size: 4rem;
     font-family: cursive;
-    color: grey;   
+    color: grey;
 
 }
 

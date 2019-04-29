@@ -21,13 +21,12 @@
 
           <div class="col-sm-4">
             <!-- Room select -->
-            <label>Avaliable Rooms</label>
+            <label>Available Rooms</label>
             <select class="mdb-select md-form colorful-select down-warning" name="room">
               <option value="" disabled selected>Choose a room</option>
-              <option value="1">Room 1</option>
-              <option value="2">Room 2</option>
-              <option value="3">Room 3</option>
-              <option value="4">Room 4</option>
+              {% for room in rooms %}
+               <option value="{{ room.id }}">{{ room.name }}</option>
+              {% endfor %}
             </select>
           </div>
         </div>
