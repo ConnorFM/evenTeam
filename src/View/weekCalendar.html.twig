@@ -17,7 +17,7 @@
                 <a href="/Calendar/month" class="btn btn-warning weekToMonthWeek">Month</a>
                 <a href="/Calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
             </div>
-            <h2 class="week-title">{{ fullDate }}</h2>
+            <h2 class="week-title week-title">{{ fullDate }}</h2>
             <h2 class="week-title-mobile">{{ mobileDate }}</h2>
             <div>
                 <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-left"></i></a>
@@ -28,13 +28,12 @@
 
     <div class="container calMobile">
         <div class="table-responsive-xl">
-            <table class="table table-bordered table-striped">
+            <table class="calendarTable table table-bordered table-striped">
                 <thead class="screenDesktop">
                     <tr class="text-center">
                         {% for day in daysOfWeek %}
-                            <th scope="col">{{ day | date('l d F Y')}}</th>
+                            <th class="everyDay" scope="col">{{ day | date('l d F')}}</th>
                         {% endfor %}
-
                     </tr>
                 </thead>
                 <thead class="screenMobile">
@@ -48,7 +47,7 @@
                     {% for hours in calendar %}
                         <tr>
                             {% for hour in hours %}
-                                <td class="tableMobile">{{ hour | date('H:i') }}</td>
+                                <td class="tableMobile calendarTd">{{ hour | date('H:i') }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}

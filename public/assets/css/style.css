@@ -243,9 +243,15 @@
     width: 70rem;
 }
 
+.week-title {
+    font-weight: bold;
+    color: grey;
+}
+
 .month-year {
     font-size: 4rem;
-    font-family: cursive;   
+    font-family: cursive;
+    color: grey;   
 }
 
 

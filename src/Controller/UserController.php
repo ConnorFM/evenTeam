@@ -39,9 +39,11 @@ class UserController extends CalendarController
               $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
               $userManager->update($user);
-        }
 
-        header('Location: '.$_SERVER['REQUEST_URI']);
+              $messages = "Well done";
+              $this->setMessages($messages);
+              header('Location:/Calendar/month');
+        }
     }
   // Delete a user with the id
     public function delete($id)
