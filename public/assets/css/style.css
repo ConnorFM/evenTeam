@@ -224,3 +224,20 @@
 .noDisplay{
     display: none;
 }
+
+
+#navbar {
+  display: flex;
+  background-color: grey;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+#navbar > * {
+  padding: 1rem;
+}
+body {
+  margin: 0;
+}
+.nav-container:hover #navbar {
+  transform: translateY(0);
+}
