@@ -26,7 +26,7 @@ class CalendarController extends AbstractController
     protected $userManager;
     protected $eventManager;
     protected $messages;
-    protected $postDatas;
+    protected $postData;
 
     public function __construct($month = null, $year = null)
     {
@@ -66,17 +66,17 @@ class CalendarController extends AbstractController
     /**
      * @return mixed
      */
-    public function getPostDatas()
+    public function getPostData()
     {
-        return $this->postDatas;
+        return $this->postData;
     }
 
     /**
-     * @param mixed $postDatas
+     * @param mixed $postData
      */
-    public function setPostDatas($postDatas): void
+    public function setPostData($postData): void
     {
-        $this->postDatas = $postDatas;
+        $this->postData = $postData;
     }
 
 
@@ -112,7 +112,7 @@ class CalendarController extends AbstractController
                                                                 'events' => $this->events($mode, $id),
                                                                 'usersjson' => $usersjson,
                                                                 'message'   => $this->getMessages(),
-                                                                'postDatas' => $this->getPostDatas()
+                                                                'postData' => $this->getPostData()
                                                                 ]);
     }
 
@@ -134,7 +134,7 @@ class CalendarController extends AbstractController
                                                                     'events' => $this->events($mode, $id),
                                                                     'usersjson' => $usersjson,
                                                                     'message'   => $this->getMessages(),
-                                                                    'postDatas' => $this->getPostDatas()
+                                                                    'postData' => $this->getPostData()
                                                                     ]);
     }
 }
