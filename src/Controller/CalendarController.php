@@ -97,14 +97,26 @@ class CalendarController extends AbstractController
     public function month($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
-        $userManager = new UserManager();
-        $users = $userManager->selectAll();
+
+        $users = $this->userManager->selectAll();
         $usersjson = json_encode($users);
+
+        if (isset($mode)) {
+            $next = $this->getCalendar()->nextMont();
+            $next .=  "/$mode/$id";
+            $previous = $this->getCalendar()->previousMonth();
+            $previous .=  "/$mode/$id";
+        } else {
+            $next = $this->getCalendar()->nextMonth();
+            $previous = $this->getCalendar()->previousMonth();
+        }
+
+
 
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
-                                                                'next' => $this->getCalendar()->nextMonth(),
-                                                                'previous' => $this->getCalendar()->previousMonth(),
+                                                                'next' => $next,
+                                                                'previous' => $previous,
                                                                 'calendar' => $this->getCalendar()->generateMonth(),
                                                                 'days' => $this->getCalendar()->days,
                                                                 'rooms' => $this->roomManager->selectAll(),
@@ -112,7 +124,9 @@ class CalendarController extends AbstractController
                                                                 'events' => $this->events($mode, $id),
                                                                 'usersjson' => $usersjson,
                                                                 'message'   => $this->getMessages(),
-                                                                'postData' => $this->getPostData()
+                                                                'postData' => $this->getPostData(),
+                                                                'mode' => $mode,
+                                                                'userOrRoomId' => $id
                                                                 ]);
     }
 
@@ -120,21 +134,34 @@ class CalendarController extends AbstractController
     public function week($month = null, $year = null, $week = null, $mode = null, $id = null)
     {
         $this->setCalendar(new Calendar($month, $year, $week));
-        $userManager = new UserManager();
-        $users = $userManager->selectAll();
+
+        $users = $this->userManager->selectAll();
         $usersjson = json_encode($users);
+
+        if (isset($mode)) {
+            $next = $this->getCalendar()->nextMont();
+            $next .=  "/$mode/$id";
+            $previous = $this->getCalendar()->previousMonth();
+            $previous .=  "/$mode/$id";
+        } else {
+            $next = $this->getCalendar()->nextMonth();
+            $previous = $this->getCalendar()->previousMonth();
+        }
+
         return $this->twig->render('weekCalendar.html.twig', [
                                                                     'fullDate' => $this->getCalendar()->getTitle(),
                                                                     'daysOfWeek' => $this->getCalendar()->daysOfWeek(),
-                                                                    'next' => $this->getCalendar()->nextWeek(),
-                                                                    'previous' => $this->getCalendar()->previousWeek(),
+                                                                    'next' => $next,
+                                                                    'previous' => $previous,
                                                                     'calendar' => $this->getCalendar()->generateWeek(),
                                                                     'rooms' => $this->roomManager->selectAll(),
                                                                     'users' => $this->userManager->selectAll(),
                                                                     'events' => $this->events($mode, $id),
                                                                     'usersjson' => $usersjson,
                                                                     'message'   => $this->getMessages(),
-                                                                    'postData' => $this->getPostData()
+                                                                    'postData' => $this->getPostData(),
+                                                                    'mode' => $mode,
+                                                                    'userOrRoomId' => $id
                                                                     ]);
     }
 }

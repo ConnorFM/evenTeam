@@ -65,9 +65,8 @@ class RoomController extends CalendarController
                 $this->setMessages($messages);
                 return $this->month();
             } else {
-                $date =  new \DateTime();
                 $this->setMessages($errors);
-                return $this->month($date->modify('m'), $date->modify('Y'));
+                return $this->month();
             }
         }
     }
