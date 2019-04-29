@@ -27,6 +27,27 @@
   <div class="row">
     <div class="col-sm-5">
       <!-- User select -->
+
+
+      <label>Avaliable Users</label>
+      <ul>
+        {% for user in users %}
+          <li onclick="this.parentNode.removeChild(this);">
+            <input type="hidden" name="users[]" value="{{ user.id }}" />
+            {{ user.firstname }} {{ user.lastname }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <select onchange="selectUser(this);">
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+        {% endfor%}
+      </select>
+
+
+      <!--
+
       <label>Avaliable Users</label>
       <select class="mdb-select md-form colorful-select down-warning" name="user" required>
         <option value="" disabled selected>Choose a user</option>
@@ -36,7 +57,78 @@
         {% endfor %}
 
       </select>
+
+      -->
+
+
     </div>
+
+    <script>
+function selectUser(select)
+{
+  var option = select.options[select.selectedIndex];
+  var ul = select.parentNode.getElementsByTagName('ul')[0];
+     
+  var choices = ul.getElementsByTagName('input');
+  for (var i = 0; i < choices.length; i++)
+    if (choices[i].value == option.value)
+      return;
+     
+  var li = document.createElement('li');
+  var input = document.createElement('input');
+  var text = document.createTextNode(option.firstChild.data);
+     
+  input.type = 'hidden';
+  input.name = 'users[]';
+  input.value = option.value;
+
+  li.appendChild(input);
+  li.appendChild(text);
+  li.setAttribute('onclick', 'this.parentNode.removeChild(this);');     
+    
+  ul.appendChild(li);
+}
+</script>
+
+
+
+<!-- 
+
+
+
+JS Script :
+
+
+
+
+
+
+PHP : 
+
+foreach ($_POST['users'] as $user) {
+  // do something with $user
+}
+
+
+
+
+
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="col-sm-5">
       <!-- Room select -->
       <label>Avaliable Rooms</label>
@@ -49,6 +141,17 @@
 
       </select>
     </div>
+
+
+
+
+
+
+
+
+
+
+
   </div>
 
   <div class="row">
