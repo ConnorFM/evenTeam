@@ -154,4 +154,22 @@ class EventController extends CalendarController
         // Display errors messages from the errors array
         return $errors;
     }
+
+
+    public function edit($id)
+    {
+        $eventManager = new EventManager();
+        $event = $eventManager->selectOneById($id);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $event['name'] = $_POST['name'];
+            $event['date_start'] = $_POST['date_start'];
+            $event['date_end'] = $_POST['date_end'];
+            $event['room_id'] = $_POST['room_id'];
+            $event['description'] = $_POST['description'];
+            $eventManager->update($event);
+        }
+
+        header('Location:/calendar/month');
+    }
 }
