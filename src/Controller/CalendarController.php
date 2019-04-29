@@ -110,8 +110,7 @@ class CalendarController extends AbstractController
                                                                 'rooms' => $this->roomManager->selectAll(),
                                                                 'users' => $this->userManager->selectAll(),
                                                                 'events' => $this->events($mode, $id),
-                                                                'message'   => $this->messages,
-                                                                'usersjson' => $usersjson
+                                                                'usersjson' => $usersjson,
                                                                 'message'   => $this->getMessages(),
                                                                 'postDatas' => $this->getPostDatas()
                                                                 ]);
@@ -133,7 +132,7 @@ class CalendarController extends AbstractController
                                                                     'rooms' => $this->roomManager->selectAll(),
                                                                     'users' => $this->userManager->selectAll(),
                                                                     'events' => $this->events($mode, $id),
-                                                                    'usersjson' => $usersjson
+                                                                    'usersjson' => $usersjson,
                                                                     'message'   => $this->getMessages(),
                                                                     'postDatas' => $this->getPostDatas()
                                                                     ]);

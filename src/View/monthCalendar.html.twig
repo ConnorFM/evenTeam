@@ -30,9 +30,9 @@
             <div class="row no-gutters">
                 <a href="/Calendar/month" class="btn btn-warning weekToMonthMonth">Month</a>
                 <a href="/Calendar/week" class="btn btn-warning weekToMonthMonth">Week</a>
-            </div>
+            </div> 
             <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2>
-            <h2 class="month-title">{{ fullDate }}</h2>
+            <h2 class="month-year month-title">{{ fullDate }}</h2>
             <div>
                 <a href="/Calendar/month/{{ previous }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-left"></i></a>
                 <a href="/Calendar/month/{{ next }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-right"></i></a>
@@ -41,23 +41,23 @@
         </div>
         <div class="container calMobile2">
             <div class="table-striped table-responsive-xl">
-                <table class="table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
+                <table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
                     <thead class="screenDesktopMonth">
                         <tr class="text-center">
                         {% for day in days %}
-                            <th scope="col">{{ day }}</th>
+                            <th class="everyDay" scope="col">{{ day }}</th>
                         {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="text-center">
                             {% for date in calendar %}
-                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}">
+                                <td class=" {% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %}    calendarTd">
                                     {{date.0.date | date('d')}}
                                     <br/>
                                     {% for event in events %}
                                         {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
-                                            <span id="event{{ event.id }}" class="badge badge-pill badge-primary ">{{ event.name }}</span>
+                                            <p style="width: 8rem;" id="event{{ event.id }}" class="badge badge-pill badge-primary "><span style="text-overflow: ellipsis;">{{ event.name }}</span></p>
                                             <br/>
                                         {% endif %}
                                     {% endfor %}

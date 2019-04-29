@@ -48,7 +48,7 @@ class UserController extends CalendarController
     {
         $userManager = new userManager();
         $userManager->delete((int)$id);
-        header('Location:/user/index');
+        header('Location:/calendar/week');
     }
     // Create a user
     public function add()
@@ -69,9 +69,9 @@ class UserController extends CalendarController
                 echo "Veuillez renseigner votre email";
             } else {
                 $userManager->insert($user);
+                header('Location:/calendar/week');
             }
         }
-        return $this->twig->render('Users/add_user.html.twig');
     }
 
 

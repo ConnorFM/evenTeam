@@ -51,6 +51,9 @@
                     <div class="dropdown-menu" id="search_div"></div>
                     {% endif %}
 
+                  <script>var tab = JSON.parse({{ usersjson|json_encode|raw }});
+                console.log(tab);</script>
+
                   </li>
                 </ul>
               </div>

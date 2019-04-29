@@ -226,3 +226,24 @@
 .noDisplay{
     display: none;
 }
+
+/* Design calendar */
+.everyDay {
+    font-size: 1.5rem;
+    color: #0C67A2;
+    font-weight: 400;
+}
+
+.calendarTd {
+    background-color: white;
+}
+
+.calendarTable {
+    table-layout: fixed;
+    width: 70rem;
+}
+
+.month-year {
+    font-size: 4rem;
+    font-family: cursive;
+}
