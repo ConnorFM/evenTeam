@@ -102,7 +102,7 @@ class CalendarController extends AbstractController
         $usersjson = json_encode($users);
 
         if (isset($mode)) {
-            $next = $this->getCalendar()->nextMont();
+            $next = $this->getCalendar()->nextMonth();
             $next .=  "/$mode/$id";
             $previous = $this->getCalendar()->previousMonth();
             $previous .=  "/$mode/$id";
