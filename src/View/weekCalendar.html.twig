@@ -10,6 +10,7 @@
     {% include '_modalRoom.html.twig' %}
     {% include '_modalUser.html.twig' %}
     {% include '_modalEditUser.html.twig' %}
+    {% include '_modalEditRoom.html.twig' %}
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
             <div class="row no-gutters">
@@ -33,6 +34,7 @@
                         {% for day in daysOfWeek %}
                             <th scope="col">{{ day | date('l d F Y')}}</th>
                         {% endfor %}
+
                     </tr>
                 </thead>
                 <thead class="screenMobile">

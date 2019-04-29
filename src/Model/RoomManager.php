@@ -19,19 +19,21 @@ class RoomManager extends AbstractManager
      * @param array $room
      * @return int
      */
-    public function insert(array $room): int
+    public function insert($room)//: int
     {
         // prepared request
-        $statement = $this->pdo->prepare("INSERT INTO $this->table (name, capacity, image, description) 
-                                                    VALUES (:name, :capacity, :image)");
+        $statement = $this->pdo->prepare("INSERT INTO $this->table
+                                            (`name`, `capacity`, `image`, `description`)
+                                            VALUES (:name, :capacity, :image)");
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
         $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
-
+/**
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();
         }
+**/     $statement->execute();
     }
 
     /**

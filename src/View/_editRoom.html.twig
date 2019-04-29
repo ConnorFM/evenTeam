@@ -1,0 +1,19 @@
+<form class="border border-light p-5" method="post" action="/room/add">
+
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" class="form-control mb-4" value="{{ room.name }}">
+
+    <label for="capacity">Capacity</label>
+    <input type="number" id="capacity" name="capacity" class="form-control mb-4" value="{{ room.capacity }}">
+
+    <label for="description">Description</label>
+    <textarea id="description" class="form-control mb-4" name="description" rows="4" value="{{ room.description }}">
+
+    </textarea>
+
+    <label for="image">Image url</label>
+    <input type="text" id="textInput" name="image" class="form-control mb-4"  value = "{{ room.image }}">
+
+    <button class="btn btn-warning my-4 btn-block text-black-50" type="submit">Add a room</button>
+
+</form>

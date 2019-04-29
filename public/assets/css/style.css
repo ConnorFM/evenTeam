@@ -230,7 +230,7 @@
 /* Design calendar */
 .everyDay {
     font-size: 1.5rem;
-    color: #0C67A2;
+    color: grey;
     font-weight: 400;
 }
 
@@ -245,5 +245,20 @@
 
 .month-year {
     font-size: 4rem;
-    font-family: cursive;
+    font-family: cursive;   
+}
+
+
+#navbar {
+  display: flex;
+  background-color: grey;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+#navbar > * {
+  padding: 1rem;
+}
+
+.nav-container:hover #navbar {
+  transform: translateY(0);
 }
