@@ -36,7 +36,7 @@ class UserManager extends AbstractManager
     // Delete a user in the database
     public function delete(int $id): void
     {
-          $statement = $this->pdo->prepare("DELETE FROM user_event
+        $statement = $this->pdo->prepare("DELETE FROM user_event
                                         WHERE user_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
@@ -45,7 +45,6 @@ class UserManager extends AbstractManager
                                         WHERE id=:id");
         $delete->bindValue('id', $id, \PDO::PARAM_INT);
         $delete->execute();
-      
     }
 
     // Uptade a user
