@@ -27,15 +27,20 @@ class RoomController extends CalendarController
     }
 
 
-    public function edit(int $id): string
+    public function edit($id)
     {
         $roomManager = new RoomManager();
         $room = $roomManager->selectOneById($id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room['title'] = $_POST['title'];
+            $room['name'] = $_POST['name'];
+            $room['capacity'] = $_POST['capacity'];
+            $room['description'] = $_POST['description'];
+            $room['image'] = $_POST['image'];
             $roomManager->update($room);
         }
+
+        header('Location:/calendar/month');
     }
 
     public function add()
@@ -58,7 +63,7 @@ class RoomController extends CalendarController
 
                 $messages = "Well done";
                 $this->setMessages($messages);
-                return $this->month($date->modify('m'), $date->modify('Y'));
+                return $this->month();
             } else {
                 $date =  new \DateTime();
                 $this->setMessages($errors);
@@ -71,7 +76,7 @@ class RoomController extends CalendarController
     {
         $roomManager = new RoomManager();
         $roomManager->delete($id);
-        header('Location:'.$_SERVER['PHP_SELF']);
+        header('Location:/calendar/month');
     }
 
     private function verifForm($room)
