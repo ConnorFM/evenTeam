@@ -33,16 +33,16 @@
                       Rooms
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                    {% if session.status == 1 %}
-                      <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
-                    {% endif %}
-                    {% for room in rooms %}
-                        <a class="dropdown-item" href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}/room/{{ room.id }}">{{ room.name }}</a>
-                        {% if session.status == 1%}
-                            <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
-                            <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
+                        {% if session.status == 1 %}
+                            <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
                         {% endif %}
-                    {% endfor %}
+                        {% for room in rooms %}
+                            <a class="dropdown-item" href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}/room/{{ room.id }}">{{ room.name }}</a>
+                            {% if session.status == 1 %}
+                                <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
+                                <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                   </li>
                   <li class="nav-item dropdown">
@@ -50,16 +50,16 @@
                       Users
                     </a>
                     <div class="dropdown-menu dropdownuser" aria-labelledby="navbarDropdownMenuLink">
-                    {% if session.status == 1%}
-                      <a class="dropdown-item" data-toggle="modal" href="#modalUser"><span class="newRoom">Add a user</span></a>
-                    <input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search a user" type="text" id="search" name="search" aria-label="Search through site content">
-                    <div class="dropdown-menu" id="search_div"></div>
-                    {% endif %}
-
-
-                  <script>var tab = JSON.parse({{ usersjson|json_encode|raw }});
-                console.log(tab);</script>
-
+                        {% if session.status == 1%}
+                            <a class="dropdown-item" data-toggle="modal" href="#modalUser"><span class="newRoom">Add a user</span></a>
+                            <input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search a user" type="text" id="search" name="search" aria-label="Search through site content">
+                            <div class="dropdown-menu" id="search_div"></div>
+                        {% endif %}
+                          <script>
+                              var tab = JSON.parse({{ usersjson|json_encode|raw }});
+                              console.log(tab);
+                          </script>
+                    </div>
                   </li>
                 </ul>
               </div>
