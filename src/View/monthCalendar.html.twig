@@ -57,7 +57,7 @@
                                     {{date.0.date | date('d')}}
                                     <br/>
                                     {% for event in events %}
-                                        {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') %}
+                                        {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
                                             <p style="width: 8rem;" id="event{{ event.id }}" class="badge badge-pill badge-primary "><span style="text-overflow: ellipsis;">{{ event.name }}</span></p>
                                             <br/>
                                         {% endif %}
