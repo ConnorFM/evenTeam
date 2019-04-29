@@ -34,8 +34,8 @@
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">
-                <a href="/Calendar/month" class="btn btn-warning weekToMonthMonth">Month</a>
-                <a href="/Calendar/week" class="btn btn-warning weekToMonthMonth">Week</a>
+                <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Month</a>
+                <a href="/calendar/week/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Week</a>
             </div>
             {# <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2> #}
             <h2 class="month-year month-title">{{ fullDate }}</h2>
