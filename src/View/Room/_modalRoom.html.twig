@@ -1,18 +1,15 @@
-{% for event in events %}
-<div class="modal fade" id="modalEditEvent{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="modalRoom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title w-100 font-weight-bold">Add New Event</h4>
+                <h4 class="modal-title w-100 font-weight-bold">Add a New Room</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                {% include '_editEventForm.html.twig' %}
+                {% include 'Room/_addRoom.html.twig' %}
             </div>
         </div>
     </div>
 </div>
-{% endfor %}
