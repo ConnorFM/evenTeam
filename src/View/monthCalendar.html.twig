@@ -13,7 +13,6 @@
     {% include '_modalEditRoom.html.twig' %}
 
     {% if message is iterable %}
-
         <div class="container mt-2">
             <div class="alert alert-danger text-center">
                 {% for error in message %}
@@ -24,15 +23,21 @@
                 </button>
             </div>
         </div>
-
+    {% elseif message == 'success' %}
+        <div class="container mt-2">
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        </div>
     {% endif %}
+
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">
                 <a href="/Calendar/month" class="btn btn-warning weekToMonthMonth">Month</a>
                 <a href="/Calendar/week" class="btn btn-warning weekToMonthMonth">Week</a>
-            </div> 
-            <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2>
+            </div>
+            {# <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2> #}
             <h2 class="month-year month-title">{{ fullDate }}</h2>
             <div>
                 <a href="/Calendar/month/{{ previous }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-left"></i></a>

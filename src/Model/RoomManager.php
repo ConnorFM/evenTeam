@@ -23,12 +23,12 @@ class RoomManager extends AbstractManager
     {
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table
-                                            (`name`, `capacity`, `image`, `description`)
-                                            VALUES (:name, :capacity, :image)");
+                                            (`name`, `capacity`, `description`, `image`)
+                                            VALUES (:name, :capacity, :description, :image)");
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
-        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
+        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 /**
         if ($statement->execute()) {
             return (int)$this->pdo->lastInsertId();
@@ -55,9 +55,16 @@ class RoomManager extends AbstractManager
     {
 
         // prepared request
-        $statement = $this->pdo->prepare("UPDATE $this->table SET `title` = :title WHERE id=:id");
+        $statement = $this->pdo->prepare("UPDATE $this->table
+                                         SET `name` = :name,
+                                            `capacity` = :capacity,
+                                            `description` = :description,
+                                            `image` = :image
+                                         WHERE id=:id");
+        $statement->bindvalue('id', $room['id'], \PDO::PARAM_INT);
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
+        $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
         $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 
         return $statement->execute();

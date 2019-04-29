@@ -39,7 +39,7 @@ function searchUser() {
 	myAsecond = document.createElement('a');
 	myAsecond.href ="#modalEditUser" + tab[i].id;
 	myAsecond.id = tab[i].id;
-	myAsecond.setAttribute("date-toggle", "modal");
+	myAsecond.setAttribute("data-toggle", "modal");
 	// Création d'une balise a qui se nomme myAthird
 	myAthird = document.createElement('a');
 	myAthird.href = "/user/delete/" + tab[i].id;

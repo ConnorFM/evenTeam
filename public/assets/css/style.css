@@ -243,9 +243,16 @@
     width: 70rem;
 }
 
+.week-title {
+    font-weight: bold;
+    color: grey;
+}
+
 .month-year {
     font-size: 4rem;
-    font-family: cursive;   
+    font-family: cursive;
+    color: grey;   
+
 }
 
 
@@ -254,6 +261,7 @@
   background-color: grey;
   transform: translateY(-100%);
   transition: transform .5s cubic-bezier(.4,0,.2,1);
+  z-index: 99;
 }
 #navbar > * {
   padding: 1rem;

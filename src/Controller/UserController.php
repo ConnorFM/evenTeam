@@ -39,16 +39,18 @@ class UserController extends CalendarController
               $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
               $userManager->update($user);
-        }
 
-        header('Location: '.$_SERVER['REQUEST_URI']);
+              $messages = "Well done";
+              $this->setMessages($messages);
+              header('Location:/Calendar/month');
+        }
     }
   // Delete a user with the id
     public function delete($id)
     {
         $userManager = new userManager();
         $userManager->delete((int)$id);
-        header('Location:/calendar/week');
+        header('Location:/calendar/month');
     }
     // Create a user
     public function add()
@@ -74,29 +76,7 @@ class UserController extends CalendarController
             }
         }
     }
-
-
-    // Connect the user if the password and the email is ok
-    public function connection()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userManager = new UserManager();
-            $userBdd = $userManager->getLog($_POST['email']);
-            if (($userBdd['email'] == $_POST['email']) && ($userBdd['password'] == $_POST['password'])) {
-                $session = new Session;
-                $session->createSession(
-                    $userBdd['id'],
-                    $userBdd['status_id'],
-                    $userBdd['lastname'],
-                    $userBdd['firstname']
-                );
-                header('Location:/user/index');
-            } else {
-                echo "Mot de passe incorect ou email inexistant";
-            }
-        }
-    }
-
+    
     // Disconnect the user and redirect to login page
     public function logOut()
     {
@@ -109,24 +89,27 @@ class UserController extends CalendarController
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month');
+            exit;
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
+
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
                 && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
-                $session->createSession(
-                    $userBdd['id'],
-                    $userBdd['status_id'],
-                    $userBdd['lastname'],
-                    $userBdd['firstname']
-                );
-                header('Location: /calendar/week');
-                exit();
+                $session->createSession($userBdd);
+                $message = "Welcome to your calendar";
+                $this->setMessages($message);
+
+                header('Location: /calendar/month/' .
+                                        $this->calendar->month . '/' .
+                                        $this->calendar->year .'/' .
+                                        $this->calendar->week) ;
             } else {
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
+
         return $this->twig->render('Users/login.html.twig');
     }
 }
