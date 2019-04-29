@@ -13,7 +13,6 @@
     {% include '_modalEditRoom.html.twig' %}
 
     {% if message is iterable %}
-
         <div class="container mt-2">
             <div class="alert alert-danger text-center">
                 {% for error in message %}
@@ -24,8 +23,14 @@
                 </button>
             </div>
         </div>
-
+    {% elseif message == 'success' %}
+        <div class="container mt-2">
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        </div>
     {% endif %}
+
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <div class="row no-gutters">

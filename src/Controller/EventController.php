@@ -71,8 +71,7 @@ class EventController extends CalendarController
                 $eventManager = new EventManager();
                 $eventManager->insert($validEvent);
 
-                $messages = "Well done";
-                $this->setMessages($messages);
+                $this->setMessages("Well done");
                 return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
             } else {
                 $messages = $errors;
