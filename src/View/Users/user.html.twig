@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+
+	<script>
+		var tab = JSON.parse({{ usersjson|json_encode|raw }});
+		console.log(tab);
+		function searchUser() {
+			search_div = document.getElementById('search_div');
+			search_div.innerHTML = "";
+			var j = 0;
+			for (var i = 0; i < tab.length; i++) {
+			 	if (j > 9)
+			 		break;
+		 		if (tab[i].firstname.includes(document.getElementById('search').value)) {
+		 			console.log(tab[i].firstname); 			
+					myA = document.createElement('a');
+					myA.className = "dropdown-item";
+					myA.textContent = tab[i].firstname;
+					myA.href = "https://google.fr";
+					search_div.appendChild(myA);
+		 			j++;
+		 		}	
+			} 
+		}
+	</script>
+		<div class="col-12">
+			<label for="site-search">Search a user</label>
+			<input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search" type="text" id="search" name="search" aria-label="Search through site content">
+		<div class="dropdown-menu" id="search_div"></div>
+	<br/>	
+	 
+<!-- 	{% for user in users %}
+		<a href="/user/show/{{ user.ID }}">{{ user.ID }}</a> {{ user.firstname }} ton email: {{ user.email }} <br/>
+	{% endfor %}
+	<a href="/user/add">Ajouter</a> -->
+{% endblock %} 
+

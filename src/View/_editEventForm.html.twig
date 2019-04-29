@@ -1,0 +1,74 @@
+
+      <form method="post" action="/event/addEvent">
+        <div class="row">
+          <div class="col-sm-8">
+            <!-- Large input for Event Name -->
+            <div class="md-form form-lg">
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="" required>
+              <label for="inputLGEx">Event Name</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8">
+            <!-- Event Description-->
+            <div class="md-form">
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required></textarea>
+              <label for="textarea-char-counter">Type your event description</label>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <!-- Room select -->
+            <label>Available Rooms</label>
+            <select class="mdb-select md-form colorful-select down-warning" name="room">
+              <option value="" disabled selected>Choose a room</option>
+              {% for room in rooms %}
+               <option value="{{ room.id }}">{{ room.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <!-- Start Date input -->
+          <div class="col-sm-8">
+            <div class="md-form input-group form-sm">
+              <div class="input-group-prepend">
+                <span class="input-group-text md-addon">Begin date</span>
+              </div>
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
+              <!-- Error message if 'Begin Year' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth" required>
+              <!-- Error message if 'Begin Month' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay" required>
+              <!-- Error message if 'Begin Day' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour" required>
+              <!-- Error message if 'Begin Hour' field is empty or not correct -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- End Date input -->
+          <div class="col-sm-8">
+            <div class="md-form input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text md-addon">End date</span>
+              </div>
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
+              <!-- Error message if 'End Year' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth" required>
+              <!-- Error message if 'End Month' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay" required>
+              <!-- Error message if 'End Day' field is empty or not correct -->
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour" required>
+              <!-- Error message if 'End Hour' field is empty or not correct -->
+            </div>
+          </div>
+        </div>
+        <!-- Add 'New Event' button -->
+        <button type="submit" class="btn btn-deep-orange">Create Event</button>
+      </form>

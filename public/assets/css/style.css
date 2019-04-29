@@ -24,11 +24,11 @@
 }
 
 .calendar__day{
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
-.calendar__othermonth td{
-    opacity: 0.4;
+.calendar__othermonth{
+    opacity: 0.3;
 }
 
 /* ADD BUTTON */
@@ -81,6 +81,35 @@
     }
 }
 
+
+/* Change title considering screen size */
+
+@media screen and (max-width: 991px){
+    .month-title{
+        display: none;
+    }
+}
+
+
+.month-title-mobile{
+    display: none;
+}
+
+@media screen and (max-width: 991px){
+    .month-title-mobile{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 368px){
+    .month-title-mobile{
+        display: none;
+    }
+}
+
 /* Change day names considering screen size */
 
 @media screen and (max-width: 991px) {
@@ -97,8 +126,151 @@
     }
 }
 
+@media screen and (max-width: 451px){
+    .tableMobile{
+        font-size: 0.5em;
+    }
+}
 
-.weekToMonth{
+.weekToMonthMonth{
     width: 125px;
 }
 
+@media screen and (max-width: 768px) {
+    .weekToMonthMonth{
+        width: 60px;
+        padding-right :2px;
+        padding-left: 2px;
+        font-size: 0.5em;
+        max-height: 38.88px;
+    }
+}
+
+.dropdownuser {
+    width : 20rem;
+}
+
+.weekToMonthWeek{
+    width: 125px;
+}
+
+@media screen and (max-width: 768px) {
+    .weekToMonthWeek{
+        width: 60px;
+        padding-right :2px;
+        padding-left: 2px;
+        font-size: 0.5em;
+        max-height: 38.88px;
+    }
+}
+
+
+@media screen and (max-width: 440px){
+    table th.firstCol{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px){
+    .calMobile{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
+
+@media screen and (max-width: 514px) {
+    .screenDesktopMonth{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 576px){
+    .calMobile2{
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+}
+
+@media screen and (max-width: 990px){
+    .userName{
+        display: none;
+    }
+}
+
+.userName{
+    padding-right: 5vw;
+}
+
+
+
+
+.logonav{
+    /*max-height: 2vw;*/
+    width: auto;
+}
+
+.navbar{
+    background-color: #fb3;
+}
+
+.navbar-dark{
+    color: white;
+    font-weight: bold;
+}
+
+.nav-item{
+    color: white;
+}
+
+
+.newRoom, .dropdown-item{
+    font-weight: bold;
+}
+
+.noDisplay{
+    display: none;
+}
+
+/* Design calendar */
+.everyDay {
+    font-size: 1.5rem;
+    color: grey;
+    font-weight: 400;
+}
+
+.calendarTd {
+    background-color: white;
+}
+
+.calendarTable {
+    table-layout: fixed;
+    width: 70rem;
+}
+
+.week-title {
+    font-weight: bold;
+    color: grey;
+}
+
+.month-year {
+    font-size: 4rem;
+    font-family: cursive;
+    color: grey;
+
+}
+
+
+#navbar {
+  display: flex;
+  background-color: grey;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  z-index: 99;
+}
+#navbar > * {
+  padding: 1rem;
+}
+
+.nav-container:hover #navbar {
+  transform: translateY(0);
+}
