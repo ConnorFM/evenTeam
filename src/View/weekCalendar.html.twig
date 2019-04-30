@@ -49,13 +49,13 @@
                             {% for hour in hours %}
                                 <td class="tableMobile calendarTd">{{ hour | date('H:i') }}
                                 {% for event in events %}
-                                    <div style="background-color: blue; padding-right:12px;" class="text-center">
                                 {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
                                     hour | date('Y-m-d H:i') == event.date_end | date('Y-m-d H:i') or
                                     hour | date('Y-m-d H:i') < event.date_end | date('Y-m-d H:i') and
                                     hour | date('Y-m-d H:i') > event.date_start | date('Y-m-d H:i')%}
-                                    <a data-toggle="modal" id="event{{ event.id }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</a></div>
-
+                                    <a data-toggle="modal" id="event{{ event.id }}" href="#modalEditEvent{{ event.id }}">
+                                    <div style="background-color: orange; padding-right:12px;" class="text-center">{{ event.name }}</a></div>
+                                    <br/>
                                 {% endif %}
                             {% endfor %}
                                 </td>
