@@ -12,7 +12,11 @@
     <input type="email" id="email" name="email" class="form-control mb-4">
 
     <label for="status">User Status</label>
-    <input type="number" id="status" name="status_id" class="form-control mb-4">
+    <select class="browser-default custom-select" id="status" name="status_id">
+        <option selected>Select the status of the new user</option>
+        <option value="1">Admin</option>
+        <option value="2">User</option>
+    </select>
 
     <label  for="image">Image Link</label>
     <input  type="text"  id="image" name="image" class="form-control mb-4">
