@@ -81,7 +81,8 @@ class EventController extends CalendarController
 
                     $message = (new \Swift_Message('Event ' . $validEvent['name'] . ' created'))
                     ->setFrom(['noreply@eventeam.com' => 'Eventeam'])
-                    ->setTo(['foucauld.gaudin@gmail.com', $userEmail])
+                    ->setTo(['noreply.eventeam@gmail.com'])
+                    ->setBCC([$userEmail])
                     ->setBody('Congratulations, your event ' .
                                 $events['eventName'] .
                                 ' has been created. You can visualize it on your calendar.')
