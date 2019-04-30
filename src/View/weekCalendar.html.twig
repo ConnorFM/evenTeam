@@ -52,7 +52,7 @@
                             <th scope="row">{{ hours[0] | date('H:i') }}</th>
                             {% for hour in hours %}
 
-                                <td class="tableMobile calendarTd">{{ hour | date('H:i') }}
+                                <td class="tableMobile calendarTd"><div class="noDisplay">{{ hour | date('H:i') }}</div>
                                 {% for event in events %}
                                 {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
                                     hour | date('Y-m-d H:i') == event.date_end | date('Y-m-d H:i') or
