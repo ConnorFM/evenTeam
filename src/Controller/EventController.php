@@ -88,13 +88,16 @@ class EventController extends CalendarController
                     ;
 
                 // Send the message
-                    $result = $mailer->send($message);
+                    $mailer->send($message);
                 }
 
                 $date = new \DateTime($validEvent["date_start"]);
+                $month = (clone $date)->format('m');
+                $year = (clone $date)->format('Y');
+                $week = (clone $date)->format('W');
 
-                $this->setMessages("Well done");
-                return $this->month($date->format('m'), $date->format('Y'));
+                header("Location: /calendar/month/$month/$year/$week");
+                exit;
             } else {
                 $messages = $errors;
                 $this->setMessages($messages);
