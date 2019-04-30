@@ -140,9 +140,20 @@ class EventManager extends AbstractManager
         $statement = $this->pdo->prepare("SELECT id, name, date_start, date_end, room_id, description  
                                           FROM user_event
                                           JOIN events ON id = user_event.event_id
-                                          WHERE user_id= :user_id
+                                          WHERE user_id = :user_id
                                           ORDER BY date_start;");
         $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+    // Return users of an event
+    public function getEventUsers()
+    {
+        $statement = $this->pdo->prepare("SELECT event_id, user_id
+                                          FROM user_event 
+                                          JOIN users 
+                                          ON user_event.user_id = users.id 
+                                          ORDER BY event_id;");
         $statement->execute();
         return $statement->fetchAll();
     }

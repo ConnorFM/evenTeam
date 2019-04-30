@@ -22,13 +22,13 @@
         <div class="row">
           <div class="col-sm-5">
           <!-- User select -->
-            <label>Avaliable Users</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="user"required disabled>
-              <option value="" disabled selected>Choose a user</option>
-              {% for user in users %}
-                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
-              {% endfor %}
-            </select>
+          <ul>
+          {% for assoc in allEvents %}
+            {% if assoc.event_id == event.id %}
+             <li> {{assoc.firstname}} {{assoc.lastname}} </li>
+            {% endif %}  
+          {% endfor %}
+          </ul> 
           </div>
           <div class="col-sm-5">
             <!-- Room select -->

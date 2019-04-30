@@ -99,4 +99,11 @@ class UserManager extends AbstractManager
 
         return $statement->fetch(); //array
     }
+
+    public function getAllUsersEvents()
+    {
+        $statement = $this->pdo->prepare("SELECT user_id, event_id, firstname, lastname FROM user_event JOIN users ON users.id = user_id");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }

@@ -110,6 +110,11 @@ class CalendarController extends AbstractController
             $next = $this->getCalendar()->nextMonth();
             $previous = $this->getCalendar()->previousMonth();
         }
+        $events = $this->events($mode, $id);
+        $eventUsers = $this->eventManager->getEventUsers();
+        
+
+
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
                                                                 'next' => $next,
@@ -123,7 +128,9 @@ class CalendarController extends AbstractController
                                                                 'message'   => $this->getMessages(),
                                                                 'postData' => $this->getPostData(),
                                                                 'mode' => $mode,
-                                                                'userOrRoomId' => $id
+                                                                'userOrRoomId' => $id,
+                                                                'eventUsers' => $this->eventManager->getEventUsers(),
+                                                                'allEvents' => $this->userManager->getAllUsersEvents()
                                                                 ]);
     }
 
