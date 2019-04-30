@@ -20,7 +20,7 @@ class EventController extends AbstractController
    * Display the created event on the 'weekCalendar.html.twig'
    * page with a success message, or display the same form with errors messages.
    *
-   * This method will insert into 'events' table the form inputs from '_addEventForm.html.twig'.
+   * This method will insert into 'events' table the event inputs and selected options.
    *
    * @return mixed
    */
@@ -47,6 +47,8 @@ class EventController extends AbstractController
             } else {
                 $events['eventRoom'] = $_POST['eventRoom'];
             }
+
+
 
             // Testing $errors in 'verifEvent' method
             $errors = $this->verifEvent($events);
@@ -100,7 +102,7 @@ class EventController extends AbstractController
         }
         // Testing EVENT USER input
         if (empty($events['userId'])) {
-            $errors['user_id'] = "Select a user please";
+            $errors['user_id'] = "Select user(s) please";
         }
         // Testing EVENT BEGIN YEAR input
         if (empty($events['eventBeginYear'])) {
