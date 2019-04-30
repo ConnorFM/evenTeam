@@ -37,11 +37,19 @@
                             <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
                         {% endif %}
                         {% for room in rooms %}
-                            <a class="dropdown-item" href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}/room/{{ room.id }}">{{ room.name }}</a>
-                            {% if session.status == 1 %}
-                                <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
-                                <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
-                            {% endif %}
+                            <div class="row">
+                                <div class="col-{% if session.status == 1 %}7{% else %}12{% endif %}">
+                                    <a class="dropdown-item" href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}/room/{{ room.id }}">{{ room.name }}</a>
+                                </div>
+                                {% if session.status == 1 %}
+                                    <div class="col-1 offset-1">
+                                        <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
+                                    </div>
+                                    <div class="col-1 offset-1">
+                                        <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                {% endif %}
+                            </div>
                         {% endfor %}
                     </div>
                   </li>
@@ -62,12 +70,10 @@
                   </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle navbar-links" href="#" id="navbarDropdownMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            My events
+                            All events
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                            {% if session.status == 1 %}
                                 <a class="dropdown-item" data-toggle="modal" href="#modalEvent"><span class="newRoom">Add an event</span></a>
-                            {% endif %}
                             {% for event in events %}
                                 <a data-toggle="modal" id="event{{ event.id }}" class="dropdown-item" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.date_start | date('d/m')}}  {{ event.name}}</a>
                             {% endfor %}
@@ -79,7 +85,7 @@
               <div class="justify-content-between">
                 <span class="userName">{{ session.firstname }} {{ session.lastname }}</span>
                 <a class="logonav" href="/user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
-                </div>
+              </div>
             </nav>
         {% endif %}
       </div>

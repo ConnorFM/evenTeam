@@ -15,12 +15,9 @@ class UserController extends CalendarController
         $this->userManager = new UserManager();
     }
 
-
   // Edit the user
     public function edit($id)
     {
-        $user = $this->userManager->selectOneById($id);
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               $user['firstname'] = $_POST['firstname'];
               $user['lastname'] = $_POST['lastname'];
@@ -30,17 +27,17 @@ class UserController extends CalendarController
               $user['password'] = $_POST['password'];
               $this->userManager->update($user);
 
-              $messages = "Well done";
-              $this->setMessages($messages);
               header('Location:/Calendar/month');
         }
     }
+
   // Delete a user with the id
     public function delete($id)
     {
         $this->userManager->delete((int)$id);
         header('Location:/calendar/month');
     }
+
     // Create a user
     public function add()
     {
@@ -58,14 +55,10 @@ class UserController extends CalendarController
 
             if (empty($errors)) {
                 $this->userManager->insert($user);
-
                 $date = new \DateTime();
                 $month = (clone $date)->format('m');
                 $year = (clone $date)->format('Y');
                 $week = (clone $date)->format('W');
-
-
-
                 header("Location: /calendar/month/$month/$year/$week");
                 exit;
             } else {
