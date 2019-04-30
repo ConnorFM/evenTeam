@@ -1,9 +1,10 @@
+
       <form method="post" action="/event/edit/{{ event.id }}">
         <div class="row">
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
             <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="{{ event.name }} "required disabled>
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="{{ event.name }}" required>
               <label for="inputLGEx">Event Name</label>
             </div>
           </div>
@@ -12,7 +13,7 @@
           <div class="col-sm-12">
             <!-- Event Description -->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription"required disabled>{{ event.description }}</textarea>
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription">{{ event.description }}</textarea>
               <label for="textarea-char-counter">Type your event description</label>
             </div>
             <!-- Error message if 'Event Description' field is empty or not correct -->
@@ -23,7 +24,7 @@
           <div class="col-sm-5">
           <!-- User select -->
             <label>Avaliable Users</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="user"required disabled>
+            <select class="mdb-select md-form colorful-select down-warning" name="user" required>
               <option value="" disabled selected>Choose a user</option>
               {% for user in users %}
                 <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
@@ -33,7 +34,7 @@
           <div class="col-sm-5">
             <!-- Room select -->
             <label>Available Rooms</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="eventRoom"required disabled>
+            <select class="mdb-select md-form colorful-select down-warning" name="eventRoom">
             <option value="" disabled selected>Choose a room</option>
             {% for room in rooms %}
               <option value="{{ room.id }}">{{ room.name }}</option>
@@ -49,13 +50,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">Begin date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" disabled>
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
               <!-- Error message if 'Begin Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth" required>
               <!-- Error message if 'Begin Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay" required>
               <!-- Error message if 'Begin Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour" required>
               <!-- Error message if 'Begin Hour' field is empty or not correct -->
             </div>
           </div>
@@ -68,19 +69,18 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">End date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required disabled>
+              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
               <!-- Error message if 'End Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth" required>
               <!-- Error message if 'End Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay" required>
               <!-- Error message if 'End Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour"required disabled>
+              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour" required>
               <!-- Error message if 'End Hour' field is empty or not correct -->
             </div>
           </div>
         </div>
         <!-- Add 'New Event' button -->
-        <button type="button" class="btn" onclick="editForm(event)" id="editButton">Edit</button>
-        <button type="submit" class="btn btn-deep-orange" style="display: none" id="saveButton">Save</button>
+        <button type="submit" class="btn btn-deep-orange">Edit Event</button>
         <a href="/event/delete/{{ event.id }}" class="btn btn-deep-orange">delete</a>
       </form>

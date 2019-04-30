@@ -65,4 +65,28 @@ function searchUser() {
 	j++;
 	} 
 	}  
+}
+
+function editForm(event) {
+	event.preventDefault();
+	let elements = document.getElementsByTagName('input');
+	disable(false, elements);
+
+	elements = document.getElementsByTagName('textarea');
+	disable(false, elements);
+
+	elements = document.getElementsByTagName('select');
+	disable(false, elements);
+
+	let editButton = document.getElementById('editButton');
+	let saveButton = document.getElementById('saveButton');
+
+	editButton.style.display = 'none';
+	saveButton.style.display = 'block';
+}
+
+function disable(isDisabled, collection) {
+	for (let item of collection) {
+	  	item.disabled = false;
+	}
 }	
