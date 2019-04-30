@@ -49,14 +49,16 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">Begin date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" disabled>
-              <!-- Error message if 'Begin Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth"required disabled>
-              <!-- Error message if 'Begin Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay"required disabled>
-              <!-- Error message if 'Begin Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour"required disabled>
-              <!-- Error message if 'Begin Hour' field is empty or not correct -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('d/m/Y') }}">
+                    </div>
+                    <div class="col offset-1">
+                        <!-- Last name -->
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required value="{{ event.date_start | date ('H:i') }}">
+                        <!-- Error message if 'Begin Hour' field is empty or not correct -->
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -68,14 +70,16 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">End date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required disabled>
-              <!-- Error message if 'End Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth"required disabled>
-              <!-- Error message if 'End Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay"required disabled>
-              <!-- Error message if 'End Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour"required disabled>
-              <!-- Error message if 'End Hour' field is empty or not correct -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input type="date" id="beginDate" class="form-control" name="dateEnd">
+                    </div>
+                    <div class="col offset-1">
+                        <!-- Last name -->
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required value="{{ event.date_end | date ('H:i') }}">
+                        <!-- Error message if 'Begin Hour' field is empty or not correct -->
+                    </div>
+                </div>
             </div>
           </div>
         </div>
