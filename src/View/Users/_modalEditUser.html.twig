@@ -1,22 +1,21 @@
-{% for room in rooms %}
-{% if 'room' ~ room.id is same as(modal-title) %}
+{% for user in users %}
+{% if 'user' ~ user.id is same as(modal-title) %}
 
-<div class="modal fade" id="modalEditRoom{{ room.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditUser{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold noDisplay"></h4>
-                <h4 class="w-100 font-weight-bold">Edit {{ room.name }}</h4>
+                <h4 class="w-100 font-weight-bold">Edit {{user.firstname}}  {{ user.lastname }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                {% include '_editRoom.html.twig' %}
+                {% include 'Users/_editUser.html.twig' %}
             </div>
         </div>
     </div>
 </div>
-
 {% endif %}
 {% endfor %}

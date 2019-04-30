@@ -137,13 +137,13 @@ class CalendarController extends AbstractController
         $usersjson = json_encode($users);
 
         if (isset($mode)) {
-            $next = $this->getCalendar()->nextMont();
+            $next = $this->getCalendar()->nextWeek();
             $next .=  "/$mode/$id";
-            $previous = $this->getCalendar()->previousMonth();
+            $previous = $this->getCalendar()->previousWeek();
             $previous .=  "/$mode/$id";
         } else {
-            $next = $this->getCalendar()->nextMonth();
-            $previous = $this->getCalendar()->previousMonth();
+            $next = $this->getCalendar()->nextWeek();
+            $previous = $this->getCalendar()->previousWeek();
         }
 
         return $this->twig->render('weekCalendar.html.twig', [
