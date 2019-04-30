@@ -70,6 +70,9 @@ class EventController extends CalendarController
                     "user_id"     => $events['userId']
                 ];
 
+                $eventManager = new EventManager();
+                $eventManager->insert($validEvent);
+
                 $getMail = new EventManager;
                 // Create the Transport
                 $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
