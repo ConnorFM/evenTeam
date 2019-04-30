@@ -10,8 +10,6 @@ class RoomController extends CalendarController
     protected $roomManager;
 
 
-
-
     public function index()
     {
         $roomManager = new RoomManager();

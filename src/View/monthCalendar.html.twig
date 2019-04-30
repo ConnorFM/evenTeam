@@ -19,8 +19,8 @@
                 {% for error in message %}
                     {{ error }} <br/>
                 {% endfor %}
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEvent">
-                    see your event
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
+                    See your {{ action }}
                 </button>
             </div>
         </div>
