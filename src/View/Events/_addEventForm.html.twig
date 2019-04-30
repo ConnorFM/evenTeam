@@ -26,21 +26,22 @@
   </div>
   <div class="row">
     <div class="col-sm-5">
-      <!-- User select -->
-      <label>Avaliable Users</label>
-      <select class="mdb-select md-form colorful-select down-warning" name="user" required>
-        <option value="" disabled selected>Choose a user</option>
+      <!-- User Multi-Select -->
+      <label>ctrl-click to select multiple users</label>
+
+      <select class="custom-select mdb-select" multiple id="select_users" size="5" name="user[]">
+        <option disabled>Select user(s)</option>
 
         {% for user in users %}
           <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
-        {% endfor %}
+        {% endfor%}
 
       </select>
     </div>
     <div class="col-sm-5">
       <!-- Room select -->
       <label>Available Rooms</label>
-      <select class="mdb-select md-form colorful-select down-warning" name="eventRoom">
+      <select class="md-form colorful-select down-warning" name="eventRoom">
         <option value="" disabled selected>Choose a room</option>
 
         {% for room in rooms %}
