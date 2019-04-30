@@ -163,17 +163,56 @@ class EventController extends CalendarController
     }
     public function edit($id)
     {
-        $eventManager = new EventManager();
-        $event = $eventManager->selectOneById($id);
+       $events = [
+                'eventName'         => $_POST['eventName'],
+                'eventDescription'  => $_POST['eventDescription'],
+                'eventBeginYear'    => $_POST['eventBeginYear'],
+                'eventBeginMonth'   => $_POST['eventBeginMonth'],
+                'eventBeginDay'     => $_POST['eventBeginDay'],
+                'eventBeginHour'    => $_POST['eventBeginHour'],
+                'eventEndYear'      => $_POST['eventEndYear'],
+                'eventEndMonth'     => $_POST['eventEndMonth'],
+                'eventEndDay'       => $_POST['eventEndDay'],
+                'eventEndHour'      => $_POST['eventEndHour'],
+                'userId'            => $_POST['user']
+            ];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $event['name'] = $_POST['name'];
-            $event['date_start'] = $_POST['date_start'];
-            $event['date_end'] = $_POST['date_end'];
-            $event['room_id'] = $_POST['room_id'];
-            $event['description'] = $_POST['description'];
-            $eventManager->update($event);
+            if (empty($_POST['eventRoom'])) {
+                $events['eventRoom'] = null;
+            } else {
+                $events['eventRoom'] = $_POST['eventRoom'];
+            }
+
+            // Testing $errors in 'verifEvent' method
+            $errors = $this->verifEvent($events);
+
+            // Condition verify the errors array is empty
+            if (empty($errors)) {
+                $validEvent = [
+                    'id'          => $id,
+                    "name"        => $events['eventName'],
+                    "date_start"  => $events['eventBeginYear'] . "-" .
+                                     $events['eventBeginMonth'] . "-" .
+                                     $events['eventBeginDay'] . " " .
+                                     $events['eventBeginHour'] . ":00",
+                    "date_end"    => $events['eventEndYear'] . "-" .
+                                     $events['eventEndMonth'] . "-" .
+                                     $events['eventEndDay'] . " " .
+                                     $events['eventEndHour'] . ":00",
+                    "room_id"     => $events['eventRoom'],
+                    "description" => $events['eventDescription'],
+                    "user_id"     => $events['userId']
+                ];
+
+                $eventManager = new EventManager();
+                $eventManager->update($validEvent);
+
+                $this->setMessages("Well done");
+                return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
+            } else {
+                $messages = $errors;
+                $this->setMessages($messages);
+                return $this->month();
+            }
         }
-        header('Location:/calendar/month');
     }
-}
