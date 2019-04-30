@@ -31,6 +31,8 @@
             <table class="calendarTable table table-bordered table-striped">
                 <thead class="screenDesktop">
                     <tr class="text-center">
+
+                        <th scope="col" class="everyDay">Hours</th>
                         {% for day in daysOfWeek %}
                             <th class="everyDay" scope="col">{{ day | date('l d F')}}</th>
                         {% endfor %}
@@ -38,6 +40,7 @@
                 </thead>
                 <thead class="screenMobile">
                     <tr class="text-center">
+
                         {% for day in daysOfWeek %}
                             <th scope="col" class="tableMobile">{{ day | date('D d') }}</th>
                         {% endfor %}
@@ -46,7 +49,9 @@
                 <tbody>
                     {% for hours in calendar %}
                         <tr>
+                            <th scope="row">{{ hours[0] | date('H:i') }}</th>
                             {% for hour in hours %}
+
                                 <td class="tableMobile calendarTd">{{ hour | date('H:i') }}
                                 {% for event in events %}
                                 {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
