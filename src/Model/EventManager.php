@@ -66,9 +66,14 @@ class EventManager extends AbstractManager
     public function delete(int $id):void
     {
         // prepared request
-        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+        
+        
+        $statement = $this->pdo->prepare("DELETE FROM user_event WHERE event_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         
+        $statement->execute();
+
+        $statement = $this->pdo->prepare("DELETE FROM events WHERE id not IN (SELECT event_id FROM user_event)");
         $statement->execute();
     }
 
@@ -82,10 +87,19 @@ class EventManager extends AbstractManager
     public function update(array $events):bool
     {
         // prepared request
-        $statement = $this->pdo->prepare("UPDATE $this->table SET `title`=:title WHERE id=:id");
+        $statement = $this->pdo->prepare("UPDATE $this->table 
+                                            SET `name`=:name,
+                                                `date_start` = :date_start,
+                                                `date_end` = :date_end,
+                                                `room_id` = :room_id,
+                                                `description` = :description
+                                            WHERE id=:id");
         $statement->bindValue('id', $events['id'], \PDO::PARAM_INT);
-        $statement->bindValue('title', $events['title'], \PDO::PARAM_STR);
-
+        $statement->bindValue('name', $events['name'], \PDO::PARAM_STR);
+        $statement->bindValue('date_start', $events['date_start'], \PDO::PARAM_STR);
+        $statement->bindValue('date_end', $events['date_end'], \PDO::PARAM_STR);
+        $statement->bindValue('room_id', $events['room_id'], \PDO::PARAM_INT);
+        $statement->bindValue('description', $events['description'], \PDO::PARAM_STR);
         return $statement->execute();
     }
 

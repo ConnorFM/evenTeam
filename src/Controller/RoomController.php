@@ -5,10 +5,10 @@ namespace App\Controller;
 
 use App\Model\RoomManager;
 
-class RoomController extends AbstractController
+class RoomController extends CalendarController
 {
-    private $roomManager;
-    private $date;
+    protected $roomManager;
+
 
 
 
@@ -27,15 +27,20 @@ class RoomController extends AbstractController
     }
 
 
-    public function edit(int $id): string
+    public function edit($id)
     {
         $roomManager = new RoomManager();
         $room = $roomManager->selectOneById($id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room['title'] = $_POST['title'];
+            $room['name'] = $_POST['name'];
+            $room['capacity'] = $_POST['capacity'];
+            $room['description'] = $_POST['description'];
+            $room['image'] = $_POST['image'];
             $roomManager->update($room);
         }
+
+        header('Location:/calendar/month');
     }
 
     public function add()
@@ -53,16 +58,15 @@ class RoomController extends AbstractController
             if (empty($errors)) {
                 $roomManager = new RoomManager();
                 $roomManager->insert($room);
-                $messages = "Room created";
 
                 $date =  new \DateTime();
 
-                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $messages);
-                return $calendar->month();
+                $messages = "Well done";
+                $this->setMessages($messages);
+                return $this->month();
             } else {
-                $date =  new \DateTime();
-                $calendar = new CalendarController($date->modify('m'), $date->modify('Y'), $errors);
-                return $calendar->month();
+                $this->setMessages($errors);
+                return $this->month();
             }
         }
     }
@@ -71,7 +75,7 @@ class RoomController extends AbstractController
     {
         $roomManager = new RoomManager();
         $roomManager->delete($id);
-        header('Location:'.$_SERVER['PHP_SELF']);
+        header('Location:/calendar/month');
     }
 
     private function verifForm($room)

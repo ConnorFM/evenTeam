@@ -1,10 +1,17 @@
 {% extends 'layout.html.twig' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/assets/css/stylelogin.css">
+{% endblock %}
+
 {% block content %}
-    <!--<link rel="stylesheet" href="/assets/css/stylelogin.css">-->
     <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-6">
-            <link rel="stylesheet" href="/assets/css/stylelogin.css">
+        <div class="row justify-content-center align-middle">
+          <div class="col-8">
                 <div class="divform">
                     <form method="POST" class="text-center border border-light p-5 form">
 
@@ -13,7 +20,9 @@
                         <p class="test">Connect to the app with the access codes you received by email</p>
 
                         {% if errorConnection == true %}
-                            <p class="text-success" style="font-size:30pt;color:red;text-decoration:underline overline;text-decoration-color:purple;">Wrong passw<span style="font-size: 50pt;color: yellow;">o</span>rd !!!!!!</p>
+                            <div class="alert alert-danger text-center">
+                                <p>Your login or password is wrong !</p>
+                            </div>
                         {% endif %}
                         <!-- Name -->
                         <input type="email" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Email" name="email">

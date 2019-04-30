@@ -146,7 +146,9 @@
     }
 }
 
-
+.dropdownuser {
+    width : 20rem;
+}
 
 .weekToMonthWeek{
     width: 125px;
@@ -195,11 +197,15 @@
     }
 }
 
+.userName{
+    padding-right: 5vw;
+}
+
 
 
 
 .logonav{
-    max-height: 2vw;
+    /*max-height: 2vw;*/
     width: auto;
 }
 
@@ -220,3 +226,53 @@
 .newRoom, .dropdown-item{
     font-weight: bold;
 }
+
+.noDisplay{
+    display: none;
+}
+
+/* Design calendar */
+.everyDay {
+    font-size: 1.5rem;
+    color: grey;
+    font-weight: 400;
+}
+
+.calendarTd {
+    background-color: white;
+}
+
+.calendarTable {
+    table-layout: fixed;
+    width: 70rem;
+}
+
+.week-title {
+    font-weight: bold;
+    color: grey;
+}
+
+.month-year {
+    font-size: 4rem;
+    font-family: cursive;
+    color: grey;
+
+}
+
+
+#navbar {
+  display: flex;
+  background-color: grey;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  z-index: 99;
+}
+#navbar > * {
+  padding: 1rem;
+}
+
+.nav-container:hover #navbar {
+  transform: translateY(0);
+}
+
+

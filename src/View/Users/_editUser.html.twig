@@ -1,7 +1,8 @@
-{{ dump(users) }}
-<form class="border border-light p-5" method="post" action="/user/edit">
 
-    <p class="h4 mb-4 text-center">Edit {{ user.firstname }} {{ user.lastname }}</p>
+
+<form class="border border-light p-5" method="POST" action="/user/edit/{{ user.id }}">
+
+    <p class="h4 mb-4 text-center noDisplay modal-title"></p>
 
     <label for="firstname">First Name</label>
     <input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" class="form-control mb-4">
@@ -21,7 +22,8 @@
     <label  for="password">Mot de passe</label>
       <input  type="password"  id="password" name="password" value="{{ user.password }}" class="form-control mb-4">
 
-    <button class="btn btn-info my-4 btn-block" type="submit">Add user</button>
+    <button class="btn btn-info my-4 btn-block" type="submit">Edit user</button>
 
 </form>
+
 

@@ -20,7 +20,8 @@
 
     <body>
         {% if connected == true %}
-            <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="nav-container">
+            <nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
               <a class="navbar-brand" href="/calendar/month"><img src="/assets/images/logo.png" class="logonav"></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,38 +33,43 @@
                       Rooms
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                    {% if session.status == 1 %}
-                      <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
-                    {% endif %}
-                    {% for room in rooms %}
-                        <a class="dropdown-item" href="#">{{ room.name }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditRoom"><i class="fas fa-pen"></i></button><a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
-                    {% endfor %}
+                        {% if session.status == 1 %}
+                            <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
+                        {% endif %}
+                        {% for room in rooms %}
+                            <a class="dropdown-item" href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}/room/{{ room.id }}">{{ room.name }}</a>
+                            {% if session.status == 1 %}
+                                <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
+                                <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" onclick="searchUser()"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Users
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% if session.status == 1%}
-                      <a class="dropdown-item" data-toggle="modal" href="#modalUser"><span class="newRoom">Add a user</span></a>
-                    {% endif %}
-                    {% for user in users %}
-                    {% if session.firstname != user.firstname %}
-                        <a class="dropdown-item" href="#">{{ user.firstname }} {{ user.lastname }}</a>{% if session.status == 1%}<a data-toggle="modal" href="#modalEditUser"><i class="fas fa-pen"></i></a><a href="/user/delete/{{ user.id }}"><i class="fas fa-trash-alt"></i></a>{% endif %}
-                    {% endif %}
-                    {% endfor %}
+                    <div class="dropdown-menu dropdownuser" aria-labelledby="navbarDropdownMenuLink">
+                        {% if session.status == 1%}
+                            <a class="dropdown-item" data-toggle="modal" href="#modalUser"><span class="newRoom">Add a user</span></a>
+                            <input data-toggle="dropdown" class="form-control" onclick="searchUser()" onkeyup="searchUser()" placeholder="Search a user" type="text" id="search" name="search" aria-label="Search through site content">
+                            <div class="dropdown-menu" id="search_div"></div>
+                        {% endif %}
+                          <script>
+                              var tab = JSON.parse({{ usersjson|json_encode|raw }});
+                          </script>
                     </div>
                   </li>
                 </ul>
-
               </div>
+
               <div class="justify-content-between">
                 <span class="userName">{{ session.firstname }} {{ session.lastname }}</span>
                 <a class="logonav" href="/user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
                 </div>
             </nav>
         {% endif %}
+      </div>
         {% block content %}{% endblock %}
 
   <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
@@ -73,9 +79,10 @@
   <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="/assets/js/mdb.min.js"></script>
-    {% block javascript %}{% endblock %}
+
+  <script type="text/javascript" src="/assets/js/script.js"></script>
+
+  {% block javascript %}{% endblock %}
 </body>
 
 </html>
-
-

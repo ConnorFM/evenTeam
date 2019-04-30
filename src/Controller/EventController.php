@@ -14,7 +14,7 @@ use App\Model\EventManager;
 /**
  * Class EventController
  */
-class EventController extends AbstractController
+class EventController extends CalendarController
 {
   /**
    * Display the created event on the 'weekCalendar.html.twig'
@@ -58,13 +58,13 @@ class EventController extends AbstractController
                 $validEvent = [
                     "name"        => $events['eventName'],
                     "date_start"  => $events['eventBeginYear'] . "-" .
-                                                     $events['eventBeginMonth'] . "-" .
-                                                     $events['eventBeginDay'] . " " .
-                                                     $events['eventBeginHour'] . ":00",
+                                     $events['eventBeginMonth'] . "-" .
+                                     $events['eventBeginDay'] . " " .
+                                     $events['eventBeginHour'] . ":00",
                     "date_end"    => $events['eventEndYear'] . "-" .
-                                                     $events['eventEndMonth'] . "-" .
-                                                     $events['eventEndDay'] . " " .
-                                                     $events['eventEndHour'] . ":00",
+                                     $events['eventEndMonth'] . "-" .
+                                     $events['eventEndDay'] . " " .
+                                     $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
                     "description" => $events['eventDescription'],
                     "user_id"     => $events['userId']
@@ -72,13 +72,13 @@ class EventController extends AbstractController
 
                 $eventManager = new EventManager();
                 $eventManager->insert($validEvent);
-                $messages = "Well done";
 
-                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $messages);
-                return $calendar->month();
+                $this->setMessages("Well done");
+                return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
             } else {
-                $calendar = new CalendarController($events['eventBeginMonth'], $events['eventBeginYear'], $errors);
-                return $calendar->month();
+                $messages = $errors;
+                $this->setMessages($messages);
+                return $this->month();
             }
         }
     }
@@ -155,5 +155,66 @@ class EventController extends AbstractController
 
         // Display errors messages from the errors array
         return $errors;
+    }
+
+    public function delete($id)
+    {
+        $eventManager = new eventManager();
+        $eventManager->delete((int)$id);
+        header('Location:/calendar/month');
+    }
+    public function edit($id)
+    {
+        $events = [
+                'eventName'         => $_POST['eventName'],
+                'eventDescription'  => $_POST['eventDescription'],
+                'eventBeginYear'    => $_POST['eventBeginYear'],
+                'eventBeginMonth'   => $_POST['eventBeginMonth'],
+                'eventBeginDay'     => $_POST['eventBeginDay'],
+                'eventBeginHour'    => $_POST['eventBeginHour'],
+                'eventEndYear'      => $_POST['eventEndYear'],
+                'eventEndMonth'     => $_POST['eventEndMonth'],
+                'eventEndDay'       => $_POST['eventEndDay'],
+                'eventEndHour'      => $_POST['eventEndHour'],
+                'userId'            => $_POST['user']
+            ];
+
+        if (empty($_POST['eventRoom'])) {
+            $events['eventRoom'] = null;
+        } else {
+            $events['eventRoom'] = $_POST['eventRoom'];
+        }
+
+            // Testing $errors in 'verifEvent' method
+            $errors = $this->verifEvent($events);
+
+            // Condition verify the errors array is empty
+        if (empty($errors)) {
+            $validEvent = [
+                'id'          => $id,
+                "name"        => $events['eventName'],
+                "date_start"  => $events['eventBeginYear'] . "-" .
+                                 $events['eventBeginMonth'] . "-" .
+                                 $events['eventBeginDay'] . " " .
+                                 $events['eventBeginHour'] . ":00",
+                "date_end"    => $events['eventEndYear'] . "-" .
+                                 $events['eventEndMonth'] . "-" .
+                                 $events['eventEndDay'] . " " .
+                                 $events['eventEndHour'] . ":00",
+                "room_id"     => $events['eventRoom'],
+                "description" => $events['eventDescription'],
+                "user_id"     => $events['userId']
+            ];
+
+            $eventManager = new EventManager();
+            $eventManager->update($validEvent);
+
+            $this->setMessages("Well done");
+            return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
+        } else {
+            $messages = $errors;
+            $this->setMessages($messages);
+            return $this->month();
+        }
     }
 }
