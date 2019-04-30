@@ -31,14 +31,10 @@ class EventController extends CalendarController
             $events = [
                 'eventName'         => $_POST['eventName'],
                 'eventDescription'  => $_POST['eventDescription'],
-                'eventBeginYear'    => $_POST['eventBeginYear'],
-                'eventBeginMonth'   => $_POST['eventBeginMonth'],
-                'eventBeginDay'     => $_POST['eventBeginDay'],
-                'eventBeginHour'    => $_POST['eventBeginHour'],
-                'eventEndYear'      => $_POST['eventEndYear'],
-                'eventEndMonth'     => $_POST['eventEndMonth'],
-                'eventEndDay'       => $_POST['eventEndDay'],
-                'eventEndHour'      => $_POST['eventEndHour'],
+                'eventBeginDate'    => $_POST['dateStart'],
+                'eventBeginHour'    => $_POST['startHour'],
+                'eventEndDate'      => $_POST['dateEnd'],
+                'eventEndHour'      => $_POST['endHour'],
                 'userId'            => $_POST['user']
             ];
 
@@ -57,13 +53,9 @@ class EventController extends CalendarController
             if (empty($errors)) {
                 $validEvent = [
                     "name"        => $events['eventName'],
-                    "date_start"  => $events['eventBeginYear'] . "-" .
-                                     $events['eventBeginMonth'] . "-" .
-                                     $events['eventBeginDay'] . " " .
+                    "date_start"  => $events['eventBeginDate'] . " " .
                                      $events['eventBeginHour'] . ":00",
-                    "date_end"    => $events['eventEndYear'] . "-" .
-                                     $events['eventEndMonth'] . "-" .
-                                     $events['eventEndDay'] . " " .
+                    "date_end"    => $events['eventEndDate'] . " " .
                                      $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
                     "description" => $events['eventDescription'],
@@ -99,8 +91,10 @@ class EventController extends CalendarController
                     $result = $mailer->send($message);
                 }
 
+                $date = new \DateTime($validEvent["date_start"]);
+
                 $this->setMessages("Well done");
-                return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
+                return $this->month($date->format('m'), $date->format('Y'));
             } else {
                 $messages = $errors;
                 $this->setMessages($messages);
@@ -130,23 +124,9 @@ class EventController extends CalendarController
         if (empty($events['userId'])) {
             $errors['user_id'] = "Select user(s) please";
         }
-        // Testing EVENT BEGIN YEAR input
-        if (empty($events['eventBeginYear'])) {
-            $errors['eventBeginYear'] = "A year is required";
-        } elseif (!preg_match("#[0-9]{4}#", $events['eventBeginYear'])) {
-            $errors['eventBeginYear'] = "Enter a valid year please ex: 2019";
-        }
-        // Testing EVENT BEGIN MONTH input
-        if (empty($events['eventBeginMonth'])) {
-            $errors['eventBeginMonth'] = "A month is required";
-        } elseif (!preg_match("#[0-9]{2}#", $events['eventBeginMonth']) || (int)$events['eventBeginMonth'] > 12) {
-            $errors['eventBeginMonth'] = "Enter a valid month of beginning please ex: 11 or 07";
-        }
-        // Testing EVENT BEGIN DAY input
-        if (empty($events['eventBeginDay'])) {
-            $errors['eventBeginDay'] = "A day is required";
-        } elseif (!preg_match("#[0-9]{2}#", $events['eventBeginDay']) || (int)$events['eventBeginDay'] > 31) {
-            $errors['eventBeginDay'] = "Enter a valid day of beginning please ex: 31 or 05";
+        //test EVENT BEGIN DAY
+        if (empty($events['eventBeginDate'])) {
+            $errors['eventBeginDate'] = "Please select a starting date";
         }
         // Testing EVENT BEGIN HOUR input
         if (empty($events['eventBeginHour'])) {
@@ -154,23 +134,9 @@ class EventController extends CalendarController
         } elseif (!preg_match("#[0-9]{2}:[0-9]{2}#", $events['eventBeginHour'])) {
             $errors['eventBeginHour'] = "Enter a valid hour of beginning please ex: 05:30 or 16:45";
         }
-        // Testing EVENT END YEAR input
-        if (empty($events['eventEndYear'])) {
-            $errors['eventEndYear'] = "A year is required";
-        } elseif (!preg_match("#[0-9]{4}#", $events['eventEndYear'])) {
-            $errors['eventEndYear'] = "Enter a valid year please ex: 2019";
-        }
-        // Testing EVENT END MONTH input
-        if (empty($events['eventEndMonth'])) {
-            $errors['eventEndMonth'] = "A month is required";
-        } elseif (!preg_match("#[0-9]{2}#", $events['eventEndMonth']) || (int)$events['eventEndMonth'] > 12) {
-            $errors['eventEndMonth'] = "Enter a valid month please ex: 11 or 07";
-        }
-        // Testing EVENT END DAY input
-        if (empty($events['eventEndDay'])) {
-            $errors['eventEndDay'] = "A day is required";
-        } elseif (!preg_match("#[0-9]{2}#", $events['eventEndDay']) || (int)$events['eventBeginDay'] > 31) {
-            $errors['eventEndDay'] = "Enter a valid day please ex: 31 or 05";
+        //test EVENT BEGIN DAY
+        if (empty($events['eventEndDate'])) {
+            $errors['eventEndDate'] = "Please select a ending date";
         }
         // Testing EVENT END HOUR input
         if (empty($events['eventEndHour'])) {

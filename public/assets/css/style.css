@@ -49,12 +49,13 @@
     /* Add a mouse pointer on hover */
     padding: 20px;
     /* Some padding */
-    border-radius: 10px;
+    border-radius: 35px;
     /* Rounded corners */
+    background-color: #fb3;
 }
 
 .addEventButt:hover {
-    background-color: #555;
+    background-color: #b20000;
     /* Add a dark-grey background on hover */
     transition-duration: 0.5s;
 }

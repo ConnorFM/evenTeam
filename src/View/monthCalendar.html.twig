@@ -45,54 +45,53 @@
                 <a href="/Calendar/month/{{ next }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
-        </div>
-        <div class="container calMobile2">
-            <div class="table-striped table-responsive-xl">
-                <table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
-                    <thead class="screenDesktopMonth">
-                        <tr class="text-center">
-                        {% for day in days %}
-                            <th class="everyDay" scope="col">{{ day }}</th>
+    </div>
+    <div class="container calMobile2">
+        <div class="table-striped table-responsive-xl">
+            <table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
+                <thead class="screenDesktopMonth">
+                <tr class="text-center">
+                    {% for day in days %}
+                        <th class="everyDay" scope="col">{{ day }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center">
+                    {% for date in calendar %}
+                    <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">
+                        {{date.0.date | date('d')}}
+                        <br/>
+                        {% for event in events %}
+                            {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or
+                                date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or
+                                date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
+                                date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
+                                <a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
+                                <br/>
+                            {% endif %}
                         {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-center">
-                            {% for date in calendar %}
-                                <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">
-                                    {{date.0.date | date('d')}}
-                                    <br/>
-                                    {% for event in events %}
-                                        {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or
-                                            date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or
-                                            date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
-                                            date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
-                                            <a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
-                                            <br/>
-                                        {% endif %}
-                                    {% endfor %}
-                                </td>
-                                {% if loop.index %7==0 %}
-                                </tr><tr class="text-center">
-                                {% endif %}
-                            {% endfor %}
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    </td>
+                    {% if loop.index %7==0 %}
+                </tr><tr class="text-center">
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 
 {% endblock %}
 
 {% block javascript %}
 
+
 <script type="text/javascript">
     // Material Select Initialization
     $(document).ready(function() {
-    $('.mdb-select').materialSelect();
+        $('.mdb-select').materialSelect();
     });
 </script>
 
 {% endblock %}
-
-
