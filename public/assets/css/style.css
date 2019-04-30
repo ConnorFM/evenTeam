@@ -1,11 +1,11 @@
 /* CALENDAR */
 
-.calendar__table{
+.calendar__table {
     width:100%;
     height:calc(100vh - 200px);
 }
 
-.calendar__table td{
+.calendar__table td {
     padding: 10px;
     border: 1px solid #CCC;
     vertical-align: top;
@@ -13,26 +13,25 @@
     height: 20%;
 }
 
-.calendar__table--6weeks td{
+.calendar__table--6weeks td {
     height: 16.66%;
 }
 
-.calendar__weekday{
+.calendar__weekday {
     font-weight: bold;
     color: black;
     font-size: 1.2em;
 }
 
-.calendar__day{
+.calendar__day {
     font-size: 1.1em;
 }
 
-.calendar__othermonth{
+.calendar__othermonth {
     opacity: 0.3;
 }
 
 /* ADD BUTTON */
-
 .addEventButt {
     position: fixed;
     /* Fixed/sticky position */
@@ -50,53 +49,49 @@
     /* Add a mouse pointer on hover */
     padding: 20px;
     /* Some padding */
-    border-radius: 10px;
+    border-radius: 35px;
     /* Rounded corners */
+    background-color: #fb3;
 }
+
 .addEventButt:hover {
-    background-color: #555;
+    background-color: #b20000;
     /* Add a dark-grey background on hover */
     transition-duration: 0.5s;
 }
 
-
-
 /* Change title considering screen size */
 
 @media screen and (max-width: 1200px){
-    .week-title{
+    .week-title {
         display: none;
     }
 }
 
-
-.week-title-mobile{
+.week-title-mobile {
     display: none;
 }
 
 @media screen and (min-width:768px) and (max-width: 1200px){
-    .week-title-mobile{
+    .week-title-mobile {
         display: initial;
         font-size: 2vw;
     }
 }
 
-
 /* Change title considering screen size */
-
 @media screen and (max-width: 991px){
-    .month-title{
+    .month-title {
         display: none;
     }
 }
 
-
-.month-title-mobile{
+.month-title-mobile {
     display: none;
 }
 
-@media screen and (max-width: 991px){
-    .month-title-mobile{
+@media screen and (max-width: 991px) {
+    .month-title-mobile {
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -104,40 +99,38 @@
     }
 }
 
-@media screen and (max-width: 368px){
-    .month-title-mobile{
+@media screen and (max-width: 368px) {
+    .month-title-mobile {
         display: none;
     }
 }
 
 /* Change day names considering screen size */
-
 @media screen and (max-width: 991px) {
-    .screenDesktop{
+    .screenDesktop {
         display: none;
     }
 }
 
-
-@media screen and (min-width: 992px){
-    .screenMobile{
+@media screen and (min-width: 992px) {
+    .screenMobile {
         display: none;
         font-size: 1em;
     }
 }
 
-@media screen and (max-width: 451px){
-    .tableMobile{
+@media screen and (max-width: 451px) {
+    .tableMobile {
         font-size: 0.5em;
     }
 }
 
-.weekToMonthMonth{
+.weekToMonthMonth {
     width: 125px;
 }
 
 @media screen and (max-width: 768px) {
-    .weekToMonthMonth{
+    .weekToMonthMonth {
         width: 60px;
         padding-right :2px;
         padding-left: 2px;
@@ -150,12 +143,12 @@
     width : 20rem;
 }
 
-.weekToMonthWeek{
+.weekToMonthWeek {
     width: 125px;
 }
 
 @media screen and (max-width: 768px) {
-    .weekToMonthWeek{
+    .weekToMonthWeek {
         width: 60px;
         padding-right :2px;
         padding-left: 2px;
@@ -164,70 +157,65 @@
     }
 }
 
-
-@media screen and (max-width: 440px){
-    table th.firstCol{
+@media screen and (max-width: 440px) {
+    table th.firstCol {
         display: none;
     }
 }
 
-@media screen and (max-width: 375px){
-    .calMobile{
+@media screen and (max-width: 375px) {
+    .calMobile {
         padding-right: 5px;
         padding-left: 5px;
     }
 }
 
 @media screen and (max-width: 514px) {
-    .screenDesktopMonth{
+    .screenDesktopMonth {
         display: none;
     }
 }
 
-@media screen and (max-width: 576px){
-    .calMobile2{
+@media screen and (max-width: 576px) {
+    .calMobile2 {
         padding-right: 5px;
         padding-left: 5px;
     }
 }
 
-@media screen and (max-width: 990px){
-    .userName{
+@media screen and (max-width: 990px) {
+    .userName {
         display: none;
     }
 }
 
-.userName{
+.userName {
     padding-right: 5vw;
 }
 
-
-
-
-.logonav{
+.logonav {
     /*max-height: 2vw;*/
     width: auto;
 }
 
-.navbar{
+.navbar {
     background-color: #fb3;
 }
 
-.navbar-dark{
+.navbar-dark {
     color: white;
     font-weight: bold;
 }
 
-.nav-item{
+.nav-item {
     color: white;
 }
 
-
-.newRoom, .dropdown-item{
+.newRoom, .dropdown-item {
     font-weight: bold;
 }
 
-.noDisplay{
+.noDisplay {
     display: none;
 }
 
@@ -240,11 +228,20 @@
 
 .calendarTd {
     background-color: white;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.event {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .calendarTable {
     table-layout: fixed;
-    width: 70rem;
+    width: 100%;
 }
 
 .week-title {
@@ -254,11 +251,9 @@
 
 .month-year {
     font-size: 4rem;
-    font-family: cursive;
+    /*font-family: cursive;*/
     color: grey;
-
 }
-
 
 #navbar {
   display: flex;
@@ -267,12 +262,20 @@
   transition: transform .5s cubic-bezier(.4,0,.2,1);
   z-index: 99;
 }
+
 #navbar > * {
   padding: 1rem;
 }
 
 .nav-container:hover #navbar {
   transform: translateY(0);
+}
+
+.dayDate{
+    border: solid 1px #fb3;
+    padding:5px;
+    background-color: #fb3;
+    border-radius: 50%;
 }
 
 
