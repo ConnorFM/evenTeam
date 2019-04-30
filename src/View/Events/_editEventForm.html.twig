@@ -20,8 +20,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-7">
           <!-- User select -->
+          <h4>Guest :</h4>
           <ul>
           {% for assoc in allEvents %}
             {% if assoc.event_id == event.id %}
@@ -32,13 +33,12 @@
           </div>
           <div class="col-sm-5">
             <!-- Room select -->
-            <label>Available Rooms</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="eventRoom"required disabled>
-            <option value="" disabled selected>Choose a room</option>
-            {% for room in rooms %}
-              <option value="{{ room.id }}">{{ room.name }}</option>
-            {% endfor %}
-            </select>
+          <h4>Room :</h4>
+          {% for room in rooms %}
+            {% if room.id == event.room_id %}
+              <p>{{room.name}}</p>
+            {% endif %}
+          {% endfor %}
           </div>
         </div>
         <div class="row">
@@ -80,7 +80,7 @@
           </div>
         </div>
         <!-- Add 'New Event' button -->
-        <button type="button" class="btn" onclick="editForm(event)" id="editButton">Edit</button>
-        <button type="submit" class="btn btn-deep-orange" style="display: none" id="saveButton">Save</button>
+        <button type="button" class="btn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+        <button type="submit" class="btn btn-deep-orange" style="display: none" id="saveButton{{event.id}}">Save</button>
         <a href="/event/delete/{{ event.id }}" class="btn btn-deep-orange">delete</a>
       </form>

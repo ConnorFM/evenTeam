@@ -67,7 +67,7 @@ function searchUser() {
 	}  
 }
 
-function editForm(event) {
+function editForm(event, eventId) {
 	event.preventDefault();
 	let elements = document.getElementsByTagName('input');
 	disable(false, elements);
@@ -78,11 +78,14 @@ function editForm(event) {
 	elements = document.getElementsByTagName('select');
 	disable(false, elements);
 
-	let editButton = document.getElementById('editButton');
-	let saveButton = document.getElementById('saveButton');
+	let editButton = document.getElementById('editButton' + eventId);
+	let saveButton = document.getElementById('saveButton' + eventId);
 
+	console.log('salut');
 	editButton.style.display = 'none';
 	saveButton.style.display = 'block';
+	console.log(saveButton);	
+	console.log('salut toi');
 }
 
 function disable(isDisabled, collection) {
