@@ -70,8 +70,31 @@ class EventController extends CalendarController
                     "user_id"     => $events['userId']
                 ];
 
-                $eventManager = new EventManager();
-                $eventManager->insert($validEvent);
+                $getMail = new EventManager;
+                // Create the Transport
+                $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                  ->setUsername('noreply.eventeam@gmail.com')
+                  ->setPassword('evenTeam2019')
+                ;
+
+               // Create the Mailer using your created Transport
+                $mailer = new \Swift_Mailer($transport);
+                // Create a message
+
+                foreach ($validEvent['user_id'] as $userID) {
+                    $userEmail = implode($getMail->getEmail($userID));
+
+                    $message = (new \Swift_Message('Event ' . $validEvent['name'] . ' created'))
+                    ->setFrom(['noreply@eventeam.com' => 'Eventeam'])
+                    ->setTo(['foucauld.gaudin@gmail.com', $userEmail])
+                    ->setBody('Congratulations, your event ' .
+                                $events['eventName'] .
+                                ' has been created. You can visualize it on your calendar.')
+                    ;
+
+                // Send the message
+                    $result = $mailer->send($message);
+                }
 
                 $this->setMessages("Well done");
                 return $this->month($events['eventBeginMonth'], $events['eventBeginYear']);
