@@ -1,28 +1,77 @@
 <form ACTION="/user/add" class="border border-light p-5" method="post" action="/user/add">
 
-    <label for="firstname">First Name</label>
-    <input type="text" id="firstname" name="firstname" class="form-control mb-4" value="{{ postData.firstname }}">
+    <div class="row">
+        <div class="col-md-5">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" class="form-control mb-4 {% if message.firstname is defined %}is-invalid {% endif %}" value="{{ postData.firstname }}" required>
+            {% if  message.firstname is defined %}
+                <div class="invalid-feedback">
+                    {{ message.firstname }}
+                </div>
+            {% endif %}
+        </div>
 
-    <label for="lastname">Last Name</label>
-    <input type="text" id="lastname" name="lastname" class="form-control mb-4 value="{{ postData.lastname }}">
+        <div class="col-md-5 offset-2">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" class="form-control mb-4 {% if message.lastname is defined %}is-invalid {% endif %}" value="{{ postData.lastname }}" required>
+            {% if  message.lastname is defined %}
+                <div class="invalid-feedback">
+                    {{ message.lastname }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    <label for="email">E-Mail</label>
-    <input type="email" id="email" name="email" class="form-control mb-4 value="{{ postData.email }}">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" class="form-control {% if message.email is defined %}is-invalid {% endif %}" value="{{ postData.email }}" required>
+            {% if  message.email is defined %}
+                <div class="invalid-feedback">
+                    {{ message.email }}
+                </div>
+            {% endif %}
+        </div>
 
-    <label for="status">User Status</label>
-    <select class="browser-default custom-select" id="status" name="status_id">
-        <option selected>Select the status of the new user</option>
-        <option value="1">Admin</option>
-        <option value="2">User</option>
-    </select>
+        <div class="col-12 mb-4">
+            <label  for="password">Mot de passe</label>
+            <input  type="password"  id="password" name="password" class="form-control  {% if message.password is defined %}is-invalid {% endif %}" required>
+            {% if  message.password is defined %}
+                <div class="invalid-feedback">
+                    {{ message.password }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    <label  for="image">Image Link</label>
-    <input  type="text"  id="image" name="image" class="form-control mb-4 value="{{ postData.image }}">
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            <label  for="image">Image Link</label>
+            <input  type="text"  id="image" name="image" class="form-control {% if message.image is defined %}is-invalid {% endif %}" value="{{ postData.image }}" required>
+            {% if  message.image is defined %}
+                <div class="invalid-feedback">
+                    {{ message.image }}
+                </div>
+            {% endif %}
+        </div>
 
-    <label  for="password">Mot de passe</label>
-      <input  type="password"  id="password" name="password" class="form-control mb-4">
-
-    <button class="btn btn-info my-4 btn-block" type="submit">Add user</button>
+        <div class="col-md-5 offset-2">
+            <label for="status">User Status</label>
+            <select class="browser-default custom-select {% if message.status is defined %}is-invalid {% endif %}" id="status" name="status_id" required>
+                <option disabled selected>Select a status</option>
+                <option value="1">Admin</option>
+                <option value="2">User</option>
+            </select>
+            {% if  message.status is defined %}
+                <div class="invalid-feedback">
+                    {{ message.status }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="d-flex justify-content-around">
+        <button class="btn btn-info" type="submit">Add user</button>
+    </div>
 
 </form>
 

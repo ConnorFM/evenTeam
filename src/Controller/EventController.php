@@ -87,7 +87,7 @@ class EventController extends CalendarController
                 // Create a message
 
                 foreach ($validEvent['user_id'] as $userID) {
-                    $userEmail = implode($this->userManager->getEmail($userID));
+                    $userEmail = implode($this->userManager->getEmails($userID));
 
                     $message = (new \Swift_Message('Event ' . $validEvent['name'] . ' created'))
                     ->setFrom(['noreply@eventeam.com' => 'Eventeam'])

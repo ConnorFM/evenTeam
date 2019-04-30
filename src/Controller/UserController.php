@@ -64,6 +64,8 @@ class UserController extends CalendarController
                 $year = (clone $date)->format('Y');
                 $week = (clone $date)->format('W');
 
+
+
                 header("Location: /calendar/month/$month/$year/$week");
                 exit;
             } else {
@@ -122,12 +124,15 @@ class UserController extends CalendarController
             $errors['firstname'] = "Please enter a firstname";
         }
         if (empty($user['lastname'])) {
-            $errors['lastname'] = "Please enter a firstname";
+            $errors['lastname'] = "Please enter a lastname";
         }
         if (empty($_POST['email'])) {
             $errors['email'] = "Please enter an email";
         } elseif ($_POST['email'] == $this->userManager->getOneByEmail($_POST['email'])['email']) {
             $errors['email'] = "This email already exist";
+        }
+        if (empty($user['status_id'])) {
+            $errors['status'] = "Please select a user's status";
         }
         if (empty($user['image'])) {
             $errors['image'] = "Please enter an image link";
