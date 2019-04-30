@@ -59,7 +59,7 @@
                 <tbody>
                 <tr class="text-center">
                     {% for date in calendar %}
-                    <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">{% if date.0.date | date('d') == now | date('d')%}<span class="dayDate">
+                    <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">{% if date.0.date | date('d-m-Y') == now | date('d-m-Y')%}<span class="dayDate">
                         {{date.0.date | date('d')}}</span>{% else %}{{date.0.date | date('d')}}{% endif %}
                         <br/>
                         {% for event in events %}
