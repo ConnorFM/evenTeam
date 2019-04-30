@@ -154,4 +154,11 @@ class EventController extends CalendarController
         // Display errors messages from the errors array
         return $errors;
     }
+
+    public function delete($id)
+    {
+        $eventManager = new eventManager();
+        $eventManager->delete((int)$id);
+        header('Location:/calendar/month');
+    }
 }

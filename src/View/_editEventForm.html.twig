@@ -4,7 +4,7 @@
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
             <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="" required>
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="{{ event.name }} " required>
               <label for="inputLGEx">Event Name</label>
             </div>
           </div>
@@ -14,7 +14,7 @@
           <div class="col-sm-8">
             <!-- Event Description-->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required></textarea>
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required>{{ event.description }}</textarea>
               <label for="textarea-char-counter">Type your event description</label>
             </div>
           </div>
@@ -70,5 +70,6 @@
           </div>
         </div>
         <!-- Add 'New Event' button -->
-        <button type="submit" class="btn btn-deep-orange">Create Event</button>
+        <button type="submit" class="btn btn-deep-orange">Edit Event</button>
+        <a href="/event/delete/{{ event.id }}" class="btn btn-deep-orange">delete</a>
       </form>

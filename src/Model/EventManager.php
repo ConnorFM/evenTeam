@@ -63,9 +63,14 @@ class EventManager extends AbstractManager
     public function delete(int $id):void
     {
         // prepared request
-        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+        
+        
+        $statement = $this->pdo->prepare("DELETE FROM user_event WHERE event_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         
+        $statement->execute();
+
+        $statement = $this->pdo->prepare("DELETE FROM events WHERE id not IN (SELECT event_id FROM user_event)");
         $statement->execute();
     }
 
