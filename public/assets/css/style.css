@@ -251,7 +251,7 @@
 
 .month-year {
     font-size: 4rem;
-    font-family: cursive;
+    /*font-family: cursive;*/
     color: grey;
 }
 
@@ -270,3 +270,12 @@
 .nav-container:hover #navbar {
   transform: translateY(0);
 }
+
+.dayDate{
+    border: solid 1px #fb3;
+    padding:5px;
+    background-color: #fb3;
+    border-radius: 50%;
+}
+
+
