@@ -15,12 +15,12 @@ class UserManager extends AbstractManager
     public function insert($user)
     {
         $insert = $this->pdo->prepare("INSERT INTO $this->table
-                                     (`firstname`, `lastname`, `email`, `status_ID`, `image`, `password`)
-                                     VALUES (:firstname, :lastname, :email, :status_ID, :image, :password)");
+                                     (`firstname`, `lastname`, `email`, `status_id`, `image`, `password`)
+                                     VALUES (:firstname, :lastname, :email, :status_id, :image, :password)");
         $insert->bindvalue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $insert->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $insert->bindvalue('email', $user['email'], \PDO::PARAM_STR);
-        $insert->bindvalue('status_ID', $user['status_ID'], \PDO::PARAM_INT);
+        $insert->bindvalue('status_id', $user['status_id'], \PDO::PARAM_INT);
         $insert->bindvalue('image', $user['image'], \PDO::PARAM_STR);
         $insert->bindvalue('password', $user['password'], \PDO::PARAM_STR);
 
@@ -36,15 +36,15 @@ class UserManager extends AbstractManager
     // Delete a user in the database
     public function delete(int $id): void
     {
-        // prepared request
-        $delete = $this->pdo->prepare("DELETE FROM $this->table
-                                        WHERE ID=:id");
-        $delete->bindValue('id', $id, \PDO::PARAM_INT);
-        $delete->execute();
         $statement = $this->pdo->prepare("DELETE FROM user_event
                                         WHERE user_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
+        // prepared request
+        $delete = $this->pdo->prepare("DELETE FROM $this->table
+                                        WHERE id=:id");
+        $delete->bindValue('id', $id, \PDO::PARAM_INT);
+        $delete->execute();
     }
 
     // Uptade a user
@@ -54,15 +54,15 @@ class UserManager extends AbstractManager
                                         SET `firstname` = :firstname,
                                             `lastname` = :lastname,
                                             `email` = :email,
-                                            `status_ID` = :status_ID,
+                                            `status_id` = :status_id,
                                             `image` = :image,
                                             `password` = :password
-                                        WHERE ID=:id");
-        $update->bindvalue('id', $user['ID'], \PDO::PARAM_INT);
+                                        WHERE id=:id");
+        $update->bindvalue('id', $user['id'], \PDO::PARAM_INT);
         $update->bindvalue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $update->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $update->bindvalue('email', $user['email'], \PDO::PARAM_STR);
-        $update->bindvalue('status_ID', $user['status_ID'], \PDO::PARAM_INT);
+        $update->bindvalue('status_id', $user['status_id'], \PDO::PARAM_INT);
         $update->bindvalue('image', $user['image'], \PDO::PARAM_STR);
         $update->bindvalue('password', $user['password'], \PDO::PARAM_STR);
 
@@ -80,10 +80,10 @@ class UserManager extends AbstractManager
         return $statement->fetch();
     }
 
-    // Return status and ID of the user
+    // Return status and id of the user
     public function getSession($email)
     {
-        $statement = $this->pdo->prepare("SELECT ID, status_ID, lastname FROM $this->table WHERE email=:email");
+        $statement = $this->pdo->prepare("SELECT id, status_id, lastname FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
         $statement->execute();
 

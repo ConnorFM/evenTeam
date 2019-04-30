@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\UserManager;
 use App\Service\Session;
 
-class UserController extends AbstractController
+class UserController extends CalendarController
 {
   // Display every user
     public function index()
@@ -35,31 +35,34 @@ class UserController extends AbstractController
               $user['firstname'] = $_POST['firstname'];
               $user['lastname'] = $_POST['lastname'];
               $user['email'] = $_POST['email'];
-              $user['status_ID'] = $_POST['status_ID'];
+              $user['status_id'] = $_POST['status_id'];
               $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
               $userManager->update($user);
-        }
 
-          return $this->twig->render('Users/user_edit.html.twig', ['user' => $user]);
+              $messages = "Well done";
+              $this->setMessages($messages);
+              header('Location:/Calendar/month');
+        }
     }
   // Delete a user with the id
     public function delete($id)
     {
         $userManager = new userManager();
         $userManager->delete((int)$id);
-        header('Location:/user/index');
+        header('Location:/calendar/month');
     }
     // Create a user
     public function add()
     {
+        $events=[] ;
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new userManager();
             $user = [
             'firstname' => $_POST['firstname'],
             'lastname' => $_POST['lastname'],
             'email' => $_POST['email'],
-            'status_ID' => $_POST['status_ID'],
+            'status_id' => $_POST['status_id'],
             'image' => $_POST['image'],
             'password' => $_POST['password']
             ];
@@ -69,33 +72,11 @@ class UserController extends AbstractController
                 echo "Veuillez renseigner votre email";
             } else {
                 $userManager->insert($user);
-            }
-        }
-        return $this->twig->render('Users/add_user.html.twig');
-    }
-
-
-    // Connect the user if the password and the email is ok
-    public function connection()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userManager = new UserManager();
-            $userBdd = $userManager->getLog($_POST['email']);
-            if (($userBdd['email'] == $_POST['email']) && ($userBdd['password'] == $_POST['password'])) {
-                $session = new Session;
-                $session->createSession(
-                    $userBdd['ID'],
-                    $userBdd['status_ID'],
-                    $userBdd['lastname'],
-                    $userBdd['firstname']
-                );
-                header('Location:/user/index');
-            } else {
-                echo "Mot de passe incorect ou email inexistant";
+                header('Location:/calendar/month');
             }
         }
     }
-
+    
     // Disconnect the user and redirect to login page
     public function logOut()
     {
@@ -108,24 +89,27 @@ class UserController extends AbstractController
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month');
+            exit;
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
             $userBdd = $userManager->getLog($_POST['email']);
+
             if ((!empty($_POST['email']) && $userBdd['email'] == $_POST['email'])
                 && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
-                $session->createSession(
-                    $userBdd['ID'],
-                    $userBdd['status_ID'],
-                    $userBdd['lastname'],
-                    $userBdd['firstname']
-                );
-                header('Location: /calendar/week');
-                exit();
+                $session->createSession($userBdd);
+                $message = "Welcome to your calendar";
+                $this->setMessages($message);
+
+                header('Location: /calendar/month/' .
+                                        $this->calendar->month . '/' .
+                                        $this->calendar->year .'/' .
+                                        $this->calendar->week) ;
             } else {
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
+
         return $this->twig->render('Users/login.html.twig');
     }
 }

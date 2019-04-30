@@ -4,12 +4,12 @@ namespace App\Service;
 
 class Session
 {
-    public function createSession($id, int $status, $name, $firstname)
+    public function createSession($user)
     {
-        $_SESSION['id'] = $id;
-        $_SESSION['status'] =$status;
-        $_SESSION['lastname'] =$name;
-        $_SESSION['firstname'] =$firstname;
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['status'] =$user['status_id'];
+        $_SESSION['lastname'] =$user['lastname'];
+        $_SESSION['firstname'] =$user['firstname'];
     }
 
     public function isConnected()

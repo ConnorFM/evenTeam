@@ -96,6 +96,7 @@ class Calendar
     /**
      * Retourne le jour de la semaine de début de mois
      * @return string
+     * @throws Exception
      */
     public function getStartingDayType()
     {
@@ -209,8 +210,9 @@ class Calendar
    * Jour dans le mois en cours?
    * @param  \DateTime $date [description]
    * @return bool
+   * @throws Exception
    */
-    public function withinMonth(\DateTime $date): bool
+    public function withinMonth(DateTime $date): bool
     {
         return $this->getStartingDay()->format('Y-m') === $date->format('Y-m');
     }
@@ -219,6 +221,7 @@ class Calendar
      * Crée un tableau associatif par mois qui définit le nombre de jours à afficher et les affiche
      * [generateMonth description]
      * @return array
+     * @throws Exception
      */
     public function generateMonth()
     {
