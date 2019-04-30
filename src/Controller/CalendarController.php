@@ -110,7 +110,6 @@ class CalendarController extends AbstractController
             $next = $this->getCalendar()->nextMonth();
             $previous = $this->getCalendar()->previousMonth();
         }
-        print_r($this->events($mode, $id));
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
                                                                 'next' => $next,
