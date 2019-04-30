@@ -16,7 +16,11 @@ function searchUser() {
 	for (var i = 0; i < tab.length; i++) {
 	if (j > 15)
 	break;
-	if (tab[i].firstname.includes(document.getElementById('search').value)) {
+	var compared = document.getElementById('search').value;
+	compared = compared.toUpperCase();
+	var firstnameUpper;
+	firstnameUpper = tab[i].firstname.toUpperCase();
+	if (firstnameUpper.includes(compared)) {
 	console.log(tab[i].firstname);
 	// Création de rowDiv
 	myrowDiv = document.createElement('div');
@@ -61,4 +65,4 @@ function searchUser() {
 	j++;
 	} 
 	}  
-	}
+}	

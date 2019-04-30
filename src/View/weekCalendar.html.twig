@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    {% include '_modalEvent.html.twig' %}
+    {% include 'Events/_modalEvent.html.twig' %}
     {% include '_addEventButton.html.twig' %}
-    {% include '_modalRoom.html.twig' %}
-    {% include '_modalUser.html.twig' %}
-    {% include '_modalEditUser.html.twig' %}
-    {% include '_modalEditRoom.html.twig' %}
+    {% include 'Room/_modalRoom.html.twig' %}
+    {% include 'Users/_modalUser.html.twig' %}
+    {% include 'Users/_modalEditUser.html.twig' %}
+    {% include 'Room/_modalEditRoom.html.twig' %}
+    {% include 'Events/_modalEditEvent.html.twig' %}
     <div class="container">
         <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
             <div class="row no-gutters">
@@ -25,12 +26,13 @@
             </div>
         </div>
     </div>
-
     <div class="container calMobile">
         <div class="table-responsive-xl">
             <table class="calendarTable table table-bordered table-striped">
                 <thead class="screenDesktop">
                     <tr class="text-center">
+
+                        <th scope="col" class="everyDay">Hours</th>
                         {% for day in daysOfWeek %}
                             <th class="everyDay" scope="col">{{ day | date('l d F')}}</th>
                         {% endfor %}
@@ -38,6 +40,7 @@
                 </thead>
                 <thead class="screenMobile">
                     <tr class="text-center">
+
                         {% for day in daysOfWeek %}
                             <th scope="col" class="tableMobile">{{ day | date('D d') }}</th>
                         {% endfor %}
@@ -46,9 +49,23 @@
                 <tbody>
                     {% for hours in calendar %}
                         <tr>
+                            <th scope="row">{{ hours[0] | date('H:i') }}</th>
                             {% for hour in hours %}
-                                <td class="tableMobile calendarTd">{{ hour | date('H:i') }}</td>
+
+                                <td class="tableMobile calendarTd"><div class="noDisplay">{{ hour | date('H:i') }}</div>
+                                {% for event in events %}
+                                {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
+                                    hour | date('Y-m-d H:i') == event.date_end | date('Y-m-d H:i') or
+                                    hour | date('Y-m-d H:i') < event.date_end | date('Y-m-d H:i') and
+                                    hour | date('Y-m-d H:i') > event.date_start | date('Y-m-d H:i')%}
+                                    <a data-toggle="modal" id="event{{ event.id }}" href="#modalEditEvent{{ event.id }}">
+                                    <div style="background-color: orange; padding-right:12px;" class="text-center">{{ event.name }}</a></div>
+                                    <br/>
+                                {% endif %}
                             {% endfor %}
+                                </td>
+                            {% endfor %}
+
                         </tr>
                     {% endfor %}
                 </tbody>
