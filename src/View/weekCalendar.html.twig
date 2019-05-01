@@ -12,11 +12,25 @@
   {% include 'Users/_modalEditUser.html.twig' %}
   {% include 'Room/_modalEditRoom.html.twig' %}
   {% include 'Events/_modalEditEvent.html.twig' %}
+
+  {% if message is iterable %}
+    <div class="container mt-2">
+      <div class="alert alert-danger text-center">
+        {% for error in message %}
+          {{ error }} <br/>
+        {% endfor %}
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
+          See your {{ action | slice(4, -1)}}
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
   <div class="container">
     <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
       <div class="row no-gutters">
-        <a href="/Calendar/month" class="btn btn-warning weekToMonthWeek">Month</a>
-        <a href="/Calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
+        <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthWeek">Month</a>
+        <a href="/calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
       </div>
       <h2 class="week-title week-title">{{ fullDate }}</h2>
       <h2 class="week-title-mobile">{{ mobileDate }}</h2>

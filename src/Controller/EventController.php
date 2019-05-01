@@ -175,7 +175,7 @@ class EventController extends CalendarController
             $messages = $errors;
             $this->setMessages($messages);
             $this->setPostData($_POST);
-            $this->setAction('event');
+            $this->setAction('EditEvent' .$id);
             return $this->month();
         }
     }

@@ -20,7 +20,7 @@
 					{{ error }} <br/>
 				{% endfor %}
 				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
-					See your {{ action }}
+					See your {{ action | slice(4, -1)}}
 				</button>
 			</div>
 		</div>

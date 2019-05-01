@@ -51,7 +51,7 @@ class RoomController extends CalendarController
             } else {
                 $this->setMessages($errors);
                 $this->setPostData($room);
-                $this->setAction('room');
+                $this->setAction('EditRoom' .$id);
                 return $this->month();
             }
         }

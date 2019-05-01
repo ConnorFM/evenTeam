@@ -73,12 +73,28 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle navbar-links" href="#" id="navbarDropdownMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  All events
+                  {% if mode is not empty %}
+                    {% if mode == 'room' %}
+                      {% for room in rooms %}
+                        {% if room.id == userOrRoomId %}
+                          All {{ room.name }} events
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+                      {% for user in users %}
+                        {% if user.id == userOrRoomId %}
+                          All {{ user.firstname }} {{ user.lastname }} events
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                  {% else %}
+                    {{ 'All my events' }}
+                  {% endif %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
                   <a class="dropdown-item" data-toggle="modal" href="#modalEvent"><span class="newRoom">Add an event</span></a>
                   {% for event in events %}
-                    <a data-toggle="modal" id="event{{ event.id }}" class="dropdown-item" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.date_start | date('d/m')}}  {{ event.name}}</a>
+                    <a data-toggle="modal" id="event{{ event.id }}" class="dropdown-item" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.date_start | date('d/m')}} {{ event.name}}</a>
                   {% endfor %}
                 </div>
               </li>
@@ -86,12 +102,13 @@
           </div>
 
           <div class="justify-content-between">
-            <span class="userName">{{ session.firstname }} {{ session.lastname }}</span>
+            <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="text-white"><span class="userName"><u>{{ session.firstname }} {{ session.lastname }}</u></span></a>
             <a class="logonav" href="/user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
           </div>
         </nav>
       {% endif %}
     </div>
+
     {% block content %}{% endblock %}
 
     <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
