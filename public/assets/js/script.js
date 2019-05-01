@@ -126,7 +126,7 @@ function editForm(event, eventId) {
 
 	// Room select
 	let labelRoom = document.createElement('label');
-	labelRoom.textContent = "Available Rooms";
+	labelRoom.textContent = "Available Rooms :";
 
 	let selectRoom = document.createElement('select');
 	selectRoom.className = "md-form colorful-select down-warning";
@@ -136,8 +136,11 @@ function editForm(event, eventId) {
 	optionDisabledRoom.setAttribute('disable',"");
 	optionDisabledRoom.textContent = 'Choose a room';
 
+	let myBr = document.createElement('br');
+
 	selectRoom.appendChild(optionDisabledRoom);
 	roomDiv.appendChild(labelRoom);
+	roomDiv.appendChild(myBr);
 	roomDiv.appendChild(selectRoom);
 
 
@@ -164,4 +167,4 @@ function deleteChild(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
-}	
+}		

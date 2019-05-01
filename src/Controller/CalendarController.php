@@ -105,7 +105,7 @@ class CalendarController extends AbstractController
                 return $this->eventManager->getUserEvents($id);
             }
         } else {
-            return $this->eventManager->getUserEvents($_SESSION['id']);
+            return $this->eventManager->getUserEventsAndCreator($_SESSION['id']);
         }
     }
 
@@ -145,6 +145,7 @@ class CalendarController extends AbstractController
                                                                 'roomsjson' => $roomsjson,
                                                                 'usersjson' => $usersjson,
                                                                 'eventUsersjson' => $eventUsersjson,
+                                                                'userid' => $_SESSION['id'],
                                                                 'eventsjson' => $eventsjson,
                                                                 'message'   => $this->getMessages(),
                                                                 'postData' => $this->getPostData(),
