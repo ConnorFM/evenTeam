@@ -9,63 +9,79 @@ class RoomController extends CalendarController
 {
     protected $roomManager;
 
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->roomManager = new RoomManager();
+    }
 
 
     public function index()
     {
-        $roomManager = new RoomManager();
-        $rooms = $roomManager->selectAll();
+        $rooms = $this->roomManager->selectAll();
         return $rooms;
     }
 
     public function show(int $id)
     {
-        $roomManager = new RoomManager();
-        $room = $roomManager->selectOneById($id);
+        $room = $this->roomManager->selectOneById($id);
         return $room;
     }
 
 
     public function edit($id)
     {
-        $roomManager = new RoomManager();
-        $room = $roomManager->selectOneById($id);
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room['name'] = $_POST['name'];
-            $room['capacity'] = $_POST['capacity'];
-            $room['description'] = $_POST['description'];
-            $room['image'] = $_POST['image'];
-            $roomManager->update($room);
-        }
+            $room = [
+            'name' => $_POST['name'],
+            'capacity' => $_POST['capacity'],
+            'description' => $_POST['description'],
+            'image' => $_POST['image'],
+            'room_id' => $id
+            ];
 
-        header('Location:/calendar/month');
+            $errors = $this->verifForm($room);
+
+            if (empty($errors)) {
+                $this->roomManager->update($room);
+                $date = new \DateTime();
+                $month = (clone $date)->format('m');
+                $year = (clone $date)->format('Y');
+                $week = (clone $date)->format('W');
+                header("Location: /calendar/month/$month/$year/$week");
+                exit;
+            } else {
+                $messages = $errors;
+                $this->setMessages($messages);
+                $this->setPostData($room);
+                $this->setAction('room');
+                return $this->month();
+            }
+        }
     }
 
     public function add()
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $room = ['name' => $_POST['name'],
                     'capacity' => $_POST['capacity'],
                     'description' => $_POST['description'],
                     'image' => $_POST['image']
             ];
-
             $errors = $this->verifForm($room);
-
             if (empty($errors)) {
-                $roomManager = new RoomManager();
-                $roomManager->insert($room);
-
-                $date =  new \DateTime();
-
-                $messages = "Well done";
-                $this->setMessages($messages);
-                return $this->month();
+                $this->roomManager->insert($room);
+                $date = new \DateTime();
+                $month = (clone $date)->format('m');
+                $year = (clone $date)->format('Y');
+                $week = (clone $date)->format('W');
+                header("Location: /calendar/month/$month/$year/$week");
+                exit;
             } else {
-                $this->setMessages($errors);
+                $messages = $errors;
+                $this->setMessages($messages);
+                $this->setPostData($room);
+                $this->setAction('room');
                 return $this->month();
             }
         }

@@ -91,7 +91,7 @@ class UserManager extends AbstractManager
     }
 
     // Return the user Email
-    public function getEmail($email)
+    public function getOneByEmail($email)
     {
         $statement = $this->pdo->prepare("SELECT email FROM $this->table WHERE email=:email");
         $statement->bindvalue('email', $email, \PDO::PARAM_STR);
@@ -102,8 +102,21 @@ class UserManager extends AbstractManager
 
     public function getAllUsersEvents()
     {
-        $statement = $this->pdo->prepare("SELECT user_id, event_id, firstname, lastname FROM user_event JOIN users ON users.id = user_id");
+        $statement = $this->pdo->prepare("SELECT user_id, event_id, firstname, lastname 
+                                                    FROM user_event 
+                                                    JOIN users ON users.id = user_id");
         $statement->execute();
         return $statement->fetchAll();
+    }
+
+    public function getEmails($user_id)
+    {
+        $statement = $this->pdo->prepare("SELECT email
+                                          FROM users
+                                          WHERE id= :id");
+        $statement->bindvalue('id', $user_id, \PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetch(); //array
     }
 }

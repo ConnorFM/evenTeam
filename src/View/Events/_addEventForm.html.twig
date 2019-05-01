@@ -4,12 +4,10 @@
 <form method="post" action="/event/addEvent">
   <div class="row">
     <div class="col-sm-12">
-      <!-- Large input for Event Name -->
       <div class="md-form form-lg">
         <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" required>
         <label for="inputLGEx">Event Name</label>
       </div>
-      <!-- Error message if 'Event Name' field is empty or not correct -->
       {{ errors.eventNameErr }}
     </div>
   </div>
@@ -96,10 +94,12 @@
             {{ errors.eventBeginHourErr }}
           </div>
         </div>
+      </div>
     </div>
-  </div>
   </div>
 
   <!-- Add 'New Event' button -->
-  <button type="submit" class="btn btn-deep-orange">Create Event</button>
+  <div class="d-flex justify-content-around">
+    <button class="btn btn-deep-orange" type="submit">Create Event</button>
+  </div>
 </form>

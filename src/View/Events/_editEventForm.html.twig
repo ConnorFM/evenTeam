@@ -51,7 +51,7 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('d/m/Y') }}">
+                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('Y-m-d') }}">
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
@@ -72,7 +72,7 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateEnd">
+                        <input type="date" id="beginDate" class="form-control" name="dateEnd" value="{{ event.date_end | date ('Y-m-d') }}">
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
