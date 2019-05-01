@@ -116,6 +116,8 @@ class CalendarController extends AbstractController
 
         $users = $this->userManager->selectAll();
         $usersjson = json_encode($users);
+        $rooms = $this->roomManager->selectAll();
+        $roomsjson = json_encode($rooms);
 
         if (isset($mode)) {
             $next = $this->getCalendar()->nextMonth();
@@ -136,6 +138,7 @@ class CalendarController extends AbstractController
                                                                 'rooms' => $this->roomManager->selectAll(),
                                                                 'users' => $this->userManager->selectAll(),
                                                                 'events' => $this->events($mode, $id),
+                                                                'roomsjson' => $roomsjson,
                                                                 'usersjson' => $usersjson,
                                                                 'message'   => $this->getMessages(),
                                                                 'postData' => $this->getPostData(),

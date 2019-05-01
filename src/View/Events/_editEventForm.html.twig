@@ -20,25 +20,31 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-7">
+          <div class="col-sm-6">
           <!-- User select -->
-          <h4>Guest :</h4>
-          <ul>
-          {% for assoc in allEvents %}
-            {% if assoc.event_id == event.id %}
-             <li> {{assoc.firstname}} {{assoc.lastname}} </li>
-            {% endif %}  
-          {% endfor %}
-          </ul> 
+          <div id="guestDiv{{event.id}}">
+            <h4>Guest :</h4>
+            <ul id="guestUl{{event.id}}">
+            {% for assoc in allEvents %}
+              {% if assoc.event_id == event.id %}
+               <li> {{assoc.firstname}} {{assoc.lastname}} </li>
+              {% endif %}  
+            {% endfor %}
+            </ul>
+          </div> 
           </div>
           <div class="col-sm-5">
             <!-- Room select -->
-          <h4>Room :</h4>
-          {% for room in rooms %}
-            {% if room.id == event.room_id %}
-              <p>{{room.name}}</p>
-            {% endif %}
-          {% endfor %}
+            <div id="roomDiv{{event.id}}">
+              <h4>Room :</h4>
+              <div>
+                {% for room in rooms %}
+                  {% if room.id == event.room_id %}
+                    <p>{{room.name}}</p>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">

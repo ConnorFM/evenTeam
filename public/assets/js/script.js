@@ -84,10 +84,74 @@ function editForm(event, eventId) {
 	editButton.style.display = 'none';
 	saveButton.style.display = 'block';	
 
+	// read into edit
+	guestDiv = document.getElementById('guestDiv' + eventId);
+	roomDiv = document.getElementById('roomDiv' + eventId);
+
+	deleteChild(guestDiv);
+	deleteChild(roomDiv);
+
+
+	// Multi select
+	let labelGuest = document.createElement('label');
+	labelGuest.textContent = "Ctrl-click to select multiple users";
+
+	let selectGuest = document.createElement('select');
+	selectGuest.className = "custom-select mdb-select";
+	selectGuest.setAttribute('multiple','select_users');
+	selectGuest.setAttribute('size', 5);
+	selectGuest.setAttribute('name', 'user[]');
+
+	let optionDisabled = document.createElement('option');
+	optionDisabled.setAttribute('disabled',"");
+	optionDisabled.textContent = 'Select user(s)';
+
+	selectGuest.appendChild(optionDisabled);
+	guestDiv.appendChild(labelGuest);
+	guestDiv.appendChild(selectGuest);
+
+	i=1;
+	tab.forEach(function(element) {
+		let option = document.createElement('option');
+		option.value = i;
+		i++;
+		option.textContent = element.firstname + " " + element.lastname;
+		selectGuest.appendChild(option);
+	});
+
+	// Room select
+	let labelRoom = document.createElement('label');
+	labelRoom.textContent = "Available Rooms";
+
+	let selectRoom = document.createElement('select');
+	selectRoom.className = "md-form colorful-select down-warning";
+	selectRoom.setAttribute('name', 'eventRoom');
+
+	let optionDisabledRoom = document.createElement('option');
+	optionDisabledRoom.setAttribute('disable',"");
+	optionDisabledRoom.textContent = 'Choose a room';
+
+	selectRoom.appendChild(optionDisabledRoom);
+	roomDiv.appendChild(labelRoom);
+	roomDiv.appendChild(selectRoom);
+
+	tabRoom.forEach(function(element) {
+		let optionRoom = document.createElement('option');
+		optionRoom.value =i;
+		i++;
+		optionRoom.textContent = element.name;
+		selectRoom.appendChild(optionRoom);
+	});
 }
 
 function disable(isDisabled, collection) {
 	for (let item of collection) {
 	  	item.disabled = false;
+	}
+}
+
+function deleteChild(parent) {
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
 	}
 }	
