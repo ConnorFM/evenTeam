@@ -102,7 +102,7 @@
           </div>
 
           <div class="justify-content-between">
-            <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="text-white"><span class="userName">{{ session.firstname }} {{ session.lastname }}</span></a>
+            <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="text-white"><span class="userName"><u>{{ session.firstname }} {{ session.lastname }}</u></span></a>
             <a class="logonav" href="/user/logout"><img src="/assets/images/logout-icon.png" class="logonav"></a>
           </div>
         </nav>
