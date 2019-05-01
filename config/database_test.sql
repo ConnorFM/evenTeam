@@ -29,12 +29,14 @@
 
 	CREATE TABLE events (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	creator INT NOT NULL,
 	name VARCHAR(80) NOT NULL,
 	date_start DATETIME NOT NULL,
 	date_end DATETIME NOT NULL,
 	room_id INT NULL,
 	description text NULL,
-	FOREIGN KEY (room_id) REFERENCES room(id)
+	FOREIGN KEY (room_id) REFERENCES room(id),
+	FOREIGN KEY (creator) REFERENCES users(id)
 	);
 
 	CREATE TABLE user_event (
@@ -45,10 +47,11 @@
 	);
 
 	INSERT INTO room (name, capacity, description, image) VALUES
-	("Salle Réunion 1er Etage", 35, "Salle de réunion du premier étage a droite en sortant de l'ascenseur", "http://tinyurl.com/y5p7yjox"),
-	("Salle de Réception RDC", 300, "Salle de Réception pour les cocktail ou les evenement important de l'entreprise", "http://tinyurl.com/y5p7yjox"),
-	("Amphithéatre", 120, "Salle située au dernier étage", "http://tinyurl.com/y5p7yjox"),
-	("Salle de Réunion 2ème étage", 25, "Salle de réunion du premier étage a droite en sortant de l'ascenseur", "http://tinyurl.com/y5p7yjox");
+	("Salle PHP", 20, "Salle du RDC à gauche en rentrant à la Wild", "http://tinyurl.com/y5p7yjox"),
+	("Salle React", 20, "Salle au deuxième Etage", "http://tinyurl.com/y5p7yjox"),
+	("Wild Room", 70, "Salle de déjeuner et de Chill au Premier étage", "http://tinyurl.com/y5p7yjox"),
+	("Salle Angular",70, "Salle se situant au 1er étage du 12Ter Quai Perrache, 69002 Lyon ", "http://tinyurl.com/y5p7yjox"),
+	("Salle Formateurs",7, "Salle du RDC à droite en rentrant à la Wild", "http://tinyurl.com/y5p7yjox");
 
 	INSERT INTO status (name) VALUES
 	('admin'), ('user');
@@ -58,20 +61,22 @@
 	("Noel", "AN", "noel@an.fr", 1, "http://tinyurl.com/yxq8jnen", "noelAN"),
 	("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "http://tinyurl.com/yxq8jnen", "foucauldGAUDIN"),
 	("Catherine", "VINCENT", "catherine@vincent.fr", 1, "http://tinyurl.com/yxq8jnen", "catherineVINCENT"),
-	("userFirstName", "userName", "user@user.fr", 2, "http://tinyurl.com/yxq8jnen", "userUSER");
+	("Jean Daniel", "BOCCARA", "jd@boccara.fr", 2, "http://tinyurl.com/yxq8jnen", "jdBOCCARA"),
+	("Laeticia", "VARELA", "laeticia@varela.fr", 1, "http://tinyurl.com/yxq8jnen", "laeticiaVARELA"),
+	("Kevin", "HEITZ", "kevin@heitz.fr", 2, "http://tinyurl.com/yxq8jnen", "kevinHEITZ");
 
-	INSERT INTO events (name, date_start, date_end, room_id, description) VALUES
-	("réunion d'équipe", "2019-04-20 14:00:00", "2019-04-20 16:00:00", 1, "c'est une description"),
-	("cocktail de fin d'année", "2019-04-25 14:00:00", "2019-04-25 16:00:00", 2, "c'est une description"),
-	("Annonce résultats Annuel", "2019-04-29 14:00:00", "2019-04-29 16:00:00", 3, "c'est une description"),
-	("HACKATON", "2019-04-22 14:00:00", "2019-04-23 14:00:00", 3, "c'est une description"),
-	("organisation projet", "2019-04-25 16:00:00", "2019-04-25 18:00:00", 4, "c'est une description");
-
-
+	INSERT INTO events (name, creator, date_start, date_end, room_id, description) VALUES
+	("Démo day",6,"2019-05-02 14:00:00", "2019-05-02 18:00:00",4,"Présentation des projets 2 de toute la promo "),
+	("Bière du vendredi Soir",3,"2019-05-03 17:00:00", "2019-05-03 20:00:00", NULL, "C'est la fin de semaine allons boire une bière"),
+	("Wild Breakfast",6, "2019-05-15 09:00:00", "2019-05-15 11:00:00", 3, "Accueil des futurs wilders potentiels"),
+	("HACKATON",6, "2019-04-22 14:00:00", "2019-04-23 14:00:00", 3, "C'est parti pour une nuit blanche"),
+	("organisation projet",3,"2019-05-02 09:00:00", "2019-05-02 12:00:00", 1, "Préparation de la présentation du projet lors de la démo day"),
+	("Vacances",3,"2019-05-06 09:00:00", "2019-05-10 23:00:00", NULL , "Bon repos à tous");
 
 	INSERT INTO user_event (user_id, event_id) VALUES
-	(3, 1), (4, 1), (2, 1),
-	(1, 2), (2, 2), (3, 2),
-	(1, 3), (2, 3),
+	(1, 1), (2, 1), (3, 1),(4, 1), (5, 1), (6, 1),(7, 1),
+	(1, 2), (2, 2), (3, 2),(4, 2), (5, 2), (6, 2),(7, 2),
+	(2, 3), (5, 3), (6, 3),
 	(1, 4), (2, 4), (3, 4), (4, 4), (5, 4),
-	(3, 5), (4, 5);
+	(1, 5), (2, 5), (3, 5), (4, 5),
+	(1, 6), (2, 6), (3, 6),(4, 6), (5, 6), (6, 6),(7, 6);
