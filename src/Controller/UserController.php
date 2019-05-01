@@ -30,6 +30,11 @@ class UserController extends CalendarController
 
               $this->userManager->update($user);
 
+            if ($_SESSION['id'] == $id) {
+                $session = new Session();
+                $session->createSession($user);
+            }
+
               header('Location: /calendar/month/' .
                   $this->calendar->month . '/' .
                   $this->calendar->year . '/' .
@@ -42,6 +47,7 @@ class UserController extends CalendarController
     public function delete($id)
     {
         $this->userManager->delete((int)$id);
+
         header('Location: /calendar/month/' .
             $this->calendar->month . '/' .
             $this->calendar->year . '/' .

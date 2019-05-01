@@ -37,22 +37,20 @@ class RoomController extends CalendarController
             'capacity' => $_POST['capacity'],
             'description' => $_POST['description'],
             'image' => $_POST['image'],
-            'room_id' => $id
+            'id' => $id
             ];
 
             $errors = $this->verifForm($room);
 
             if (empty($errors)) {
                 $this->roomManager->update($room);
-                $date = new \DateTime();
-                $month = (clone $date)->format('m');
-                $year = (clone $date)->format('Y');
-                $week = (clone $date)->format('W');
-                header("Location: /calendar/month/$month/$year/$week");
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
                 exit;
             } else {
-                $messages = $errors;
-                $this->setMessages($messages);
+                $this->setMessages($errors);
                 $this->setPostData($room);
                 $this->setAction('room');
                 return $this->month();

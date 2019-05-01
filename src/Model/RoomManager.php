@@ -30,7 +30,7 @@ class RoomManager extends AbstractManager
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
         $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 /**
-        if ($statement->execute()) {
+        if ($statement->exmessagesecute()) {
             return (int)$this->pdo->lastInsertId();
         }
 **/     $statement->execute();
