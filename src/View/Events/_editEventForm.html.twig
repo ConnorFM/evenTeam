@@ -51,11 +51,11 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('d/m/Y') }}">
+                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('Y-m-d') }}" disabled>
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
-                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required value="{{ event.date_start | date ('H:i') }}">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required value="{{ event.date_start | date ('H:i') }}" disabled>
                         <!-- Error message if 'Begin Hour' field is empty or not correct -->
                     </div>
                 </div>
@@ -72,11 +72,11 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateEnd">
+                        <input type="date" id="endDate" class="form-control" name="dateEnd" value="{{ event.date_end | date ('Y-m-d') }}" disabled>
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
-                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required value="{{ event.date_end | date ('H:i') }}">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required value="{{ event.date_end | date ('H:i') }}" disabled>
                         <!-- Error message if 'Begin Hour' field is empty or not correct -->
                     </div>
                 </div>
@@ -84,7 +84,16 @@
           </div>
         </div>
         <!-- Add 'New Event' button -->
-        <button type="button" class="btn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
-        <button type="submit" class="btn btn-deep-orange" style="display: none" id="saveButton{{event.id}}">Save</button>
-        <a href="/event/delete/{{ event.id }}" class="btn btn-deep-orange">delete</a>
+      <div class="row justify-content-around">
+        <div class="col-3"> 
+          <button type="button" class="btn btn-light" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+        </div>  
+        <div class="col-3">
+          <button type="submit" class="btn btn-info" style="display: none" id="saveButton{{event.id}}">Save</button>
+        </div>
+        <div class="col-3">
+          <a href="/event/delete/{{ event.id }}" class="btn btn-danger">delete</a>
+        </div>
+      </div>    
+     </div>
       </form>
