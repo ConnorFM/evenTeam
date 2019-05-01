@@ -71,7 +71,8 @@ class EventController extends CalendarController
                                      $events['eventEndHour'] . ":00",
                     "room_id"     => $events['eventRoom'],
                     "description" => $events['eventDescription'],
-                    "user_id"     => $events['userId']
+                    "user_id"     => $events['userId'],
+                    "creator"     => $_SESSION['id']
                 ];
 
                 $this->eventManager->insert($validEvent);
