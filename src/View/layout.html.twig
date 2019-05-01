@@ -66,6 +66,8 @@
                           <script>
                               var tab = JSON.parse({{ usersjson|json_encode|raw }});
                               var tabRoom = JSON.parse({{ roomsjson|json_encode|raw }});
+                              var tabEventUsers = JSON.parse({{ eventUsersjson|json_encode|raw }});
+                              var tabEvent = JSON.parse({{ eventsjson|json_encode|raw }});
                           </script>
                     </div>
                   </li>

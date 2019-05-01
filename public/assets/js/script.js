@@ -110,13 +110,16 @@ function editForm(event, eventId) {
 	guestDiv.appendChild(labelGuest);
 	guestDiv.appendChild(selectGuest);
 
-	i=1;
 	tab.forEach(function(element) {
 		let option = document.createElement('option');
-		option.value = i;
-		i++;
-		option.textContent = element.firstname + " " + element.lastname;
-		selectGuest.appendChild(option);
+		option.value = element.id;
+		tabEventUsers.forEach(function(element2) {
+			if(eventId == element2.event_id && element.id == element2.user_id) {
+				option.selected = true;
+			}
+		});
+			option.textContent = element.firstname + " " + element.lastname;
+			selectGuest.appendChild(option);
 	});
 
 	// Room select
@@ -135,11 +138,16 @@ function editForm(event, eventId) {
 	roomDiv.appendChild(labelRoom);
 	roomDiv.appendChild(selectRoom);
 
+	console.log(event);
 	tabRoom.forEach(function(element) {
 		let optionRoom = document.createElement('option');
-		optionRoom.value =i;
-		i++;
+		optionRoom.value =element.id;
 		optionRoom.textContent = element.name;
+		tabEvent.forEach(function(element2) {
+			if(eventId == element2.room_id && element2.room_id == element.id){
+				optionRoom.selected = true;
+			}
+		});	
 		selectRoom.appendChild(optionRoom);
 	});
 }

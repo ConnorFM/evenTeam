@@ -146,4 +146,11 @@ class EventManager extends AbstractManager
         $statement->execute();
         return $statement->fetchAll();
     }
+    // return every events and user(s) in the event
+    public function getEventUsers()
+    {
+        $statement = $this->pdo->prepare("SELECT * from user_event;");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }
