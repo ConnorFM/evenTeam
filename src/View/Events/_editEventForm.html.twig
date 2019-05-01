@@ -92,13 +92,13 @@
         <!-- Add 'New Event' button -->
       <div class="row justify-content-around">
         <div class="col-3"> 
-          <button type="button" class="btn btn-light" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+          <button type="button" class="btn btn-light editbtn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
         </div>  
         <div class="col-3">
-          <button type="submit" class="btn btn-info" style="display: none" id="saveButton{{event.id}}">Save</button>
+          <button type="submit" class="btn btn-info savebtn" style="display: none" id="saveButton{{event.id}}">Save</button>
         </div>
         <div class="col-3">
-          <a href="/event/delete/{{ event.id }}" class="btn btn-danger">delete</a>
+          <a id="deleteButton{{ event.id }}" href="/event/delete/{{ event.id }}" style="display: none" class="btn btn-danger">Delete</a>
         </div>
       </div>    
      </div>

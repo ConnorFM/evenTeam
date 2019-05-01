@@ -80,9 +80,11 @@ function editForm(event, eventId) {
 
 	let editButton = document.getElementById('editButton' + eventId);
 	let saveButton = document.getElementById('saveButton' + eventId);
+	let deleteButton = document.getElementById('deleteButton' + eventId);
 
 	editButton.style.display = 'none';
-	saveButton.style.display = 'block';	
+	saveButton.style.display = 'block';
+	deleteButton.style.display = 'block';		
 
 	// read into edit
 	guestDiv = document.getElementById('guestDiv' + eventId);
