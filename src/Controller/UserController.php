@@ -47,7 +47,9 @@ class UserController extends CalendarController
     public function delete($id)
     {
         $this->userManager->delete((int)$id);
-
+        if ($id == $_SESSION['id']) {
+            $this->logOut();
+        }
         header('Location: /calendar/month/' .
             $this->calendar->month . '/' .
             $this->calendar->year . '/' .

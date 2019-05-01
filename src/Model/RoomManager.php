@@ -42,6 +42,10 @@ class RoomManager extends AbstractManager
     public function delete(int $id): void
     {
         // prepared request
+        $updateStatement = $this->pdo->prepare("UPDATE events SET room_id = NULL WHERE room_id = :id");
+        $updateStatement->bindValue('id', $id, \PDO::PARAM_INT);
+        $updateStatement->execute();
+
         $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
@@ -53,8 +57,6 @@ class RoomManager extends AbstractManager
      */
     public function update(array $room):bool
     {
-
-        // prepared request
         $statement = $this->pdo->prepare("UPDATE $this->table
                                          SET `name` = :name,
                                             `capacity` = :capacity,
