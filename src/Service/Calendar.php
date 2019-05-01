@@ -121,8 +121,7 @@ class Calendar
      */
     public function nextMonth()
     {
-        $date = new DateTime();
-        $date ->setISOdate($this->year, $this->week);
+        $date = $this->getStartingDay();
         return $date->modify('+1 month')->format('m/Y/W');
     }
 
@@ -133,8 +132,7 @@ class Calendar
      */
     public function previousMonth()
     {
-        $date = new DateTime();
-        $date ->setISOdate($this->year, $this->week);
+        $date = $this->getStartingDay();
         return $date->modify('-1 month')->format('m/Y/W');
     }
 

@@ -1,79 +1,90 @@
 
 <!-- Success message if inputs are valid (will be in another place in fine) -->
-{{ success }}
 <form method="post" action="/event/addEvent">
+
   <div class="row">
-    <div class="col-sm-12">
-      <!-- Large input for Event Name -->
+    <div class="col-12">
       <div class="md-form form-lg">
-        <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" required>
-        <label for="inputLGEx">Event Name</label>
+        <input type="text" id="eventName" class="form-control form-control-lg {% if message.eventName is defined %}is-invalid {% endif %}" name="eventName"  value="{{ postData.eventName }}" required>
+        <label for="eventName">Event Name</label>
       </div>
-      <!-- Error message if 'Event Name' field is empty or not correct -->
-      {{ errors.eventNameErr }}
+      {% if  message.eventName is defined %}
+        <div class="invalid-feedback">
+          {{ message.eventName }}
+        </div>
+      {% endif %}
     </div>
   </div>
+
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
       <!-- Event Description -->
       <div class="md-form">
-        <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription"></textarea>
-        <label for="textarea-char-counter">Type your event description</label>
+        <textarea id="textarea-char-counter" class="form-control md-textarea {% if message.eventDescription is defined %}is-invalid {% endif %}" rows="2" name="eventDescription">{% if postData.eventDescription is defined %}{{ postData.eventDescription }}{% endif %}</textarea>
+        <label for="textarea-char-counter">Event description</label>
       </div>
-      <!-- Error message if 'Event Description' field is empty or not correct -->
-      {{ errors.eventDescriptionErr }}
+      {% if  message.eventDescription is defined %}
+        <div class="invalid-feedback">
+          {{ message.eventDescription }}
+        </div>
+      {% endif %}
     </div>
   </div>
+
   <div class="row">
     <div class="col-sm-5">
       <!-- User Multi-Select -->
       <label>ctrl-click to select multiple users</label>
-
-      <select class="custom-select mdb-select" multiple id="select_users" size="5" name="user[]">
+      <select class="custom-select mdb-select {% if message.user is defined %}is-invalid {% endif %}" multiple id="select_users" size="5" name="user[]" required>
         <option disabled>Select user(s)</option>
-
         {% for user in users %}
           <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
         {% endfor%}
-
       </select>
+      {% if  message.user is defined %}
+        <div class="invalid-feedback">
+          {{ message.user }}
+        </div>
+      {% endif %}
     </div>
+
     <div class="col-sm-5">
       <!-- Room select -->
-      <label>Available Rooms</label>
+      <label>Choose a Room</label>
       <select class="md-form colorful-select down-warning" name="eventRoom">
         <option value="" disabled selected>Choose a room</option>
-
         {% for room in rooms %}
           <option value="{{ room.id }}">{{ room.name }}</option>
         {% endfor %}
-
       </select>
     </div>
   </div>
 
   <div class="row">
-
     <!-- Start Date input -->
-    <div class="col-sm-12">
+    <div class="col-12">
       <div class="md-form input-group form-sm">
         <div class="input-group-prepend">
           <span class="input-group-text md-addon">Begin date</span>
         </div>
-
         <div class="form-row mb-4">
           <div class="col">
-            <input type="date" id="beginDate" class="form-control" name="dateStart">
+            <input type="date" id="beginDate" class="form-control {% if message.eventBeginDate is defined %}is-invalid {% endif %}" name="dateStart" value="{{ postData.dateStart }}" required>
           </div>
-          {{ errors.eventBeginDayErr }}
+          {% if  message.eventBeginDate is defined %}
+            <div class="invalid-feedback">
+              {{ message.eventBeginDate }}
+            </div>
+          {% endif %}
           <div class="col offset-1">
-            <!-- Last name -->
-            <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required>
-            <!-- Error message if 'Begin Hour' field is empty or not correct -->
-            {{ errors.eventBeginHourErr }}
+            <input type="text" id="inputLGEx" aria-label="Hour" class="form-control {% if message.eventBeginHour is defined %}is-invalid {% endif %}" placeholder="Hour ex. 08:00" name="startHour" value="{{ postData.startHour }}" required>
+            {% if  message.eventBeginHour is defined %}
+              <div class="invalid-feedback">
+                {{ message.eventBeginHour }}
+              </div>
+            {% endif %}
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -87,19 +98,28 @@
         </div>
         <div class="form-row mb-4">
           <div class="col">
-            <input type="date" id="beginDate" class="form-control" name="dateEnd">
+            <input type="date" id="endDate" class="form-control {% if message.eventBeginDate is defined %}is-invalid {% endif %}" name="dateEnd" value="{{ postData.dateEnd }}" required>
           </div>
+          {% if  message.eventEndDate is defined %}
+            <div class="invalid-feedback">
+              {{ message.eventEndDate }}
+            </div>
+          {% endif %}
           <div class="col offset-1">
-            <!-- Last name -->
-            <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required>
-            <!-- Error message if 'Begin Hour' field is empty or not correct -->
-            {{ errors.eventBeginHourErr }}
+            <input type="text" id="inputLGEx" aria-label="Hour" class="form-control {% if message.eventEndHour is defined %}is-invalid {% endif %}" placeholder="Hour ex. 08:00" name="endHour" value="{{ postData.endHour }}" required>
+            {% if  message.eventEndHour is defined %}
+              <div class="invalid-feedback">
+                {{ message.eventEndHour }}
+              </div>
+            {% endif %}
           </div>
         </div>
+      </div>
     </div>
-  </div>
   </div>
 
   <!-- Add 'New Event' button -->
-  <button type="submit" class="btn btn-deep-orange">Create Event</button>
+  <div class="d-flex justify-content-around">
+    <button class="btn btn-deep-orange" type="submit">Create Event</button>
+  </div>
 </form>

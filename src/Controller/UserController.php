@@ -7,30 +7,17 @@ use App\Service\Session;
 
 class UserController extends CalendarController
 {
-  // Display every user
-    public function index()
+    protected $userManager;
+
+    public function __construct()
     {
-        $userManager = new UserManager();
-        $users = $userManager->selectFirstname();
-        $usersjson = json_encode($users);
-        return $this->twig->render('Users/user.html.twig', ['users' => $users,
-                                                            'usersjson' => $usersjson
-                                                            ]);
+        parent::__construct();
+        $this->userManager = new UserManager();
     }
 
-    public function show($id)
-    {
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($id);
-
-        return $this->twig->render('Users/show.html.twig', ['user' => $user]);
-    }
   // Edit the user
     public function edit($id)
     {
-        $userManager = new UserManager();
-        $user = $userManager->selectOneById($id);
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               $user['firstname'] = $_POST['firstname'];
               $user['lastname'] = $_POST['lastname'];
@@ -38,45 +25,82 @@ class UserController extends CalendarController
               $user['status_id'] = $_POST['status_id'];
               $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
-              $userManager->update($user);
+              $user['id'] = $id;
 
-              $messages = "Well done";
-              $this->setMessages($messages);
-              header('Location:/Calendar/month');
-        }
-    }
-  // Delete a user with the id
-    public function delete($id)
-    {
-        $userManager = new userManager();
-        $userManager->delete((int)$id);
-        header('Location:/calendar/month');
-    }
-    // Create a user
-    public function add()
-    {
-        $events=[] ;
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userManager = new userManager();
-            $user = [
-            'firstname' => $_POST['firstname'],
-            'lastname' => $_POST['lastname'],
-            'email' => $_POST['email'],
-            'status_id' => $_POST['status_id'],
-            'image' => $_POST['image'],
-            'password' => $_POST['password']
-            ];
-            if (!empty($_POST['email']) && $_POST['email'] == $userManager->getEmail($_POST['email'])['email']) {
-                echo "Email déja existant";
-            } elseif (empty($_POST['email'])) {
-                echo "Veuillez renseigner votre email";
+            $errors = $this->verifForm($user);
+
+            if (empty($errors)) {
+                $this->userManager->update($user);
+
+                if ($_SESSION['id'] == $id) {
+                    $session = new Session();
+                    $session->createSession($user);
+                }
+
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
+                exit;
             } else {
-                $userManager->insert($user);
-                header('Location:/calendar/month');
+                $this->setMessages($errors);
+                $this->setPostData($user);
+                $this->setAction('EditUser' .$id);
+                return $this->month();
             }
         }
     }
-    
+
+  // Delete a user with the id
+    public function delete($id)
+    {
+        $this->userManager->delete((int)$id);
+        if ($id == $_SESSION['id']) {
+            $this->logOut();
+        }
+        header('Location: /calendar/month/' .
+            $this->calendar->month . '/' .
+            $this->calendar->year . '/' .
+            $this->calendar->week);
+        exit;
+    }
+
+    // Create a user
+    public function add()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = [
+                'firstname' => $_POST['firstname'],
+                'lastname' => $_POST['lastname'],
+                'email' => $_POST['email'],
+                'status_id' => $_POST['status_id'],
+                'image' => $_POST['image'],
+                'password' => $_POST['password']
+            ];
+
+            $errors = $this->verifForm($user);
+            if ($_POST['email'] == $this->userManager->getOneByEmail($_POST['email'])['email']) {
+                $errors['email'] = "This email already exist";
+            }
+
+            if (empty($errors)) {
+                $this->userManager->insert($user);
+
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
+                exit;
+            } else {
+                $messages = $errors;
+                $this->setMessages($messages);
+                $this->setPostData($user);
+                $this->setAction('user');
+                return $this->month();
+            }
+        }
+    }
+
     // Disconnect the user and redirect to login page
     public function logOut()
     {
@@ -88,7 +112,10 @@ class UserController extends CalendarController
     public function logIn()
     {
         if (!empty($_SESSION)) {
-            header('Location: /calendar/month');
+            header('Location: /calendar/month/' .
+                $this->calendar->month . '/' .
+                $this->calendar->year . '/' .
+                $this->calendar->week);
             exit;
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userManager = new UserManager();
@@ -98,18 +125,43 @@ class UserController extends CalendarController
                 && (!empty($_POST['password']) && $userBdd['password'] == $_POST['password'])) {
                 $session = new Session;
                 $session->createSession($userBdd);
-                $message = "Welcome to your calendar";
-                $this->setMessages($message);
 
                 header('Location: /calendar/month/' .
                                         $this->calendar->month . '/' .
-                                        $this->calendar->year .'/' .
-                                        $this->calendar->week) ;
+                                        $this->calendar->year . '/' .
+                                        $this->calendar->week);
+                exit;
             } else {
                 $this->twig->addGlobal("errorConnection", true);
             }
         }
 
         return $this->twig->render('Users/login.html.twig');
+    }
+
+    private function verifForm(array $user)
+    {
+        $errors = [];
+
+        if (empty($user['firstname'])) {
+            $errors['firstname'] = "Please enter a firstname";
+        }
+        if (empty($user['lastname'])) {
+            $errors['lastname'] = "Please enter a lastname";
+        }
+        if (empty($_POST['email'])) {
+            $errors['email'] = "Please enter an email";
+        }
+        if (empty($user['status_id'])) {
+            $errors['status'] = "Please select a user's status";
+        }
+        if (empty($user['image'])) {
+            $errors['image'] = "Please enter an image link";
+        }
+        if (empty($user['password'])) {
+            $errors['password'] = "Please enter a password";
+        }
+
+        return $errors;
     }
 }
