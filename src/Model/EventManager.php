@@ -107,6 +107,7 @@ class EventManager extends AbstractManager
          $statement->bindValue('date_end', $event['date_end'], \PDO::PARAM_STR);
          $statement->bindValue('room_id', $event['room_id'], \PDO::PARAM_INT);
          $statement->bindValue('description', $event['description'], \PDO::PARAM_STR);
+         $statement->execute();
 
         foreach ($event['user_id'] as $value) {
             $statement = $this->pdo->prepare("
@@ -185,12 +186,12 @@ class EventManager extends AbstractManager
     public function getUserEventsAndCreator($user_id)
     {
         // Prepared request
-        $statement = $this->pdo->prepare("SELECT id,creator, name, date_start, date_end, room_id, description
+        $statement = $this->pdo->prepare("SELECT DISTINCT id,creator, name, date_start, date_end, room_id, description
                                           FROM user_event
                                           JOIN events ON id = user_event.event_id
                                           WHERE user_id = :user_id 
                                           OR creator= :user_id
-                                          ORDER BY date_start;");
+                                          ORDER BY date_start;  ");
         $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
