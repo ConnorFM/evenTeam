@@ -85,6 +85,40 @@ class UserController extends CalendarController
 
             if (empty($errors)) {
                 $this->userManager->insert($user);
+                // Create the Transport
+                $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                  ->setUsername('noreply.eventeam@gmail.com')
+                  ->setPassword('evenTeam2019')
+                ;
+
+               // Create the Mailer using your created Transport
+                $mailer = new \Swift_Mailer($transport);
+                // Create a message
+
+
+                $message = (new \Swift_Message('You are now a member of Eventeam'))
+                ->setFrom(['noreply@eventeam.com' => 'Eventeam'])
+                ->setTo(['noreply.eventeam@gmail.com'])
+                ->setBCC([$user['email']])
+                ->setBody(
+                    '<html>' .
+                         ' <head></head>' .
+                         ' <body>' .
+                         'Welcome to Eventeam!' . '<br />' .'<br />' .
+                         'You are now a member of evenTeam.
+                         You can now log in with your email adress
+                         and the password you have been attributed to: '
+                         . '<br />' . '<br />' .
+                         '<span style="font-weight: bold;">' .
+                         $user['password'] . '</span><br />' . '<br />'.
+                         'See you soon on <a href="eventeam.com">Eventeam.</a>' .
+                         '</body>' .
+                         '</html>',
+                    'text/html'
+                );
+
+            // Send the message
+                $mailer->send($message);
 
                 header('Location: /calendar/month/' .
                     $this->calendar->month . '/' .
