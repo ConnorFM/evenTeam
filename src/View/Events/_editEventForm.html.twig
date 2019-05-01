@@ -3,7 +3,7 @@
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
             <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="{{ event.name }} "required disabled>
+              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="{{ event.name }} " required disabled>
               <label for="inputLGEx">Event Name</label>
             </div>
           </div>
@@ -12,8 +12,8 @@
           <div class="col-sm-12">
             <!-- Event Description -->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription"required disabled>{{ event.description }}</textarea>
-              <label for="textarea-char-counter">Type your event description</label>
+              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="2" name="eventDescription" required disabled>{{ event.description }}</textarea>
+              <label for="textarea-char-counter">Event description</label>
             </div>
             <!-- Error message if 'Event Description' field is empty or not correct -->
             {{ errors.eventDescriptionErr }}
@@ -89,17 +89,18 @@
             </div>
           </div>
         </div>
-        <!-- Add 'New Event' button -->
-      <div class="row justify-content-around">
-        <div class="col-3"> 
-          <button type="button" class="btn btn-light editbtn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
-        </div>  
-        <div class="col-3">
-          <button type="submit" class="btn btn-info savebtn" style="display: none" id="saveButton{{event.id}}">Save</button>
-        </div>
-        <div class="col-3">
-          <a id="deleteButton{{ event.id }}" href="/event/delete/{{ event.id }}" style="display: none" class="btn btn-danger">Delete</a>
-        </div>
-      </div>    
-     </div>
+       {% if session.id == event.creator %}
+          <div class="row justify-content-around">
+            <div class="col-3">
+              <button type="button" class="btn btn-light editbtn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-info savebtn" style="display: none" id="saveButton{{event.id}}">Save</button>
+            </div>
+            <div class="col-3">
+              <a id="deleteButton{{ event.id }}" href="/event/delete/{{ event.id }}" style="display: none" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+         </div>
+       {% endif %}
       </form>
