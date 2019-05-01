@@ -20,11 +20,11 @@
 .calendar__weekday {
     font-weight: bold;
     color: black;
-    font-size: 1.2em;
+    font-size: 1.2vw;
 }
 
 .calendar__day {
-    font-size: 1.1em;
+    font-size: 1.1vw;
 }
 
 .calendar__othermonth {
@@ -86,25 +86,6 @@
     }
 }
 
-.month-title-mobile {
-    display: none;
-}
-
-@media screen and (max-width: 991px) {
-    .month-title-mobile {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 0.8em;
-    }
-}
-
-@media screen and (max-width: 368px) {
-    .month-title-mobile {
-        display: none;
-    }
-}
-
 /* Change day names considering screen size */
 @media screen and (max-width: 991px) {
     .screenDesktop {
@@ -115,13 +96,13 @@
 @media screen and (min-width: 992px) {
     .screenMobile {
         display: none;
-        font-size: 1em;
+        font-size: 100vw;
     }
 }
 
 @media screen and (max-width: 451px) {
     .tableMobile {
-        font-size: 0.5em;
+        font-size: 0.5vw;
     }
 }
 
@@ -134,13 +115,13 @@
         width: 60px;
         padding-right :2px;
         padding-left: 2px;
-        font-size: 0.5em;
+        font-size: 0.5vw;
         max-height: 38.88px;
     }
 }
 
 .dropdownuser {
-    width : 20rem;
+    width : 20vw;
 }
 
 .weekToMonthWeek {
@@ -198,10 +179,6 @@
     width: auto;
 }
 
-.navbar {
-    background-color: #fb3;
-}
-
 .navbar-dark {
     color: white;
     font-weight: bold;
@@ -209,6 +186,26 @@
 
 .nav-item {
     color: white;
+}
+
+#navbar {
+  display: flex;
+  background-color: grey;
+  transform: translateY(-100%);
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  z-index: 99;
+}
+
+#navbar > * {
+  padding: 1vw;
+}
+
+.nav-container:hover #navbar {
+  transform: translateY(0);
+}
+
+.body {
+
 }
 
 .newRoom, .dropdown-item {
@@ -221,7 +218,7 @@
 
 /* Design calendar */
 .everyDay {
-    font-size: 1.5rem;
+    font-size: 1.5vw;
     color: grey;
     font-weight: 400;
 }
@@ -277,5 +274,3 @@
     background-color: #fb3;
     border-radius: 50%;
 }
-
-
