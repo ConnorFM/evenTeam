@@ -20,25 +20,31 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-7">
+          <div class="col-sm-6">
           <!-- User select -->
-          <h4>Guest :</h4>
-          <ul>
-          {% for assoc in allEvents %}
-            {% if assoc.event_id == event.id %}
-             <li> {{assoc.firstname}} {{assoc.lastname}} </li>
-            {% endif %}  
-          {% endfor %}
-          </ul> 
+          <div id="guestDiv{{event.id}}">
+            <h4>Guest :</h4>
+            <ul id="guestUl{{event.id}}">
+            {% for assoc in allEvents %}
+              {% if assoc.event_id == event.id %}
+               <li> {{assoc.firstname}} {{assoc.lastname}} </li>
+              {% endif %}  
+            {% endfor %}
+            </ul>
+          </div> 
           </div>
           <div class="col-sm-5">
             <!-- Room select -->
-          <h4>Room :</h4>
-          {% for room in rooms %}
-            {% if room.id == event.room_id %}
-              <p>{{room.name}}</p>
-            {% endif %}
-          {% endfor %}
+            <div id="roomDiv{{event.id}}">
+              <h4>Room :</h4>
+              <div>
+                {% for room in rooms %}
+                  {% if room.id == event.room_id %}
+                    <p>{{room.name}}</p>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -51,11 +57,11 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('Y-m-d') }}">
+                        <input type="date" id="beginDate" class="form-control" name="dateStart" value="{{ event.date_start | date ('Y-m-d') }}" disabled>
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
-                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required value="{{ event.date_start | date ('H:i') }}">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="startHour" required value="{{ event.date_start | date ('H:i') }}" disabled>
                         <!-- Error message if 'Begin Hour' field is empty or not correct -->
                     </div>
                 </div>
@@ -72,11 +78,11 @@
               </div>
                 <div class="form-row mb-4">
                     <div class="col">
-                        <input type="date" id="beginDate" class="form-control" name="dateEnd" value="{{ event.date_end | date ('Y-m-d') }}">
+                        <input type="date" id="endDate" class="form-control" name="dateEnd" value="{{ event.date_end | date ('Y-m-d') }}" disabled>
                     </div>
                     <div class="col offset-1">
                         <!-- Last name -->
-                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required value="{{ event.date_end | date ('H:i') }}">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="Hour ex. 08:00" name="endHour" required value="{{ event.date_end | date ('H:i') }}" disabled>
                         <!-- Error message if 'Begin Hour' field is empty or not correct -->
                     </div>
                 </div>
@@ -84,7 +90,16 @@
           </div>
         </div>
         <!-- Add 'New Event' button -->
-        <button type="button" class="btn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
-        <button type="submit" class="btn btn-deep-orange" style="display: none" id="saveButton{{event.id}}">Save</button>
-        <a href="/event/delete/{{ event.id }}" class="btn btn-deep-orange">delete</a>
+      <div class="row justify-content-around">
+        <div class="col-3"> 
+          <button type="button" class="btn btn-light editbtn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+        </div>  
+        <div class="col-3">
+          <button type="submit" class="btn btn-info savebtn" style="display: none" id="saveButton{{event.id}}">Save</button>
+        </div>
+        <div class="col-3">
+          <a id="deleteButton{{ event.id }}" href="/event/delete/{{ event.id }}" style="display: none" class="btn btn-danger">Delete</a>
+        </div>
+      </div>    
+     </div>
       </form>

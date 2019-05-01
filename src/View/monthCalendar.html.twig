@@ -1,80 +1,80 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-    My Monthly Calendar
+	My Monthly Calendar
 {% endblock %}
 
 {% block content %}
-    {% include 'Events/_modalEvent.html.twig' %}
-    {% include '_addEventButton.html.twig' %}
-    {% include 'Room/_modalRoom.html.twig' %}
-    {% include 'Users/_modalUser.html.twig' %}
-    {% include 'Users/_modalEditUser.html.twig' %}
-    {% include 'Room/_modalEditRoom.html.twig' %}
-    {% include 'Events/_modalEditEvent.html.twig' %}
+	{% include 'Events/_modalEvent.html.twig' %}
+	{% include '_addEventButton.html.twig' %}
+	{% include 'Room/_modalRoom.html.twig' %}
+	{% include 'Users/_modalUser.html.twig' %}
+	{% include 'Users/_modalEditUser.html.twig' %}
+	{% include 'Room/_modalEditRoom.html.twig' %}
+	{% include 'Events/_modalEditEvent.html.twig' %}
 
-    {% if message is iterable %}
-        <div class="container mt-2">
-            <div class="alert alert-danger text-center">
-                {% for error in message %}
-                    {{ error }} <br/>
-                {% endfor %}
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
-                    See your {{ action }}
-                </button>
-            </div>
-        </div>
-    {% endif %}
+	{% if message is iterable %}
+		<div class="container mt-2">
+			<div class="alert alert-danger text-center">
+				{% for error in message %}
+					{{ error }} <br/>
+				{% endfor %}
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
+					See your {{ action }}
+				</button>
+			</div>
+		</div>
+	{% endif %}
 
-    <div class="container">
-        <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
-            <div class="row no-gutters">
-                <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Month</a>
-                <a href="/calendar/week/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Week</a>
-            </div>
-            {# <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2> #}
-            <h2 class="month-year month-title">{{ fullDate }}</h2>
-            <div>
-                <a href="/Calendar/month/{{ previous }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-left"></i></a>
-                <a href="/Calendar/month/{{ next }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="container calMobile2">
-        <div class="table-striped table-responsive-xl">
-            <table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
-                <thead class="screenDesktopMonth">
-                <tr class="text-center">
-                    {% for day in days %}
-                        <th class="everyDay" scope="col">{{ day }}</th>
-                    {% endfor %}
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="text-center">
-                    {% for date in calendar %}
-                    <td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">{% if date.0.date | date('d-m-Y') == now | date('d-m-Y')%}<span class="dayDate">
-                        {{date.0.date | date('d')}}</span>{% else %}{{date.0.date | date('d')}}{% endif %}
-                        <br/>
-                        {% for event in events %}
-                            {% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or
-                                date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or
-                                date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
-                                date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
-                                <a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
-                                <br/>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
-                    {% if loop.index %7==0 %}
-                </tr><tr class="text-center">
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<div class="container">
+		<div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+			<div class="row no-gutters">
+				<a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Month</a>
+				<a href="/calendar/week/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthMonth">Week</a>
+			</div>
+			{# <h2 class="month-title-mobile">{{ fullDate | date('m-Y') }}</h2> #}
+			<h2 class="month-year month-title">{{ fullDate }}</h2>
+			<div>
+				<a href="/Calendar/month/{{ previous }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-left"></i></a>
+				<a href="/Calendar/month/{{ next }}" class="btn btn-warning weekToMonthMonth"><i class="fas fa-chevron-right"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="container calMobile2">
+		<div class="table-striped table-responsive-xl">
+			<table class="calendarTable table calendar__table calendar__table--{{ nbWeeks +1 }}weeks ">
+				<thead class="screenDesktopMonth">
+				<tr class="text-center">
+					{% for day in days %}
+						<th class="everyDay" scope="col">{{ day }}</th>
+					{% endfor %}
+				</tr>
+				</thead>
+				<tbody>
+				<tr class="text-center">
+					{% for date in calendar %}
+					<td class="{% if date.1 == true %}calendar__day{% else %}calendar__othermonth{% endif %} calendarTd">{% if date.0.date | date('d-m-Y') == now | date('d-m-Y')%}<span class="dayDate">
+						{{date.0.date | date('d')}}</span>{% else %}{{date.0.date | date('d')}}{% endif %}
+						<br/>
+						{% for event in events %}
+							{% if date.0.date | date('Y-m-d') == event.date_start | date('Y-m-d') or
+								date.0.date | date ('Y-m-d') == event.date_end | date ('Y-m-d') or
+								date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
+								date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
+								<a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
+								<br/>
+							{% endif %}
+						{% endfor %}
+					</td>
+					{% if loop.index %7==0 %}
+				</tr><tr class="text-center">
+					{% endif %}
+					{% endfor %}
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 {% endblock %}
 
@@ -82,10 +82,10 @@
 
 
 <script type="text/javascript">
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').materialSelect();
-    });
+	// Material Select Initialization
+	$(document).ready(function() {
+		$('.mdb-select').materialSelect();
+	});
 </script>
 
 {% endblock %}
