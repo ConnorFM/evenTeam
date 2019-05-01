@@ -111,6 +111,8 @@ class EventController extends CalendarController
             } else {
                 $messages = $errors;
                 $this->setMessages($messages);
+                $this->setPostData($_POST);
+                $this->setAction('event');
                 return $this->month();
             }
         }
@@ -214,7 +216,7 @@ class EventController extends CalendarController
         if (empty($events['eventEndHour'])) {
             $errors['eventEndHour'] = "An hour is required";
         } elseif (!preg_match("#[0-9]{2}:[0-9]{2}#", $events['eventEndHour'])) {
-            $errors['eventEndHour'] = "Enter a valid hour please ex: 05:30 or 16:45";
+            $errors['eventEndHour'] = "Enter a valid hour of ending please ex: 05:30 or 16:45";
         }
 
         // Display errors messages from the errors array

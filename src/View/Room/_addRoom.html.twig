@@ -1,9 +1,9 @@
 <form class="border border-light p-5" method="post" action="/room/add">
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 md-form form-lg">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" class="form-control mb-4 {% if message.name is defined %}is-invalid {% endif %}" value="{{ postData.name }}" required>
+            <input type="text" id="name" name="name" class="form-control {% if message.name is defined %}is-invalid {% endif %}" value="{{ postData.name }}" required>
             {% if  message.name is defined %}
                 <div class="invalid-feedback">
                     {{ message.name }}
@@ -13,11 +13,9 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 md-form form-lg">
             <label for="description">Description</label>
-            <textarea id="description" class="form-control mb-4 {% if message.description is defined %}is-invalid {% endif %}" name="description" rows="4" >
-                {{ postData.description }}
-            </textarea>
+            <textarea id="description" class="form-control md-textarea {% if message.description is defined %}is-invalid {% endif %}" name="description" rows="4">{{ postData.description }}</textarea>
 
             {% if  message.description is defined %}
                 <div class="invalid-feedback">
@@ -28,9 +26,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 md-form">
             <label for="capacity">Capacity</label>
-            <input type="number" id="capacity" name="capacity" class="form-control mb-4 {% if message.capacity is defined %}is-invalid {% endif %}" value="{{ postData.capacity }}" required>
+            <input type="number" id="capacity" name="capacity" class="form-control {% if message.capacity is defined %}is-invalid {% endif %}" value="{{ postData.capacity }}" required>
             {% if  message.capacity is defined %}
                 <div class="invalid-feedback">
                     {{ message.capacity }}
@@ -38,9 +36,9 @@
             {% endif %}
         </div>
 
-        <div class="col-md-7 offset-2">
+        <div class="col-md-7 offset-2 md-form">
             <label for="image">Image url</label>
-            <input type="text" id="textInput" name="image" class="form-control mb-4 {% if message.image is defined %}is-invalid {% endif %}" value="{{ postData.image }}" required>
+            <input type="text" id="textInput" name="image" class="form-control {% if message.image is defined %}is-invalid {% endif %}" value="{{ postData.image }}" required>
             {% if  message.image is defined %}
                 <div class="invalid-feedback">
                     {{ message.image }}
