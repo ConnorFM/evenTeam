@@ -25,7 +25,7 @@ function searchUser() {
 			// Création de rowDiv
 			myrowDiv = document.createElement('div');
 			myrowDiv.className = "row";
-			myrowDiv.style.width = "21.68rem";
+			myrowDiv.style.width = "24.80rem";
 			// Création des colDiv
 			mycolDivfirst = document.createElement('div');
 			mycolDivfirst.className = "col-6";
@@ -80,9 +80,11 @@ function editForm(event, eventId) {
 
 	let editButton = document.getElementById('editButton' + eventId);
 	let saveButton = document.getElementById('saveButton' + eventId);
+	let deleteButton = document.getElementById('deleteButton' + eventId);
 
 	editButton.style.display = 'none';
-	saveButton.style.display = 'block';	
+	saveButton.style.display = 'block';
+	deleteButton.style.display = 'block';		
 
 	// read into edit
 	guestDiv = document.getElementById('guestDiv' + eventId);
@@ -110,13 +112,16 @@ function editForm(event, eventId) {
 	guestDiv.appendChild(labelGuest);
 	guestDiv.appendChild(selectGuest);
 
-	i=1;
 	tab.forEach(function(element) {
 		let option = document.createElement('option');
-		option.value = i;
-		i++;
-		option.textContent = element.firstname + " " + element.lastname;
-		selectGuest.appendChild(option);
+		option.value = element.id;
+		tabEventUsers.forEach(function(element2) {
+			if(eventId == element2.event_id && element.id == element2.user_id) {
+				option.selected = true;
+			}
+		});
+			option.textContent = element.firstname + " " + element.lastname;
+			selectGuest.appendChild(option);
 	});
 
 	// Room select
@@ -135,11 +140,16 @@ function editForm(event, eventId) {
 	roomDiv.appendChild(labelRoom);
 	roomDiv.appendChild(selectRoom);
 
+
 	tabRoom.forEach(function(element) {
 		let optionRoom = document.createElement('option');
-		optionRoom.value =i;
-		i++;
+		optionRoom.value =element.id;
 		optionRoom.textContent = element.name;
+		tabEvent.forEach(function(element2) {
+			if(eventId == element2.id && element2.room_id == element.id){
+				optionRoom.selected = 1;
+			}
+		});	
 		selectRoom.appendChild(optionRoom);
 	});
 }
