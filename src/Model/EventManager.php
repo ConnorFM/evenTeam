@@ -67,7 +67,7 @@ class EventManager extends AbstractManager
     {
         // prepared request
 
-        
+
         $statement = $this->pdo->prepare("DELETE FROM user_event WHERE event_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
 

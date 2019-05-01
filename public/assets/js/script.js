@@ -140,14 +140,14 @@ function editForm(event, eventId) {
 	roomDiv.appendChild(labelRoom);
 	roomDiv.appendChild(selectRoom);
 
-	console.log(event);
+
 	tabRoom.forEach(function(element) {
 		let optionRoom = document.createElement('option');
 		optionRoom.value =element.id;
 		optionRoom.textContent = element.name;
 		tabEvent.forEach(function(element2) {
-			if(eventId == element2.room_id && element2.room_id == element.id){
-				optionRoom.selected = true;
+			if(eventId == element2.id && element2.room_id == element.id){
+				optionRoom.selected = 1;
 			}
 		});	
 		selectRoom.appendChild(optionRoom);
