@@ -146,16 +146,4 @@ class EventManager extends AbstractManager
         $statement->execute();
         return $statement->fetchAll();
     }
-
-    public function getEmail($user_id)
-    {
-        $statement = $this->pdo->prepare("SELECT email
-                                          FROM users
-                                          -- JOIN user_event ON id=user_event.user_id
-                                          WHERE id= :id");
-        $statement->bindvalue('id', $user_id, \PDO::PARAM_STR);
-        $statement->execute();
-
-        return $statement->fetch(); //array
-    }
 }

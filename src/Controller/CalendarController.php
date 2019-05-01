@@ -27,6 +27,7 @@ class CalendarController extends AbstractController
     protected $eventManager;
     protected $messages;
     protected $postData;
+    protected $action;
 
     public function __construct($month = null, $year = null)
     {
@@ -79,6 +80,21 @@ class CalendarController extends AbstractController
         $this->postData = $postData;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     */
+    public function setAction($action): void
+    {
+        $this->action = ucfirst($action);
+    }
 
     public function events($mode, $id)
     {
@@ -125,7 +141,8 @@ class CalendarController extends AbstractController
                                                                 'postData' => $this->getPostData(),
                                                                 'mode' => $mode,
                                                                 'userOrRoomId' => $id,
-                                                                'allEvents' => $this->userManager->getAllUsersEvents()
+                                                                'allEvents' => $this->userManager->getAllUsersEvents(),
+                                                                'action' => $this->getAction()
                                                                 ]);
     }
 
