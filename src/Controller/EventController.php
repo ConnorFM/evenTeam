@@ -94,8 +94,7 @@ class EventController extends CalendarController
                     ->setTo(['noreply.eventeam@gmail.com'])
                     ->setBCC([$userEmail])
                     ->setBody('Congratulations, your event ' . $events['eventName'] .
-                                ' has been created. You can visualize it on your calendar.')
-                    ;
+                                ' has been created. You can visualize it on your calendar.');
 
                 // Send the message
                     $mailer->send($message);
@@ -121,7 +120,10 @@ class EventController extends CalendarController
     public function delete($id)
     {
         $this->eventManager->delete((int)$id);
-        header('Location:/calendar/month');
+        header('Location: /calendar/month/' .
+            $this->calendar->month . '/' .
+            $this->calendar->year . '/' .
+            $this->calendar->week);
         exit;
     }
     public function edit($id)

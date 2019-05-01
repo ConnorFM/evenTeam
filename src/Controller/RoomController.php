@@ -28,7 +28,6 @@ class RoomController extends CalendarController
         return $room;
     }
 
-
     public function edit($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -69,11 +68,10 @@ class RoomController extends CalendarController
             $errors = $this->verifForm($room);
             if (empty($errors)) {
                 $this->roomManager->insert($room);
-                $date = new \DateTime();
-                $month = (clone $date)->format('m');
-                $year = (clone $date)->format('Y');
-                $week = (clone $date)->format('W');
-                header("Location: /calendar/month/$month/$year/$week");
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
                 exit;
             } else {
                 $messages = $errors;
@@ -89,7 +87,11 @@ class RoomController extends CalendarController
     {
         $roomManager = new RoomManager();
         $roomManager->delete($id);
-        header('Location:/calendar/month');
+        header('Location: /calendar/month/' .
+            $this->calendar->month . '/' .
+            $this->calendar->year . '/' .
+            $this->calendar->week);
+        exit;
     }
 
     private function verifForm($room)
