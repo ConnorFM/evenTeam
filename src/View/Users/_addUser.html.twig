@@ -1,9 +1,9 @@
 <form ACTION="/user/add" class="border border-light p-5" method="post" action="/user/add">
 
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 md-form">
             <label for="firstname">First Name</label>
-            <input type="text" id="firstname" name="firstname" class="form-control mb-4 {% if message.firstname is defined %}is-invalid {% endif %}" value="{{ postData.firstname }}" required>
+            <input type="text" id="firstname" name="firstname" class="form-control {% if message.firstname is defined %}is-invalid {% endif %}" value="{{ postData.firstname }}" required>
             {% if  message.firstname is defined %}
                 <div class="invalid-feedback">
                     {{ message.firstname }}
@@ -11,9 +11,9 @@
             {% endif %}
         </div>
 
-        <div class="col-md-5 offset-2">
+        <div class="col-md-5 offset-2 md-form">
             <label for="lastname">Last Name</label>
-            <input type="text" id="lastname" name="lastname" class="form-control mb-4 {% if message.lastname is defined %}is-invalid {% endif %}" value="{{ postData.lastname }}" required>
+            <input type="text" id="lastname" name="lastname" class="form-control {% if message.lastname is defined %}is-invalid {% endif %}" value="{{ postData.lastname }}" required>
             {% if  message.lastname is defined %}
                 <div class="invalid-feedback">
                     {{ message.lastname }}
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 mb-4">
+        <div class="col-12 mb-4 md-form">
             <label for="email">E-Mail</label>
             <input type="email" id="email" name="email" class="form-control {% if message.email is defined %}is-invalid {% endif %}" value="{{ postData.email }}" required>
             {% if  message.email is defined %}
@@ -33,7 +33,7 @@
             {% endif %}
         </div>
 
-        <div class="col-12 mb-4">
+        <div class="col-12 mb-4 md-form">
             <label  for="password">Mot de passe</label>
             <input  type="password"  id="password" name="password" class="form-control  {% if message.password is defined %}is-invalid {% endif %}" required>
             {% if  message.password is defined %}
@@ -45,7 +45,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-5 mb-4">
+        <div class="col-md-5 md-form">
             <label  for="image">Image Link</label>
             <input  type="text"  id="image" name="image" class="form-control {% if message.image is defined %}is-invalid {% endif %}" value="{{ postData.image }}" required>
             {% if  message.image is defined %}
