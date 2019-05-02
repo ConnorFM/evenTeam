@@ -45,18 +45,7 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-5 md-form">
-            <label  for="image">Image Link</label>
-            <input  type="text"  id="image" name="image" class="form-control {% if message.image is defined %}is-invalid {% endif %}" value="{% if postData.image is defined %}{{ postData.image }}{% else %}{{ user.image }}{% endif %}" required>
-            {% if  message.image is defined %}
-                <div class="invalid-feedback">
-                    {{ message.image }}
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="col-md-5 offset-2">
+        <div class="col-md-8 offset-2 mb-4">
             <label for="status">User Status</label>
             <select class="browser-default custom-select {% if message.status is defined %}is-invalid {% endif %}" id="status" name="status_id" required>
                 <option disabled selected>Select a status</option>
@@ -69,7 +58,6 @@
                 </div>
             {% endif %}
         </div>
-    </div>
     <div class="d-flex justify-content-around">
         <button class="btn btn-deep-orange" type="submit" >Edit user</button>
     </div>

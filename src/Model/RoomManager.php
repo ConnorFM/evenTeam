@@ -23,12 +23,11 @@ class RoomManager extends AbstractManager
     {
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table
-                                            (`name`, `capacity`, `description`, `image`)
-                                            VALUES (:name, :capacity, :description, :image)");
+                                            (`name`, `capacity`, `description`)
+                                            VALUES (:name, :capacity, :description)");
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
-        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 /**
         if ($statement->exmessagesecute()) {
             return (int)$this->pdo->lastInsertId();
@@ -61,13 +60,11 @@ class RoomManager extends AbstractManager
                                          SET `name` = :name,
                                             `capacity` = :capacity,
                                             `description` = :description,
-                                            `image` = :image
                                          WHERE id=:id");
         $statement->bindvalue('id', $room['id'], \PDO::PARAM_INT);
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
-        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 
         return $statement->execute();
     }
