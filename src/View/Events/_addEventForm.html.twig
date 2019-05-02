@@ -50,9 +50,9 @@
 
     <div class="col-sm-5">
       <!-- Room select -->
-      <label>Choose a Room</label>
+      <label>Choose a Room :</label><br/>
       <select class="md-form colorful-select down-warning" name="eventRoom">
-        <option value="" disabled selected>Choose a room</option>
+        <option value="" selected>I dont need a room</option>
         {% for room in rooms %}
           <option value="{{ room.id }}">{{ room.name }}</option>
         {% endfor %}

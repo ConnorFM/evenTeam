@@ -19,7 +19,7 @@ function searchUser() {
 		var compared = document.getElementById('search').value;
 		compared = compared.toUpperCase();
 		var firstnameUpper;
-		firstnameUpper = tab[i].firstname.toUpperCase();
+		firstnameUpper = tab[i].firstname + tab[i].lastname.toUpperCase();
 		if (firstnameUpper.includes(compared)) {
 			console.log(tab[i].firstname);
 			// Création de rowDiv
@@ -37,7 +37,7 @@ function searchUser() {
 			// Création d'une balise a qui se nomme myAfirst      
 			myAfirst = document.createElement('a');
 			myAfirst.className = "dropdown-item";
-			myAfirst.textContent = tab[i].firstname; 
+			myAfirst.textContent = tab[i].firstname + " " + tab[i].lastname; 
 			myAfirst.href = "/calendar/month/05/2019/21/user/" + tab[i].id;
 			// Création d'une balise a qui se nomme myAsecond
 			myAsecond = document.createElement('a');
@@ -126,7 +126,7 @@ function editForm(event, eventId) {
 
 	// Room select
 	let labelRoom = document.createElement('label');
-	labelRoom.textContent = "Available Rooms";
+	labelRoom.textContent = "Available Rooms :";
 
 	let selectRoom = document.createElement('select');
 	selectRoom.className = "md-form colorful-select down-warning";
@@ -136,8 +136,11 @@ function editForm(event, eventId) {
 	optionDisabledRoom.setAttribute('disable',"");
 	optionDisabledRoom.textContent = 'Choose a room';
 
+	let myBr = document.createElement('br');
+
 	selectRoom.appendChild(optionDisabledRoom);
 	roomDiv.appendChild(labelRoom);
+	roomDiv.appendChild(myBr);
 	roomDiv.appendChild(selectRoom);
 
 
@@ -164,4 +167,4 @@ function deleteChild(parent) {
 	while (parent.firstChild) {
 		parent.removeChild(parent.firstChild);
 	}
-}	
+}		
