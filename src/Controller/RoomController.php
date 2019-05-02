@@ -35,7 +35,6 @@ class RoomController extends CalendarController
             'name' => $_POST['name'],
             'capacity' => $_POST['capacity'],
             'description' => $_POST['description'],
-            'image' => $_POST['image'],
             'id' => $id
             ];
 
@@ -62,8 +61,7 @@ class RoomController extends CalendarController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $room = ['name' => $_POST['name'],
                     'capacity' => $_POST['capacity'],
-                    'description' => $_POST['description'],
-                    'image' => $_POST['image']
+                    'description' => $_POST['description']
             ];
             $errors = $this->verifForm($room);
             if (empty($errors)) {
@@ -106,9 +104,6 @@ class RoomController extends CalendarController
         }
         if (empty($room['description'])) {
             $errors['description'] = 'You should add a description';
-        }
-        if (empty($room['image'])) {
-            $errors['image'] = 'You should put an image';
         }
         return $errors;
     }

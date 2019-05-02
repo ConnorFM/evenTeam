@@ -15,13 +15,12 @@ class UserManager extends AbstractManager
     public function insert($user)
     {
         $insert = $this->pdo->prepare("INSERT INTO $this->table
-                                     (`firstname`, `lastname`, `email`, `status_id`, `image`, `password`)
-                                     VALUES (:firstname, :lastname, :email, :status_id, :image, :password)");
+                                     (`firstname`, `lastname`, `email`, `status_id`, `password`)
+                                     VALUES (:firstname, :lastname, :email, :status_id, :password)");
         $insert->bindvalue('firstname', $user['firstname'], \PDO::PARAM_STR);
         $insert->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $insert->bindvalue('email', $user['email'], \PDO::PARAM_STR);
         $insert->bindvalue('status_id', $user['status_id'], \PDO::PARAM_INT);
-        $insert->bindvalue('image', $user['image'], \PDO::PARAM_STR);
         $insert->bindvalue('password', $user['password'], \PDO::PARAM_STR);
 
         $insert->execute();
@@ -55,7 +54,6 @@ class UserManager extends AbstractManager
                                             `lastname` = :lastname,
                                             `email` = :email,
                                             `status_id` = :status_id,
-                                            `image` = :image,
                                             `password` = :password
                                         WHERE id=:id");
         $update->bindvalue('id', $user['id'], \PDO::PARAM_INT);
@@ -63,7 +61,6 @@ class UserManager extends AbstractManager
         $update->bindvalue('lastname', $user['lastname'], \PDO::PARAM_STR);
         $update->bindvalue('email', $user['email'], \PDO::PARAM_STR);
         $update->bindvalue('status_id', $user['status_id'], \PDO::PARAM_INT);
-        $update->bindvalue('image', $user['image'], \PDO::PARAM_STR);
         $update->bindvalue('password', $user['password'], \PDO::PARAM_STR);
 
         return $update->execute();

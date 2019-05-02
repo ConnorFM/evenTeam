@@ -29,14 +29,14 @@
   <div class="container">
     <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
       <div class="row no-gutters">
-        <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthWeek">Month</a>
-        <a href="/calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
+        <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthWeek text-dark">Month</a>
+        <a href="/calendar/week" class="btn btn-warning weekToMonthWeek text-dark">Week</a>
       </div>
       <h2 class="week-title week-title">{{ fullDate }}</h2>
       <h2 class="week-title-mobile">{{ mobileDate }}</h2>
       <div>
-        <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-left"></i></a>
-        <a href="/Calendar/week/{{ next }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-right"></i></a>
+        <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek text-dark"><i class="fas fa-chevron-left"></i></a>
+        <a href="/Calendar/week/{{ next }}" class="btn btn-warning weekToMonthWeek text-dark"><i class="fas fa-chevron-right"></i></a>
       </div>
     </div>
   </div>

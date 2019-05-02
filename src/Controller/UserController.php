@@ -23,7 +23,6 @@ class UserController extends CalendarController
               $user['lastname'] = $_POST['lastname'];
               $user['email'] = $_POST['email'];
               $user['status_id'] = $_POST['status_id'];
-              $user['image'] = $_POST['image'];
               $user['password'] = $_POST['password'];
               $user['id'] = $id;
 
@@ -74,7 +73,6 @@ class UserController extends CalendarController
                 'lastname' => $_POST['lastname'],
                 'email' => $_POST['email'],
                 'status_id' => $_POST['status_id'],
-                'image' => $_POST['image'],
                 'password' => $_POST['password']
             ];
 
@@ -143,7 +141,7 @@ class UserController extends CalendarController
     }
 
     // Display the login page
-    public function logIn()
+    public function login()
     {
         if (!empty($_SESSION)) {
             header('Location: /calendar/month/' .
@@ -170,7 +168,7 @@ class UserController extends CalendarController
             }
         }
 
-        return $this->twig->render('Users/login.html.twig');
+        return $this->twig->render('Home/login.html.twig');
     }
 
     private function verifForm(array $user)
@@ -188,9 +186,6 @@ class UserController extends CalendarController
         }
         if (empty($user['status_id'])) {
             $errors['status'] = "Please select a user's status";
-        }
-        if (empty($user['image'])) {
-            $errors['image'] = "Please enter an image link";
         }
         if (empty($user['password'])) {
             $errors['password'] = "Please enter a password";

@@ -22,9 +22,10 @@
   color: black;
   font-size: 1.2vw;
 }
-
-.calendar__day {
-  font-size: 1.1vw;
+@media screen and (max-width: 992px) {
+  .event{
+    font-size: 2.3vw;
+  }
 }
 
 .calendar__othermonth {
@@ -180,28 +181,14 @@
 }
 
 .navbar-dark {
+  display: flex;
+  background-color: grey;
   color: white;
   font-weight: bold;
 }
 
 .nav-item {
   color: white;
-}
-
-#navbar {
-  display: flex;
-  background-color: grey;
-  transform: translateY(-100%);
-  transition: transform .5s cubic-bezier(.4,0,.2,1);
-  z-index: 99;
-}
-
-#navbar > * {
-  padding: 1vw;
-}
-
-.nav-container:hover #navbar {
-  transform: translateY(0);
 }
 
 .newRoom, .dropdown-item {
@@ -246,22 +233,6 @@
   font-size: 4vw;
   /*font-family: cursive;*/
   color: grey;
-}
-
-#navbar {
-  display: flex;
-  background-color: grey;
-  transform: translateY(-100%);
-  transition: transform .5s cubic-bezier(.4,0,.2,1);
-  z-index: 99;
-}
-
-#navbar > * {
-  padding: 0,1vw;
-}
-
-.nav-container:hover #navbar {
-  transform: translateY(0);
 }
 
 .dayDate{

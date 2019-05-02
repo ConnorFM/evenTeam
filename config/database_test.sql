@@ -46,24 +46,24 @@
 	FOREIGN KEY (event_id) REFERENCES events(id)
 	);
 
-	INSERT INTO room (name, capacity, description, image) VALUES
-	("Salle PHP", 20, "Salle du RDC à gauche en rentrant à la Wild", "http://tinyurl.com/y5p7yjox"),
-	("Salle React", 20, "Salle au deuxième Etage", "http://tinyurl.com/y5p7yjox"),
-	("Wild Room", 70, "Salle de déjeuner et de Chill au Premier étage", "http://tinyurl.com/y5p7yjox"),
-	("Salle Angular",70, "Salle se situant au 1er étage du 12Ter Quai Perrache, 69002 Lyon ", "http://tinyurl.com/y5p7yjox"),
-	("Salle Formateurs",7, "Salle du RDC à droite en rentrant à la Wild", "http://tinyurl.com/y5p7yjox");
+	INSERT INTO room (name, capacity, description) VALUES
+	("Salle PHP", 20, "Salle du RDC à gauche en rentrant à la Wild"),
+	("Salle React", 20, "Salle au deuxième Etage"),
+	("Wild Room", 70, "Salle de déjeuner et de Chill au Premier étage"),
+	("Salle Angular",70, "Salle se situant au 1er étage du 12Ter Quai Perrache, 69002 Lyon "),
+	("Salle Formateurs",7, "Salle du RDC à droite en rentrant à la Wild");
 
 	INSERT INTO status (name) VALUES
 	('admin'), ('user');
 
-	INSERT INTO users (firstname, lastname, email, status_id, image, password) VALUES
-	("Quentin", "BISIAUX", "quentin@bisiaux.fr", 1, "http://tinyurl.com/yxq8jnen", "quentinBISIAUX"),
-	("Noel", "AN", "noel@an.fr", 1, "http://tinyurl.com/yxq8jnen", "noelAN"),
-	("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "http://tinyurl.com/yxq8jnen", "foucauldGAUDIN"),
-	("Catherine", "VINCENT", "catherine@vincent.fr", 1, "http://tinyurl.com/yxq8jnen", "catherineVINCENT"),
-	("Jean Daniel", "BOCCARA", "jd@boccara.fr", 2, "http://tinyurl.com/yxq8jnen", "jdBOCCARA"),
-	("Laeticia", "VARELA", "laeticia@varela.fr", 1, "http://tinyurl.com/yxq8jnen", "laeticiaVARELA"),
-	("Kevin", "HEITZ", "kevin@heitz.fr", 2, "http://tinyurl.com/yxq8jnen", "kevinHEITZ");
+	INSERT INTO users (firstname, lastname, email, status_id, password) VALUES
+	("Quentin", "BISIAUX", "quentin@bisiaux.fr", 1, "quentinBISIAUX"),
+	("Noel", "AN", "noel@an.fr", 1, "noelAN"),
+	("Foucauld", "GAUDIN", "foucauld@gaudin.fr", 1, "foucauldGAUDIN"),
+	("Catherine", "VINCENT", "catherine@vincent.fr", 1,"catherineVINCENT"),
+	("Jean Daniel", "BOCCARA", "jd@boccara.fr", 2, "jdBOCCARA"),
+	("Laeticia", "VARELA", "laeticia@varela.fr", 1, "laeticiaVARELA"),
+	("Kevin", "HEITZ", "kevin@heitz.fr", 2, "kevinHEITZ");
 
 	INSERT INTO events (name, creator, date_start, date_end, room_id, description) VALUES
 	("Démo day",6,"2019-05-02 14:00:00", "2019-05-02 18:00:00",4,"Présentation des projets 2 de toute la promo "),
