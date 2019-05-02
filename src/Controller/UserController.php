@@ -27,19 +27,27 @@ class UserController extends CalendarController
               $user['password'] = $_POST['password'];
               $user['id'] = $id;
 
+            $errors = $this->verifForm($user);
 
-              $this->userManager->update($user);
+            if (empty($errors)) {
+                $this->userManager->update($user);
 
-            if ($_SESSION['id'] == $id) {
-                $session = new Session();
-                $session->createSession($user);
+                if ($_SESSION['id'] == $id) {
+                    $session = new Session();
+                    $session->createSession($user);
+                }
+
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
+                exit;
+            } else {
+                $this->setMessages($errors);
+                $this->setPostData($user);
+                $this->setAction('EditUser' .$id);
+                return $this->month();
             }
-
-              header('Location: /calendar/month/' .
-                  $this->calendar->month . '/' .
-                  $this->calendar->year . '/' .
-                  $this->calendar->week);
-              exit;
         }
     }
 
@@ -70,10 +78,47 @@ class UserController extends CalendarController
                 'password' => $_POST['password']
             ];
 
-            $errors = $this->verifEvent($user);
+            $errors = $this->verifForm($user);
+            if ($_POST['email'] == $this->userManager->getOneByEmail($_POST['email'])['email']) {
+                $errors['email'] = "This email already exist";
+            }
 
             if (empty($errors)) {
                 $this->userManager->insert($user);
+                // Create the Transport
+                $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                  ->setUsername('noreply.eventeam@gmail.com')
+                  ->setPassword('evenTeam2019')
+                ;
+
+               // Create the Mailer using your created Transport
+                $mailer = new \Swift_Mailer($transport);
+                // Create a message
+
+
+                $message = (new \Swift_Message('You are now a member of Eventeam'))
+                ->setFrom(['noreply@eventeam.com' => 'Eventeam'])
+                ->setTo(['noreply.eventeam@gmail.com'])
+                ->setBCC([$user['email']])
+                ->setBody(
+                    '<html>' .
+                         ' <head></head>' .
+                         ' <body>' .
+                         'Welcome to Eventeam!' . '<br />' .'<br />' .
+                         'You are now a member of evenTeam.
+                         You can now log in with your email adress
+                         and the password you have been attributed to: '
+                         . '<br />' . '<br />' .
+                         '<span style="font-weight: bold;">' .
+                         $user['password'] . '</span><br />' . '<br />'.
+                         'See you soon on <a href="eventeam.com">Eventeam.</a>' .
+                         '</body>' .
+                         '</html>',
+                    'text/html'
+                );
+
+            // Send the message
+                $mailer->send($message);
 
                 header('Location: /calendar/month/' .
                     $this->calendar->month . '/' .
@@ -128,7 +173,7 @@ class UserController extends CalendarController
         return $this->twig->render('Users/login.html.twig');
     }
 
-    private function verifEvent(array $user)
+    private function verifForm(array $user)
     {
         $errors = [];
 
@@ -140,8 +185,6 @@ class UserController extends CalendarController
         }
         if (empty($_POST['email'])) {
             $errors['email'] = "Please enter an email";
-        } elseif ($_POST['email'] == $this->userManager->getOneByEmail($_POST['email'])['email']) {
-            $errors['email'] = "This email already exist";
         }
         if (empty($user['status_id'])) {
             $errors['status'] = "Please select a user's status";
