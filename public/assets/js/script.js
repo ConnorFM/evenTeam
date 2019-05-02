@@ -19,7 +19,7 @@ function searchUser() {
 		var compared = document.getElementById('search').value;
 		compared = compared.toUpperCase();
 		var firstnameUpper;
-		firstnameUpper = tab[i].firstname.toUpperCase();
+		firstnameUpper = tab[i].firstname + tab[i].lastname.toUpperCase();
 		if (firstnameUpper.includes(compared)) {
 			console.log(tab[i].firstname);
 			// Création de rowDiv
@@ -37,7 +37,7 @@ function searchUser() {
 			// Création d'une balise a qui se nomme myAfirst      
 			myAfirst = document.createElement('a');
 			myAfirst.className = "dropdown-item";
-			myAfirst.textContent = tab[i].firstname; 
+			myAfirst.textContent = tab[i].firstname + " " + tab[i].lastname; 
 			myAfirst.href = "/calendar/month/05/2019/21/user/" + tab[i].id;
 			// Création d'une balise a qui se nomme myAsecond
 			myAsecond = document.createElement('a');
