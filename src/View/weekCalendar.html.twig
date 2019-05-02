@@ -1,76 +1,87 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-    My Weekly Calendar
+  My Weekly Calendar
 {% endblock %}
 
 {% block content %}
-    {% include 'Events/_modalEvent.html.twig' %}
-    {% include '_addEventButton.html.twig' %}
-    {% include 'Room/_modalRoom.html.twig' %}
-    {% include 'Users/_modalUser.html.twig' %}
-    {% include 'Users/_modalEditUser.html.twig' %}
-    {% include 'Room/_modalEditRoom.html.twig' %}
-    {% include 'Events/_modalEditEvent.html.twig' %}
-    <div class="container">
-        <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
-            <div class="row no-gutters">
-                <a href="/Calendar/month" class="btn btn-warning weekToMonthWeek">Month</a>
-                <a href="/Calendar/week" class="btn btn-warning weekToMonthWeek">Week</a>
-            </div>
-            <h2 class="week-title week-title">{{ fullDate }}</h2>
-            <h2 class="week-title-mobile">{{ mobileDate }}</h2>
-            <div>
-                <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-left"></i></a>
-                <a href="/Calendar/week/{{ next }}" class="btn btn-warning weekToMonthWeek"><i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div>
+  {% include 'Events/_modalEvent.html.twig' %}
+  {% include '_addEventButton.html.twig' %}
+  {% include 'Room/_modalRoom.html.twig' %}
+  {% include 'Users/_modalUser.html.twig' %}
+  {% include 'Users/_modalEditUser.html.twig' %}
+  {% include 'Room/_modalEditRoom.html.twig' %}
+  {% include 'Events/_modalEditEvent.html.twig' %}
+
+  {% if message is iterable %}
+    <div class="container mt-2">
+      <div class="alert alert-danger text-center">
+        {% for error in message %}
+          {{ error }} <br/>
+        {% endfor %}
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal{{ action }}">
+          See your {{ action | slice(4, -1)}}
+        </button>
+      </div>
     </div>
-    <div class="container calMobile">
-        <div class="table-responsive-xl">
-            <table class="calendarTable table table-bordered table-striped">
-                <thead class="screenDesktop">
-                    <tr class="text-center">
+  {% endif %}
 
-                        <th scope="col" class="everyDay">Hours</th>
-                        {% for day in daysOfWeek %}
-                            <th class="everyDay" scope="col">{{ day | date('l d F')}}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <thead class="screenMobile">
-                    <tr class="text-center">
-
-                        {% for day in daysOfWeek %}
-                            <th scope="col" class="tableMobile">{{ day | date('D d') }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for hours in calendar %}
-                        <tr>
-                            <th scope="row">{{ hours[0] | date('H:i') }}</th>
-                            {% for hour in hours %}
-
-                                <td class="tableMobile calendarTd"><div class="noDisplay">{{ hour | date('H:i') }}</div>
-                                {% for event in events %}
-                                {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
-                                    hour | date('Y-m-d H:i') == event.date_end | date('Y-m-d H:i') or
-                                    hour | date('Y-m-d H:i') < event.date_end | date('Y-m-d H:i') and
-                                    hour | date('Y-m-d H:i') > event.date_start | date('Y-m-d H:i')%}
-                                    <a data-toggle="modal" id="event{{ event.id }}" href="#modalEditEvent{{ event.id }}">
-                                    <div style="background-color: orange; padding-right:12px;" class="text-center">{{ event.name }}</a></div>
-                                    <br/>
-                                {% endif %}
-                            {% endfor %}
-                                </td>
-                            {% endfor %}
-
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+  <div class="container">
+    <div class="d-flex flex-row align-items-center justify-content-around mx-sm-3">
+      <div class="row no-gutters">
+        <a href="/calendar/month/{{ calendar.0.date | date ('m/Y/W') }}" class="btn btn-warning weekToMonthWeek text-dark">Month</a>
+        <a href="/calendar/week" class="btn btn-warning weekToMonthWeek text-dark">Week</a>
+      </div>
+      <h2 class="week-title week-title">{{ fullDate }}</h2>
+      <h2 class="week-title-mobile">{{ mobileDate }}</h2>
+      <div>
+        <a href="/Calendar/week/{{ previous }}" class="btn btn-warning weekToMonthWeek text-dark"><i class="fas fa-chevron-left"></i></a>
+        <a href="/Calendar/week/{{ next }}" class="btn btn-warning weekToMonthWeek text-dark"><i class="fas fa-chevron-right"></i></a>
+      </div>
     </div>
-
+  </div>
+  <div class="container calMobile">
+    <div class="table-responsive-xl">
+      <table class="calendarTable table table-bordered table-striped">
+        <thead class="screenDesktop">
+          <tr class="text-center">
+            <th scope="col" class="everyDay">Hours</th>
+            {% for day in daysOfWeek %}
+              <th class="everyDay" scope="col">{{ day | date('l d F')}}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <thead class="screenMobile">
+          <tr class="text-center">
+            {% for day in daysOfWeek %}
+              <th scope="col" class="tableMobile">{{ day | date('D d') }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for hours in calendar %}
+            <tr>
+              <th scope="row">{{ hours[0] | date('H:i') }}</th>
+              {% for hour in hours %}
+                <td class="tableMobile calendarTd">
+                  <div class="noDisplay">{{ hour | date('H:i') }}
+                  </div>
+                  {% for event in events %}
+                    {% if hour | date('Y-m-d H:i') == event.date_start | date('Y-m-d H:i') or
+                      hour | date('Y-m-d H:i') == event.date_end | date('Y-m-d H:i') or
+                      hour | date('Y-m-d H:i') < event.date_end | date('Y-m-d H:i') and
+                      hour | date('Y-m-d H:i') > event.date_start | date('Y-m-d H:i')%}
+                      <a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span>
+                      </a>
+                      <br/>
+                    {% endif %}
+                  {% endfor %}
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

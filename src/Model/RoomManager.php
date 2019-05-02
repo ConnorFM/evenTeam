@@ -23,14 +23,13 @@ class RoomManager extends AbstractManager
     {
         // prepared request
         $statement = $this->pdo->prepare("INSERT INTO $this->table
-                                            (`name`, `capacity`, `description`, `image`)
-                                            VALUES (:name, :capacity, :description, :image)");
+                                            (`name`, `capacity`, `description`)
+                                            VALUES (:name, :capacity, :description)");
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
-        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 /**
-        if ($statement->execute()) {
+        if ($statement->exmessagesecute()) {
             return (int)$this->pdo->lastInsertId();
         }
 **/     $statement->execute();
@@ -42,6 +41,10 @@ class RoomManager extends AbstractManager
     public function delete(int $id): void
     {
         // prepared request
+        $updateStatement = $this->pdo->prepare("UPDATE events SET room_id = NULL WHERE room_id = :id");
+        $updateStatement->bindValue('id', $id, \PDO::PARAM_INT);
+        $updateStatement->execute();
+
         $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
@@ -53,19 +56,15 @@ class RoomManager extends AbstractManager
      */
     public function update(array $room):bool
     {
-
-        // prepared request
         $statement = $this->pdo->prepare("UPDATE $this->table
                                          SET `name` = :name,
                                             `capacity` = :capacity,
                                             `description` = :description,
-                                            `image` = :image
                                          WHERE id=:id");
         $statement->bindvalue('id', $room['id'], \PDO::PARAM_INT);
         $statement->bindValue('name', $room['name'], \PDO::PARAM_STR);
         $statement->bindValue('capacity', $room['capacity'], \PDO::PARAM_INT);
         $statement->bindValue('description', $room['description'], \PDO::PARAM_STR);
-        $statement->bindValue('image', $room['image'], \PDO::PARAM_STR);
 
         return $statement->execute();
     }

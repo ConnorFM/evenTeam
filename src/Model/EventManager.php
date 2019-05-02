@@ -24,32 +24,35 @@ class EventManager extends AbstractManager
      *
      * This method will execute the SQL request which will insert inputs into database via PDO.
      *
-     * @param array $events Representation of the Object 'event' as an array can be manipulated.
+     * @param array $event Representation of the Object 'event' as an array can be manipulated.
      */
-    public function insert(array $events)
+    public function insert(array $event)
     {
         // Prepared request
         $statement = $this->pdo->prepare("
-            INSERT INTO $this->table (name, date_start, date_end, room_id, description) 
-            VALUES (:name, :date_start, :date_end, :room_id, :description)
+            INSERT INTO $this->table (name,creator, date_start, date_end, room_id, description)
+            VALUES (:name, :creator, :date_start, :date_end, :room_id, :description)
             ");
-        $statement->bindValue('name', $events['name'], \PDO::PARAM_STR);
-        $statement->bindValue('date_start', $events['date_start'], \PDO::PARAM_STR);
-        $statement->bindValue('date_end', $events['date_end'], \PDO::PARAM_STR);
-        $statement->bindValue('room_id', $events['room_id'], \PDO::PARAM_INT);
-        $statement->bindValue('description', $events['description'], \PDO::PARAM_STR);
+        $statement->bindValue('name', $event['name'], \PDO::PARAM_STR);
+        $statement->bindValue('creator', $event['creator'], \PDO::PARAM_STR);
+        $statement->bindValue('date_start', $event['date_start'], \PDO::PARAM_STR);
+        $statement->bindValue('date_end', $event['date_end'], \PDO::PARAM_STR);
+        $statement->bindValue('room_id', $event['room_id'], \PDO::PARAM_INT);
+        $statement->bindValue('description', $event['description'], \PDO::PARAM_STR);
 
-        //
         if ($statement->execute()) {
             $event_id = $this->pdo->lastInsertId();
-            $statement = $this->pdo->prepare("
-            INSERT INTO user_event (event_id, user_id)
-            VALUES (:event_id, :userId)
-            ");
 
-            $statement->bindValue('event_id', $event_id, \PDO::PARAM_INT);
-            $statement->bindValue('userId', $events['user_id'], \PDO::PARAM_INT);
-            $statement->execute();
+            foreach ($event['user_id'] as $value) {
+                $statement = $this->pdo->prepare("
+                    INSERT INTO user_event (event_id, user_id)
+                    VALUES (:event_id, :userId)
+                ");
+
+                $statement->bindValue('event_id', $event_id, \PDO::PARAM_INT);
+                $statement->bindValue('userId', $value, \PDO::PARAM_INT);
+                $statement->execute();
+            }
         }
     }
 
@@ -63,9 +66,14 @@ class EventManager extends AbstractManager
     public function delete(int $id):void
     {
         // prepared request
-        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+
+
+        $statement = $this->pdo->prepare("DELETE FROM user_event WHERE event_id=:id");
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
-        
+
+        $statement->execute();
+
+        $statement = $this->pdo->prepare("DELETE FROM events WHERE id not IN (SELECT event_id FROM user_event)");
         $statement->execute();
     }
 
@@ -74,16 +82,44 @@ class EventManager extends AbstractManager
      *
      * This method will execute the SQL request which will delete an 'event' object from database via PDO.
      *
-     * @param array $events Representation of the Object 'event' as an array can be manipulated.
+     * @param array $event Representation of the Object 'event' as an array can be manipulated.
+     * @return bool
      */
-    public function update(array $events):bool
+    public function update(array $event)
     {
         // prepared request
-        $statement = $this->pdo->prepare("UPDATE $this->table SET `title`=:title WHERE id=:id");
-        $statement->bindValue('id', $events['id'], \PDO::PARAM_INT);
-        $statement->bindValue('title', $events['title'], \PDO::PARAM_STR);
 
-        return $statement->execute();
+        $statement = $this->pdo->prepare("DELETE FROM user_event where event_id=:id");
+        $statement->bindValue('id', $event['id'], \PDO::PARAM_INT);
+        $statement->execute();
+
+
+        $statement = $this->pdo->prepare("UPDATE $this->table
+                                             SET `name`=:name,
+                                                 `date_start` = :date_start,
+                                                 `date_end` = :date_end,
+                                                 `room_id` = :room_id,
+                                                 `description` = :description
+                                             WHERE id=:id");
+         $statement->bindValue('id', $event['id'], \PDO::PARAM_INT);
+         $statement->bindValue('name', $event['name'], \PDO::PARAM_STR);
+         $statement->bindValue('date_start', $event['date_start'], \PDO::PARAM_STR);
+         $statement->bindValue('date_end', $event['date_end'], \PDO::PARAM_STR);
+         $statement->bindValue('room_id', $event['room_id'], \PDO::PARAM_INT);
+         $statement->bindValue('description', $event['description'], \PDO::PARAM_STR);
+         $statement->execute();
+
+        foreach ($event['user_id'] as $value) {
+            $statement = $this->pdo->prepare("
+                    INSERT INTO user_event (event_id, user_id)
+                    VALUES (:event_id, :userId)
+
+                ");
+
+            $statement->bindValue('event_id', $event['id'], \PDO::PARAM_INT);
+            $statement->bindValue('userId', $value, \PDO::PARAM_INT);
+            $statement->execute();
+        }
     }
 
     /**
@@ -110,7 +146,7 @@ class EventManager extends AbstractManager
     /**
      * Select every 'event' objects for one user.
      *
-     *This method will execute the SQL request which will select
+     * This method will execute the SQL request which will select
      * all events associate with one user from database via PDO.
      *
      * @param int $user_id
@@ -120,13 +156,45 @@ class EventManager extends AbstractManager
     public function getUserEvents($user_id)
     {
         // Prepared request
-        $statement = $this->pdo->prepare("  SELECT id, name, date_start, date_end, room_id, description  
-                                                      FROM user_event
-                                                      JOIN events ON id = user_event.event_id
-                                                      WHERE user_id= :user_id
-                                                      ORDER BY date_start;");
+        $statement = $this->pdo->prepare("SELECT id,creator, name, date_start, date_end, room_id, description
+                                          FROM user_event
+                                          JOIN events ON id = user_event.event_id
+                                          WHERE user_id = :user_id 
+                                          ORDER BY date_start;");
         $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll();
     }
+    // return every events and user(s) in the event
+    public function getEventUsers()
+    {
+        $statement = $this->pdo->prepare("SELECT * from user_event;");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+        /**
+     * Select every 'event' objects for one user included event(s) created by the user.
+     *
+     * This method will execute the SQL request which will select
+     * all events associate with one user from database via PDO.
+     *
+     * @param int $user_id
+     * @return array of events of a user
+     */
+
+    public function getUserEventsAndCreator($user_id)
+    {
+        // Prepared request
+        $statement = $this->pdo->prepare("SELECT DISTINCT id,creator, name, date_start, date_end, room_id, description
+                                          FROM user_event
+                                          JOIN events ON id = user_event.event_id
+                                          WHERE user_id = :user_id 
+                                          OR creator= :user_id
+                                          ORDER BY date_start;  ");
+        $statement->bindValue('user_id', $user_id, \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+    // return every even
 }

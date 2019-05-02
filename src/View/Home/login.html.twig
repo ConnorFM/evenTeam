@@ -1,0 +1,54 @@
+{% extends 'Home/loginLayout.html.twig' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/assets/css/stylelogin.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="modal hide fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Login</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" class="text-center border border-light p-5 form">
+
+                            <p class="test">Connect to the app with the access codes you received by email</p>
+
+                            {% if errorConnection == true %}
+                                <div class="alert alert-danger text-center">
+                                    <p>Your login or password is wrong !</p>
+                                </div>
+                            {% endif %}
+                            <input type="email" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Email" name="email">
+
+                            <input type="password" id="defaultSubscriptionFormEmail" class="form-control" placeholder="Password" name="password">
+
+                            <a href="#">Request a new password</a>
+
+                            <button class="btn btn-warning btn-block mt-4" type="submit">Login</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+
+        {% block javascript %}
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                $('#modalLogin').modal('show');
+            });
+        </script>
+        {% endblock %}

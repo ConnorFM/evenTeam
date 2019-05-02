@@ -1,36 +1,60 @@
-
-      <form method="post" action="/event/addEvent">
+      <form method="post" action="/event/edit/{{ event.id }}">
         <div class="row">
           <div class="col-sm-8">
             <!-- Large input for Event Name -->
-            <div class="md-form form-lg">
-              <input type="text" id="inputLGEx" class="form-control form-control-lg" name="eventName" value="" required>
+            <div class="md-form form-lg md-form">
+              <input type="text" id="inputLGEx" class="form-control form-control-lg {% if message.eventName is defined %}is-invalid {% endif %}" name="eventName" value="{% if postData.eventName is defined %}{{ postData.eventName }}{% else %}{{ event.name }}{% endif %}" required disabled>
               <label for="inputLGEx">Event Name</label>
             </div>
+              {% if  message.eventName is defined %}
+                  <div class="invalid-feedback">
+                      {{ message.eventName }}
+                  </div>
+              {% endif %}
           </div>
         </div>
-
         <div class="row">
-          <div class="col-sm-8">
-            <!-- Event Description-->
+          <div class="col-sm-12">
+            <!-- Event Description -->
             <div class="md-form">
-              <textarea id="textarea-char-counter" class="form-control md-textarea" length="120" rows="3" name="eventDescription" required></textarea>
-              <label for="textarea-char-counter">Type your event description</label>
+              <textarea id="textarea-char-counter" class="form-control md-textarea {% if message.eventDescription is defined %}is-invalid {% endif %}" length="120" rows="2" name="eventDescription" required disabled>{% if postData.eventDescription is defined %}{{ postData.eventDescription }}{% else %}{{ event.description }}{% endif %}</textarea>
+              <label for="textarea-char-counter">Event description</label>
+            </div>
+              {% if  message.eventDescription is defined %}
+                  <div class="invalid-feedback">
+                      {{ message.eventDescription }}
+                  </div>
+              {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+          <!-- User select -->
+          <div id="guestDiv{{event.id}}">
+            <h4>Guest :</h4>
+            <ul id="guestUl{{event.id}}">
+            {% for assoc in allEvents %}
+              {% if assoc.event_id == event.id %}
+               <li> {{assoc.firstname}} {{assoc.lastname}} </li>
+              {% endif %}  
+            {% endfor %}
+            </ul>
+          </div> 
+          </div>
+          <div class="col-sm-5">
+            <!-- Room select -->
+            <div id="roomDiv{{event.id}}">
+              <h4>Room :</h4>
+              <div>
+                {% for room in rooms %}
+                  {% if room.id == event.room_id %}
+                    <p>{{room.name}}</p>
+                  {% endif %}
+                {% endfor %}
+              </div>
             </div>
           </div>
-
-          <div class="col-sm-4">
-            <!-- Room select -->
-            <label>Available Rooms</label>
-            <select class="mdb-select md-form colorful-select down-warning" name="room">
-              <option value="" disabled selected>Choose a room</option>
-              {% for room in rooms %}
-               <option value="{{ room.id }}">{{ room.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
         </div>
-
         <div class="row">
 
           <!-- Start Date input -->
@@ -39,14 +63,24 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">Begin date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventBeginYear" required>
-              <!-- Error message if 'Begin Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 12" name="eventBeginMonth" required>
-              <!-- Error message if 'Begin Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 05 or 23" name="eventBeginDay" required>
-              <!-- Error message if 'Begin Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 08:00 or 16:15" name="eventBeginHour" required>
-              <!-- Error message if 'Begin Hour' field is empty or not correct -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input type="date" id="beginDate" class="form-control {% if message.eventBeginDate is defined %}is-invalid {% endif %}" name="dateStart" value="{% if postData.beginDate is defined %}{{ postData.beginDate }}{% else %}{{ event.date_start | date ('Y-m-d') }}{% endif %}" disabled>
+                        {% if  message.eventBeginHour is defined %}
+                            <div class="invalid-feedback">
+                                {{ message.eventBeginHour }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col offset-1">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control {% if message.eventBeginHour is defined %}is-invalid{% endif %}" placeholder="Hour ex. 08:00" name="startHour" required value="{% if postData.startHour is defined %}{{ postData.startHour }}{% else %}{{ event.date_start | date ('H:i') }}{% endif %}" disabled>
+                        {% if  message.eventBeginHour is defined %}
+                            <div class="invalid-feedback">
+                                {{ message.eventBeginHour }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -58,17 +92,39 @@
               <div class="input-group-prepend">
                 <span class="input-group-text md-addon">End date</span>
               </div>
-              <input type="text" id="inputLGEx" aria-label="Year" class="form-control" value="2019" name="eventEndYear" required>
-              <!-- Error message if 'End Year' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Month" class="form-control" placeholder="month ex. : 03 or 10" name="eventEndMonth" required>
-              <!-- Error message if 'End Month' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Day" class="form-control" placeholder="day ex. : 01 or 23" name="eventEndDay" required>
-              <!-- Error message if 'End Day' field is empty or not correct -->
-              <input type="text" id="inputLGEx" aria-label="Hour" class="form-control" placeholder="ex: 09:00 or 14:30" name="eventEndHour" required>
-              <!-- Error message if 'End Hour' field is empty or not correct -->
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <input type="date" id="endDate" class="form-control {% if message.eventEndDate is defined %}is-invalid{% endif %}" name="dateEnd" value="{% if postData.endDate is defined %}{{ postData.endDate }}{% else %}{{ event.date_end | date ('Y-m-d') }}{% endif %}" disabled>
+                        {% if  message.eventEndHour is defined %}
+                            <div class="invalid-feedback">
+                                {{ message.eventEndHour }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col offset-1">
+                        <input type="text" id="inputLGEx" aria-label="Hour" class="form-control {% if message.eventEndHour is defined %}is-invalid {% endif %}" placeholder="Hour ex. 08:00" name="endHour" required value="{% if postData.endHour is defined %}{{ postData.endHour }}{% else %}{{ event.date_end | date ('H:i') }}{% endif %}" disabled>
+                        {% if  message.eventEndHour is defined %}
+                            <div class="invalid-feedback">
+                                {{ message.eventEndHour }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
           </div>
         </div>
-        <!-- Add 'New Event' button -->
-        <button type="submit" class="btn btn-deep-orange">Create Event</button>
+       {% if session.id == event.creator %}
+          <div class="row justify-content-around">
+            <div class="col-3">
+              <button type="button" class="btn btn-light editbtn" onclick="editForm(event, {{event.id}})" id="editButton{{event.id}}">Edit</button>
+            </div>
+            <div class="col-3">
+              <button type="submit" class="btn btn-info savebtn" style="display: none" id="saveButton{{event.id}}">Save</button>
+            </div>
+            <div class="col-3">
+              <a id="deleteButton{{ event.id }}" href="/event/delete/{{ event.id }}" style="display: none" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+         </div>
+       {% endif %}
       </form>

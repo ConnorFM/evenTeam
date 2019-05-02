@@ -27,6 +27,7 @@ class CalendarController extends AbstractController
     protected $eventManager;
     protected $messages;
     protected $postData;
+    protected $action;
 
     public function __construct($month = null, $year = null)
     {
@@ -79,6 +80,21 @@ class CalendarController extends AbstractController
         $this->postData = $postData;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param mixed $action
+     */
+    public function setAction($action): void
+    {
+        $this->action = ucfirst($action);
+    }
 
     public function events($mode, $id)
     {
@@ -89,7 +105,7 @@ class CalendarController extends AbstractController
                 return $this->eventManager->getUserEvents($id);
             }
         } else {
-            return $this->eventManager->getUserEvents($_SESSION['id']);
+            return $this->eventManager->getUserEventsAndCreator($_SESSION['id']);
         }
     }
 
@@ -100,6 +116,12 @@ class CalendarController extends AbstractController
 
         $users = $this->userManager->selectAll();
         $usersjson = json_encode($users);
+        $rooms = $this->roomManager->selectAll();
+        $roomsjson = json_encode($rooms);
+        $eventUsers = $this->eventManager->getEventUsers();
+        $eventUsersjson = json_encode($eventUsers);
+        $events = $this->eventManager->selectAll();
+        $eventsjson = json_encode($events);
 
         if (isset($mode)) {
             $next = $this->getCalendar()->nextMonth();
@@ -111,8 +133,6 @@ class CalendarController extends AbstractController
             $previous = $this->getCalendar()->previousMonth();
         }
 
-
-
         return $this->twig->render('monthCalendar.html.twig', [
                                                                 'fullDate' => $this->getCalendar()->fullDate(),
                                                                 'next' => $next,
@@ -122,11 +142,17 @@ class CalendarController extends AbstractController
                                                                 'rooms' => $this->roomManager->selectAll(),
                                                                 'users' => $this->userManager->selectAll(),
                                                                 'events' => $this->events($mode, $id),
+                                                                'roomsjson' => $roomsjson,
                                                                 'usersjson' => $usersjson,
+                                                                'eventUsersjson' => $eventUsersjson,
+                                                                'userid' => $_SESSION['id'],
+                                                                'eventsjson' => $eventsjson,
                                                                 'message'   => $this->getMessages(),
                                                                 'postData' => $this->getPostData(),
                                                                 'mode' => $mode,
-                                                                'userOrRoomId' => $id
+                                                                'userOrRoomId' => $id,
+                                                                'allEvents' => $this->userManager->getAllUsersEvents(),
+                                                                'action' => $this->getAction()
                                                                 ]);
     }
 

@@ -1,19 +1,44 @@
 <form class="border border-light p-5" method="post" action="/room/edit/{{ room.id }}">
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" class="form-control mb-4" value="{{ room.name }}">
+    <div class="row">
+        <div class="col-12 md-form form-lg">
+            <input type="text" id="name" name="name" class="form-control {% if message.name is defined %}is-invalid {% endif %}" value="{% if postData.name is defined %}{{ postData.name }}{% else %}{{ room.name }}{% endif %}" required>
+            <label for="name">Name</label>
+            {% if  message.name is defined %}
+                <div class="invalid-feedback">
+                    {{ message.name }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    <label for="capacity">Capacity</label>
-    <input type="number" id="capacity" name="capacity" class="form-control mb-4" value="{{ room.capacity }}">
+    <div class="row">
+        <div class="col-12 md-form form-lg">
+            <label for="description">Description</label>
+            <textarea id="description" class="form-control md-textarea {% if message.description is defined %}is-invalid {% endif %}" name="description" rows="4" >{% if postData.description is defined %}{{ postData.description }}{% else %}{{ room.description }}{% endif %}</textarea>
+            {% if  message.description is defined %}
+                <div class="invalid-feedback">
+                    {{ message.description }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    <label for="description">Description</label>
-    <textarea id="description" class="form-control mb-4" name="description" rows="4" value="{{ room.description }}">
+    <div class="row">
+        <div class="col-md-6 offset-3 md-form mb-4">
+            <label for="capacity">Capacity</label>
+            <input type="number" id="capacity" name="capacity" class="form-control {% if message.capacity is defined %}is-invalid {% endif %}" value="{% if postData.capacity is defined %}{{ postData.capacity }}{% else %}{{ room.capacity }}{% endif %}" required>
+            {% if  message.capacity is defined %}
+                <div class="invalid-feedback">
+                    {{ message.capacity }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
-    </textarea>
 
-    <label for="image">Image url</label>
-    <input type="text" id="textInput" name="image" class="form-control mb-4"  value = "{{ room.image }}">
-
-    <button class="btn btn-warning my-4 btn-block text-black-50" type="submit">Add a room</button>
+    <div class="d-flex justify-content-around">
+        <button class="btn btn-deep-orange" type="submit" >Edit room</button>
+    </div>
 
 </form>

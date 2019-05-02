@@ -9,63 +9,73 @@ class RoomController extends CalendarController
 {
     protected $roomManager;
 
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->roomManager = new RoomManager();
+    }
 
 
     public function index()
     {
-        $roomManager = new RoomManager();
-        $rooms = $roomManager->selectAll();
+        $rooms = $this->roomManager->selectAll();
         return $rooms;
     }
 
     public function show(int $id)
     {
-        $roomManager = new RoomManager();
-        $room = $roomManager->selectOneById($id);
+        $room = $this->roomManager->selectOneById($id);
         return $room;
     }
 
-
     public function edit($id)
     {
-        $roomManager = new RoomManager();
-        $room = $roomManager->selectOneById($id);
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room['name'] = $_POST['name'];
-            $room['capacity'] = $_POST['capacity'];
-            $room['description'] = $_POST['description'];
-            $room['image'] = $_POST['image'];
-            $roomManager->update($room);
-        }
-
-        header('Location:/calendar/month');
-    }
-
-    public function add()
-    {
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $room = ['name' => $_POST['name'],
-                    'capacity' => $_POST['capacity'],
-                    'description' => $_POST['description'],
-                    'image' => $_POST['image']
+            $room = [
+            'name' => $_POST['name'],
+            'capacity' => $_POST['capacity'],
+            'description' => $_POST['description'],
+            'id' => $id
             ];
 
             $errors = $this->verifForm($room);
 
             if (empty($errors)) {
-                $roomManager = new RoomManager();
-                $roomManager->insert($room);
-
-                $date =  new \DateTime();
-
-                $messages = "Well done";
-                $this->setMessages($messages);
-                return $this->month();
+                $this->roomManager->update($room);
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
+                exit;
             } else {
                 $this->setMessages($errors);
+                $this->setPostData($room);
+                $this->setAction('EditRoom' .$id);
+                return $this->month();
+            }
+        }
+    }
+
+    public function add()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $room = ['name' => $_POST['name'],
+                    'capacity' => $_POST['capacity'],
+                    'description' => $_POST['description']
+            ];
+            $errors = $this->verifForm($room);
+            if (empty($errors)) {
+                $this->roomManager->insert($room);
+                header('Location: /calendar/month/' .
+                    $this->calendar->month . '/' .
+                    $this->calendar->year . '/' .
+                    $this->calendar->week);
+                exit;
+            } else {
+                $messages = $errors;
+                $this->setMessages($messages);
+                $this->setPostData($room);
+                $this->setAction('room');
                 return $this->month();
             }
         }
@@ -75,7 +85,11 @@ class RoomController extends CalendarController
     {
         $roomManager = new RoomManager();
         $roomManager->delete($id);
-        header('Location:/calendar/month');
+        header('Location: /calendar/month/' .
+            $this->calendar->month . '/' .
+            $this->calendar->year . '/' .
+            $this->calendar->week);
+        exit;
     }
 
     private function verifForm($room)
@@ -90,9 +104,6 @@ class RoomController extends CalendarController
         }
         if (empty($room['description'])) {
             $errors['description'] = 'You should add a description';
-        }
-        if (empty($room['image'])) {
-            $errors['image'] = 'You should put an image';
         }
         return $errors;
     }
