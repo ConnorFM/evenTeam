@@ -32,7 +32,7 @@
                 <a class="nav-link dropdown-toggle navbar-links" href="#" id="navbarDropdownMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Rooms
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                <div class="dropdown-menu" style="width: 20rem;" aria-labelledby="navbarDropdownMenu">
                   {% if session.status == 1 %}
                     <a class="dropdown-item" data-toggle="modal" href="#modalRoom"><span class="newRoom">Add a room</span></a>
                   {% endif %}
@@ -46,7 +46,7 @@
                           <a id="room{{ room.id }}" data-toggle="modal" href="#modalEditRoom{{ room.id }}" data-title="room{{ room.id }}"><i class="fas fa-pen"></i></a>
                         </div>
                         <div class="col-1 offset-1">
-                          <a href="/room/delete/{{ room.id }}"><i class="fas fa-trash-alt"></i></a>
+                          <a href="/room/delete/{{ room.id }}" class="mr-1"><i class="fas fa-trash-alt"></i></a>
                         </div>
                       {% endif %}
                     </div>

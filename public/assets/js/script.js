@@ -25,7 +25,7 @@ function searchUser() {
 			// Création de rowDiv
 			myrowDiv = document.createElement('div');
 			myrowDiv.className = "row";
-			myrowDiv.style.width = "24.80rem";
+			myrowDiv.style.width = "20rem";
 			// Création des colDiv
 			mycolDivfirst = document.createElement('div');
 			mycolDivfirst.className = "col-6";

@@ -62,9 +62,9 @@
 								date.0.date | date ('Y-m-d') < event.date_end | date ('Y-m-d') and
 								date.0.date | date('Y-m-d') > event.date_start | date('Y-m-d')%}
 								{% if event.creator == userid %}
-									<a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-info event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
+									<a data-toggle="modal" id="event{{ event.id }}" class="badge badge-info event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
 								{% else %}
-									<a data-toggle="modal" id="event{{ event.id }}" class="badge badge-pill badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
+									<a data-toggle="modal" id="event{{ event.id }}" class="badge badge-primary event" title="{{ event.name }}" href="#modalEditEvent{{ event.id }}">{{ event.name }}</span></a>
 								{% endif %}								
 								<br/>
 							{% endif %}

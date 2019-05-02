@@ -22,9 +22,10 @@
   color: black;
   font-size: 1.2vw;
 }
-
-.calendar__day {
-  font-size: 1.1vw;
+@media screen and (max-width: 992px) {
+  .event{
+    font-size: 2.3vw;
+  }
 }
 
 .calendar__othermonth {
